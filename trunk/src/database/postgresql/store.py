@@ -3,10 +3,9 @@ from twisted.python import components
 
 class Store(object):
 
-    def __init__(self, db_adapter, database, user, password):
+    def __init__(self, db_adapter, database_dsn):
         self.__pool = adbapi.ConnectionPool(db_adapter,
-                                            database=database,
-                                            user=user, password=password,
+                                            dsn=database_dsn,
                                             cp_min=3, cp_max=10)
 
     def runQuery(self, query, *args):

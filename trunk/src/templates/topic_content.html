@@ -84,7 +84,6 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
     <n:invisible n:data="posts" n:render="sequence">
       <div class="entry reply" n:pattern="item" n:render="reply">
         <h3>
-        <n:slot name="progression">1</n:slot>.
         <n:slot name="ptitle">A cool hack indeed</n:slot>
         </h3>
 
@@ -92,14 +91,14 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
         morbi tristique senectus et netus et malesuada fames ac turpis egestas.
         </n:slot>
 
-        <p class="datetime">Posted by 
+        <p class="datetime">Reply #<n:slot name="progression">1</n:slot>
+        by 
         <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
           <n:attr name="href">
             <n:slot name="userpref" />
           </n:attr>
 
-          <n:slot name="owner">rhoncus</n:slot>
-        </a>
+          <n:slot name="owner">rhoncus</n:slot></a>
 
         on 
         <n:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</n:slot>

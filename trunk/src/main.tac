@@ -20,10 +20,7 @@ from database.interfaces import IS
 
 application = service.Application('weever')
 
-store = store.Store(c.database_adapter, c.database_name,
-              c.database_user, c.database_password)
-
-
+store = store.Store(c.database_adapter, c.database_dsn)
 
 realm = auth.SimpleRealm(store)
 portal = portal.Portal(realm)

@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
-import os.path as op
-
 from nevow import loaders, url, tags as t
 
 from main import MasterPage, BaseContent
-from web import template_path as tp
+from web import getTemplate
 from database.interfaces import IS, ITopicsDatabase
 
 def pptime(date):
@@ -15,7 +13,7 @@ class NewTopic(MasterPage):
         return [{'ttitle':'New Topic -- Weever'}]
 
 class NewTopicContent(BaseContent):
-    docFactory = loaders.xmlfile(op.join(tp,'newtopic_content.html'),
+    docFactory = loaders.xmlfile(getTemplate('newtopic_content.html'),
             ignoreDocType=True)
 
 class Topic(MasterPage):
@@ -33,7 +31,7 @@ class Topic(MasterPage):
         return Topic(self.args, ctnt=TopicContent)
 
 class TopicContent(BaseContent):
-    docFactory = loaders.xmlfile(op.join(tp,'topic_content.html'),
+    docFactory = loaders.xmlfile(getTemplate('topic_content.html'),
             ignoreDocType=True)
 
     def __init__(self, args, data=None):

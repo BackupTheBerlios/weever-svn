@@ -9,13 +9,14 @@ def getNetworkParameters(filename):
 
 def getDatabaseParameters(filename):
     cfg = _parse(filename)
+    dbms = cfg.get('Database','dbms')
     adapter = cfg.get('Database', 'adapter')
     dsn = ''
     for entry in 'dbname user password host port'.split():
         if cfg.has_option('Database', entry):
             el = cfg.get('Database', entry)
             dsn = '%s %s=%s' % (dsn, entry, el)
-    return adapter, dsn
+    return dbms, adapter, dsn
 
 def getRemoteShParameters(filename):
     cfg = _parse(filename)

@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-import os.path as op
-
 from twisted.python import util
 
 from nevow import rend, loaders, url, inevow
@@ -9,7 +7,7 @@ from nevow import tags as t
 from database import interfaces as idata
 from database.interfaces import IS
 
-from web import main, topic, template_path as tp
+from web import main, topic, getTemplate
 from interfaces import ILastURL
 
 def pptime(date):
@@ -29,7 +27,7 @@ class Main(main.MasterPage):
     #    return Main(id, ctnt=SectionContent)
 
 class IndexContent(main.BaseContent):
-    docFactory = loaders.xmlfile(op.join(tp, 'index_content.html'), ignoreDocType=True)
+    docFactory = loaders.xmlfile(getTemplate('index_content.html'), ignoreDocType=True)
 
     def data_HotTopics(self, ctx, data):
         return idata.ITopicsDatabase(IS(ctx)).getTopTopics(15)
@@ -59,6 +57,6 @@ class Login(main.MasterPage):
         return [dict(ttitle='Login -- Weever')]        
 
 class LoginContent(main.BaseContent):
-    docFactory = loaders.xmlfile(op.join(tp, 'login_content.html'), ignoreDocType=True)
+    docFactory = loaders.xmlfile(getTemplate('login_content.html'), ignoreDocType=True)
     
     

@@ -21,7 +21,7 @@ def getDatabaseParameters(filename):
         if cfg.has_option('Database', entry):
             el = cfg.get('Database', entry)
             dsn = '%s %s=%s' % (dsn, entry, el)
-    return dbms, adapter, dsn
+    return dbms, adapter, dsn.strip()
 
 def getRemoteShParameters(filename):
     cfg = _parse(filename)

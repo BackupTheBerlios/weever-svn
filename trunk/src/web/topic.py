@@ -4,14 +4,12 @@ from datetime import datetime
 from nevow import loaders, url, tags as t, liveevil, rend
 from formless import webform, annotate, iformless
 
-from utils import util
+from utils import util, markdown
 from main import MasterPage, BaseContent
 from database import interfaces as idb #import IS, ITopicsDatabase
 from users import interfaces as iusers #interfaces import IA
 from web import interfaces as iweb #import IMainTitle
 from web import getTemplate, forms
-
-liveevil.DEBUG = True
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -25,10 +23,9 @@ def clean(title):
 def fillReply(ctx, d):
     ctx.tag.fillSlots('id', d.get('pid'))
     ctx.tag.fillSlots('edit', '/edit.xhtml')
-    ctx.tag.fillSlots('permalink', '/permalink.xhtml')
     ctx.tag.fillSlots('title', d.get('ttitle'))
-    ctx.tag.fillSlots('body', d.get('pbody'))
-    ctx.tag.fillSlots('userpref', d.get('powner')+'.xhtml')
+    ctx.tag.fillSlots('body', t.xml(d.get('pparsed_body')))
+    ctx.tag.fillSlots('userpref', url.root.clear().child('user').child(str(d.get('ulogin'))))
     ctx.tag.fillSlots('owner', d.get('powner'))
     ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
 
@@ -38,15 +35,20 @@ class QuickForm(rend.Fragment):
         if title == '':
             title = data.get('ttitle')
         title = clean(title)
+        hd_inpt = t.input(type="hidden", id="reply_to",
+                          name="reply_to", value=data.get('pid'))
         inpt = t.input(type="text", id="title_", name="title",
                        maxlength="70", size="60", value=title)
-        return inpt
+        return t.invisible[hd_inpt, inpt]
 
     def body(self, ctx, data):
         d = data.get('pbody').split('\r\n')
+        text_content = '\n> '.join(d)
+        if not text_content.startswith('>'):
+            text_content = '> '+text_content
         text = t.textarea(id="content_", name="content",
                           cols="70", rows="8", size="70")[
-                '\n'.join(d)
+                text_content
             ]
         return text
 
@@ -63,7 +65,7 @@ class QuickForm(rend.Fragment):
                     t.label(_for="title_")["Title"],
                     self.title,
                     t.label(_for="content_")["Message",
-                        t.span[" (reST formatting rules are supported)"]
+                        t.span[" (Markdown formatting rules are supported)"]
                     ],
                     self.body                    
                 ],
@@ -81,6 +83,7 @@ class QuickForm(rend.Fragment):
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
        ctx=annotate.Context(),
+       reply_to=annotate.Integer(hidden=True, default=0),
        title=forms.StyleString(required=True,
                              requiredFailMessage="Missing Title",
                              maxlength="70",
@@ -96,10 +99,17 @@ class IQuickReply(annotate.TypedInterface):
                                         action="Post Reply")
 
 def rememberTitle(result, ctx):
-    t = result[0].get('ptitle')
-    if t == '':
-        t = result[0].get('ttitle')
-    ctx.remember(t, iweb.IMainTitle)
+    try:
+        t = result[0]
+    except (IndexError, KeyError):
+        try:
+            t = result
+        except AttributeError:
+            return result
+    title = t.get('ptitle')
+    if title == '':
+        title = t.get('ttitle')
+    ctx.remember(title, iweb.IMainTitle)
     return result
 
 class TopicContent(BaseContent):
@@ -125,6 +135,7 @@ class TopicContent(BaseContent):
             
         if d:
             ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
+            ctx.tag.fillSlots('permalink', url.root.clear().child('topic').child(d.get('pid')))
             ##
             fillReply(ctx, d)
             ##
@@ -161,11 +172,15 @@ class TopicContent(BaseContent):
         ctx.tag.fillSlots('progression', self.start)
         ctx.tag.fillSlots('ptitle', data.get('ptitle'))
         ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
+        ctx.tag.fillSlots('permalink', url.root.clear().child('post').child(data.get('pid')))
         ##
         fillReply(ctx, data)
         ##
         self.start = self.start + 1
-        return ctx.tag
+        #  margin-left:10px  margin-left:20px  margin-left:30px con un
+        #  max(x, 40)
+        indent_level = data.get('indent_level')
+        return t.div(style="margin-left: %spx" % min(indent_level*10, 40))[ctx.tag]
 
     def render_divider(self, ctx, data):
         return ctx.tag
@@ -219,15 +234,18 @@ class Topic(MasterPage):
         self.args.append(start)
         return Topic(self.args)
     
-    def quick_reply(self, ctx, title, content):
+    def quick_reply(self, ctx, reply_to, title, content):
         if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
-        properties = dict(thread_id=self.args[0],
+        text = markdown.Markdown(content).toString()
+        print text
+        properties = dict(reply_to=reply_to or self.args[0],
                           owner_id=iusers.IA(ctx)['uid'],
                           creation=datetime.now(),
                           modification=datetime.now(),
                           title=title,
-                          body=content
+                          body=content,
+                          parsed_body=text
                          )
         d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
         return d

@@ -123,7 +123,12 @@ class MasterPage(ManualFormMixin, rend.Page):
         return ctx.tag["%.0f" % ((now()-startTime)*1000,)]
 
     def render_content(self, ctx, data):
-        ctx.tag.fillSlots('content', self.content(self.args, data[FIRST_POST]))
+        try:
+            ct = self.content(self.args, data[FIRST_POST])
+        except IndexError:
+            ct = self.content(self.args, data)
+        #ct = t.cached(name=str(self.__class__), lifetime=10)[]
+        ctx.tag.fillSlots('content', ct)
         return ctx.tag
     
     def render_glue(self, ctx, data):

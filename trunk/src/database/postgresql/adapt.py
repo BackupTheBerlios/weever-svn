@@ -1,3 +1,7 @@
+from twisted.python import failure
+
+from formless import annotate
+
 from utils import util
 
 from database import interfaces as idb
@@ -23,7 +27,21 @@ def cleanCache(*fn):
         return _1
     return _
 
-
+def reorderThread(thread):
+    try:
+        first = thread[0]
+    except IndexError:
+        return thread
+    else:
+        first_indent = len(first.get('preferences_').split('.'))-1
+        for post in thread:
+            indent = len(post.get('preferences_').split('.'))-1
+            indent_level = indent - first_indent
+            if indent_level < 0:
+                indent_level = 0
+            post['indent_level'] = indent_level
+        return thread
+    
 class UsersDatabase(object):
     
     util.implements(idb.IUsersDatabase)
@@ -73,11 +91,11 @@ class SectionsDatabase(object):
 
     def addSection(self, properties):
         return self.store.runOperation(q.add_section, properties)
-    addSection = cleanCache([getAllSections, simpleGetAllSections])(addSection)
+    addSection = cleanCache(getAllSections, simpleGetAllSections)(addSection)
     
     def delSection(self, sid):
         return self.store.runOperation(q.del_section, sid)
-    delSection = cleanCache(delSection)
+    delSection = cleanCache(getAllSections, simpleGetAllSections)(delSection)
 
 util.backwardsCompatImplements(SectionsDatabase)
 
@@ -89,7 +107,8 @@ class TopicsDatabase(object):
         self.store = db
 
     def getAllPosts(self, tid, num, offset):
-        return self.store.runQuery(q.topic, tid, num, offset)
+        return self.store.runQuery(q.topic, tid, num, offset
+                                   ).addCallback(reorderThread)
 
     def getPostsNum(self, tid):
         return self.store.runQuery(q.posts_num, tid)
@@ -98,10 +117,10 @@ class TopicsDatabase(object):
         return self.store.runQuery(q.top_threads, num)
     getTopTopics = defcache.DeferredCache(getTopTopics)
 
-    def addTopic(self, args1, args2):        
+    def addTopic(self, args):        
         return self.store.runInteraction(self._addTopic, \
-                                         queries=(q.add_topic,q.add_post),
-                                         args=(args1, args2)
+                                         q.add_topic,
+                                         args
                                          )
     addTopic = cleanCache(getTopTopics)(addTopic)
 
@@ -110,19 +129,13 @@ class TopicsDatabase(object):
 
     def getPost(self, id):
         d = self.store.runQuery(q.get_post, id)
-        d.addCallback(_transformResult)
         return d
     
-    def _addTopic(self, curs, queries, args):
-        add_topic = queries[0]
-        add_post = queries[1]
-        topic_args = args[0]
-        post_args = args[1]
-        curs.execute(add_topic, topic_args)
-        curs.execute("SELECT MAX(t.id) FROM thread t")
+    def _addTopic(self, curs, query, args):
+        curs.execute(query, args)
+        ## XXX
+        curs.execute("SELECT max(posts.id)")
         lid = curs.fetchone()
-        post_args['thread_id'] = lid[0]
-        curs.execute(add_post, post_args)
         return lid[0]
         
 util.backwardsCompatImplements(TopicsDatabase)                 

@@ -25,7 +25,7 @@ class IRegister(annotate.TypedInterface):
                  password=annotate.Password(required=True,
                                             requiredFailMessage=noPwd
                                             ),
-                 screename=annotate.String(),
+                 name=annotate.String(),
                  homepage=annotate.String()
                 ):
         """ Register """
@@ -55,8 +55,8 @@ class Register(MasterPage):
         return [{'ttitle':'Register -- Weever'}]
 
     def register(self, ctx, username, email,
-                 password, screename, homepage):
-        properties = dict(screename=screename or username,
+                 password, name, homepage):
+        properties = dict(name=name or username,
                           login=username,
                           password=password,
                           group_id=3,
@@ -68,6 +68,10 @@ class Register(MasterPage):
             d = idb.IUsersDatabase(idb.IS(ctx)).findUser(username)
             d.addCallback(login, ctx)
             return d
+        def errback(failure, ctx, username):
+            error = 'Username: %s already existing' % username
+            raise annotate.ValidateError({ 'username' : error }, 'Error: ' + error)  
+
         def login(avatar, ctx):
             # if using new guard
             # s = inevow.ISession(ctx)
@@ -83,7 +87,8 @@ class Register(MasterPage):
             inevow.ISession(ctx).unsetComponent(iweb.ILastURL)
         inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,uri or '')
         d = idb.IUsersDatabase(idb.IS(ctx)).addUser(properties)
-        d.addCallback(success, ctx, username)        
+        d.addErrback(errback, ctx, username)
+        d.addCallback(success, ctx, username)
         return d
 util.backwardsCompatImplements(Register)
 

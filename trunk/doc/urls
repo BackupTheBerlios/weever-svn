@@ -1,0 +1,15 @@
+This document explains the semantics of each url that we are going to implement. Currently it's different.
+
+The new semantics are:
+
+http://weever/ is the root url hot topics and sections
+http://weever/viewtopic/4 topic 4
+http://weever/viewsection/6 section 6
+http://weever/viewreply/56 permalink for replies, view reply #56
+http://weever/feedtopic/5 feed for section #5
+http://weever/feedsection/5 feed for topic 6
+http://weever/feed/ whole forum feed
+
+All numbers are _absolute_ numbers, except the offset.
+
+

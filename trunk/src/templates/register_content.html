@@ -3,42 +3,54 @@
 <n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
   <div id="content"> 
     <h2>Register</h2>
-        
-    <form action="" method="post">
-    
-        <fieldset>
-            <legend>Required information</legend> 
-        
-            <label for="username_">Username <span>(max. 15 characters)</span></label>
-            <input type="text" id="username_" name="username" maxlength="15" size="15" value="" />
 
-            <label for="email_">E-mail address <span>(<strong>must</strong> be valid)</span></label>
-            <input type="text" id="email_" name="email" maxlength="30" size="15" value="" />
+    <n:invisible n:render="form">
+        <form n:pattern="freeform-form">
+            <n:attr name="action"><n:slot name="form-action"/></n:attr>
+            <n:attr name="id"><n:slot name="form-id"/></n:attr>
+            <n:attr name="name"><n:slot name="form-name"/></n:attr>
 
-            <label for="password_">Password</label>
-            <input type="password" id="password_" name="password" maxlength="15" size="15" value="" />
+            <n:invisible n:pattern="argument!!username">
+                <label for="username_">Username <span>(max. 15 characters)</span></label>
+                <span class="error"><n:slot name="error" /></span>
+                <n:slot name="input" />
+            </n:invisible>
 
-            <label for="retypePassword_">Retype password</label>
-            <input type="password" id="retypePassword_" name="retypePassword" maxlength="15" size="15" value="" />
+            <n:invisible n:pattern="argument!!email">
+                <label for="email_">E-mail address <span>(<strong>must</strong> be valid)</span></label>
+                <span class="error"><n:slot name="error" /></span>
+                <n:slot name="input" />
+            </n:invisible>
 
+            <n:invisible n:pattern="argument!!password">
+                <label for="password_">Password</label>
+                <n:slot name="input" /> <span class="error"><n:slot name="error" /></span>
+            </n:invisible>
+            
+            <n:invisible n:pattern="argument!!screename">
+                <label for="screename_">Screen name (optional)</label>
+                <n:slot name="input" />
+            </n:invisible>            
+            <n:invisible n:pattern="argument!!homepage">
+                <label for="homepage_">Home page</label>
+                <n:slot name="input" />            
+            </n:invisible>            
 
-        </fieldset>
-
-        <fieldset>
-            <legend>Optional personal information</legend> 
-
-            <label for="username_">Screen name (optional)</label>
-            <input type="text" id="username_" name="screenName" maxlength="40" size="20" value="" />
-
-           <label for="homepage_">Home page</label>
-            <input type="text" id="homepage_" name="homepage" maxlength="60" size="20" value="" />
-
-        </fieldset>
-
-
-      <fieldset>
-        <input type="submit" name="" value="Register" />
-      </fieldset>
-    </form>    
+            <fieldset>
+                <legend>Required information</legend>     
+                <n:slot name="argument!!username" />
+                <n:slot name="argument!!email" />
+                <n:slot name="argument!!password" />                
+            </fieldset>
+            <fieldset>
+                <legend>Optional personal information</legend> 
+                <n:slot name="argument!!screename" />
+                <n:slot name="argument!!homepage" />
+            </fieldset>
+            <fieldset>
+                <n:slot name="form-button" />
+            </fieldset>
+        </form>
+    </n:invisible>
   </div>
 </n:invisible>

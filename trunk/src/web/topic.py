@@ -21,8 +21,7 @@ class IQuickReply(annotate.TypedInterface):
         """Quick Reply
         """
     quick_reply = annotate.autocallable(quick_reply,
-                                        action="Post Reply",
-                                        label="Quick Reply")
+                                        action="Post Reply")
 
 class Topic(MasterPage):
     def data_head(self, ctx, data):

@@ -25,7 +25,7 @@ def fillReply(ctx, d):
     ctx.tag.fillSlots('edit', '/edit.xhtml')
     ctx.tag.fillSlots('title', d.get('ttitle'))
     ctx.tag.fillSlots('body', t.xml(d.get('pparsed_body')))
-    ctx.tag.fillSlots('userpref', url.root.child('user').child(str(d.get('pid'))))
+    ctx.tag.fillSlots('userpref', url.root.clear().child('user').child(str(d.get('ulogin'))))
     ctx.tag.fillSlots('owner', d.get('powner'))
     ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
 
@@ -135,7 +135,7 @@ class TopicContent(BaseContent):
             
         if d:
             ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
-            ctx.tag.fillSlots('permalink', url.root.child('topic').child(d.get('pid')))
+            ctx.tag.fillSlots('permalink', url.root.clear().child('topic').child(d.get('pid')))
             ##
             fillReply(ctx, d)
             ##
@@ -172,7 +172,7 @@ class TopicContent(BaseContent):
         ctx.tag.fillSlots('progression', self.start)
         ctx.tag.fillSlots('ptitle', data.get('ptitle'))
         ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
-        ctx.tag.fillSlots('permalink', url.root.child('post').child(data.get('pid')))
+        ctx.tag.fillSlots('permalink', url.root.clear().child('post').child(data.get('pid')))
         ##
         fillReply(ctx, data)
         ##

@@ -71,5 +71,5 @@ posts_num = """ SELECT posts_num FROM posts_in_thread() WHERE tid=%s """
 
 get_post = """ SELECT p.id AS pid, u.name AS powner, p.modification AS pmodification,
 p.references_ AS preferences_, p.noise AS pnoise, p.title AS ptitle, p.body AS pbody,
-p.parsed_body AS pparsed_body, p.title AS ttitle
+p.parsed_body AS pparsed_body, p.title AS ttitle, u.login AS ulogin
 FROM posts p, users u WHERE p.id = %s AND u.id = p.owner_id"""

@@ -15,10 +15,10 @@ class PostContent(topic.TopicContent):
             
         if d:
             ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
-            ctx.tag.fillSlots('permalink', url.root.child('post').child(d.get('pid')))
+            ctx.tag.fillSlots('permalink', url.root.clear().child('post').child(d.get('pid')))
             rp = d.get('preferences_').split('.')[0]
             
-            ctx.tag.fillSlots('thread', url.root.child('topic').child(rp))
+            ctx.tag.fillSlots('thread', url.root.clear().child('topic').child(rp))
             ##
             topic.fillReply(ctx, d)
             ##

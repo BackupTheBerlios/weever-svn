@@ -1,3 +1,7 @@
+from twisted.python import failure
+
+from formless import annotate
+
 from utils import util
 
 from database import interfaces as idb
@@ -37,44 +41,7 @@ def reorderThread(thread):
                 indent_level = 0
             post['indent_level'] = indent_level
         return thread
-
-##     r = [[x.get('preferences_') or '{}', x] for x in thread]
-##     #t = [x[1] for x in r]
-##     # Get a list of ints from a string
-##     for el in r:
-##         tmp = []
-##         for x in el[0][1:-1].split(','):
-##             if x:
-##                 tmp.append(int(x))
-##         el[0] = tmp
-
-##     tree = []
-##     r.sort()
-##     base = len(r[0][0])
-##     for idx, node in enumerate(r):
-##         appended = 0
-##         if idx == 0:
-##             tree.append(node)
-##             node[1]['indent_level'] = 0
-##             appended = 1
-##         else:
-##             if len(node[0]) == base:
-##                 tree.append(node)
-##                 node[1]['indent_level'] = 0
-##                 appended = 1
-##             else:
-##                 for i, t in enumerate(tree):
-##                     if t[0] == node[0][:-1]:
-##                         if t[1].get('pid') == node[0][-1]:
-##                             tree.insert(i+1, node)
-##                             node[1]['indent_level'] = len(t[0])+1-base
-##                             appended = 1
-##                             break
-##         if not appended:
-##             tree.append(node)
-##             node[1]['indent_level'] = 0
-##     return [x[1] for x in tree]
-
+    
 class UsersDatabase(object):
     
     util.implements(idb.IUsersDatabase)

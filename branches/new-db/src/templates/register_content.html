@@ -43,8 +43,8 @@
                             <n:slot name="error" />
                         </span>
                     </n:invisible>
-                    <n:invisible n:pattern="argument!!screename">
-                        <label for="screename_">Screen name (optional)</label>
+                    <n:invisible n:pattern="argument!!name">
+                        <label for="name_">Screen name (optional)</label>
                         <n:slot name="input" />
                     </n:invisible>
                     <n:invisible n:pattern="argument!!homepage">
@@ -52,6 +52,7 @@
                         <n:slot name="input" />
                     </n:invisible>
                     <fieldset>
+<!--                        <p><strong><em><n:slot name="form-error"/></em></strong></p>-->
                         <legend>Required information</legend>
                         <n:slot name="argument!!username" />
                         <n:slot name="argument!!email" />
@@ -59,7 +60,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>Optional personal information</legend>
-                        <n:slot name="argument!!screename" />
+                        <n:slot name="argument!!name" />
                         <n:slot name="argument!!homepage" />
                     </fieldset>
                     <fieldset>

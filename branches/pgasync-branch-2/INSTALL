@@ -1,0 +1,41 @@
+
+After you have installed all this dependencies written in the README you
+will be able to install weever.
+
+create a postgresql database in which you will execute the sql file in 
+db_scripts.
+
+To build the required database structure you will need to run:
+
+psql -U testuser -d weever < db_scripts/forum.sql
+
+supposing you created a database named weever with an allowed user named 
+testuser.
+
+If you used different values or if the database is on a tcp connection you will 
+need to modify files/weever.ini with your wanted parameters in the section 
+Database.
+
+Another thing you can configure from weever.ini is the post on which weever will 
+be listening for new connections, by default 8080.
+
+Once you have installed and configured the database you can run weever with:
+
+twistd -oy weever.tac
+
+(this will run weever as a daemon, use the -n option to run it on current shell)
+
+The default database has no sections. And the root user is:
+username: root
+password: pass
+
+after starting weever you will be able to add sections using the admin interface
+under:
+
+http://localhost:8080/admin/
+
+Currently if you need to change the root password you will have to change that
+from SQL.
+
+If you have any other questions use the mailing list:
+weever-users@lists.berlios.de

@@ -45,7 +45,7 @@ class NewTopic(MasterPage):
     util.implements(INewTopic)
 
     def beforeRender(self, ctx):
-        if not iu.IA(ctx).get('uid'):
+        if not iusers.IA(ctx).get('uid'):
             inevow.ISession(ctx).setComponent(iweb.ILastURL, '/newtopic/')
             return inevow.IRequest(ctx).redirect('/login/')
 

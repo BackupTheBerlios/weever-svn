@@ -80,7 +80,7 @@ class Main(main.MasterPage):
     def child_admin(self, ctx, data=None):
         reload(admin)
         # Need to make 2 dynamic
-        if iusers.IA(ctx).get('gpermissionlevel', sys.maxint) > 1:
+        if iusers.IA(ctx).get('gpermission_level', sys.maxint) > 1:
             raise WebException("Not Enough Permissions to enter this section")
         else:
             return admin.Admin(data)

@@ -160,6 +160,8 @@ class Markdown:
                 else :
                     el.appendChild(txtEl)
                     ll.append(el)
+                br = doc.createElement('br')
+                ll.append(br)
                     
                 ll.extend(lr)
                 return ll

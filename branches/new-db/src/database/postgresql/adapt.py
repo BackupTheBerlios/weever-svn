@@ -91,11 +91,11 @@ class SectionsDatabase(object):
 
     def addSection(self, properties):
         return self.store.runOperation(q.add_section, properties)
-    addSection = cleanCache([getAllSections, simpleGetAllSections])(addSection)
+    addSection = cleanCache(getAllSections, simpleGetAllSections)(addSection)
     
     def delSection(self, sid):
         return self.store.runOperation(q.del_section, sid)
-    delSection = cleanCache(delSection)
+    delSection = cleanCache(getAllSections, simpleGetAllSections)(delSection)
 
 util.backwardsCompatImplements(SectionsDatabase)
 

@@ -1,8 +1,19 @@
 @import url("typo.css");
 @import url("form.css");
 
-/* basic elements */
-/*---------------------------------------------------*/
+/* 
+==========================================
+basic settings 
+
+TODO:
+* fix rel paths
+* add IE filters
+* restyle header
+* "sidebar" to be renamed in "menu"
+==========================================
+*/
+
+
 
 html {
 	margin: 0;
@@ -41,7 +52,12 @@ a img {
     border-style: none;
 }
 
-/* main contents */
+
+/* 
+==========================================
+main wrapper box 
+==========================================
+*/
 
 #main {	
 
@@ -54,16 +70,17 @@ a img {
 	margin: 50px auto; 
 	padding: 0; 
 
-    width: 760px;
-
-    /*margin: 0;
-    margin-left: -380px;*/
-    
+    width: 730px;  /* 800x600 friendly */
     
     /*background: transparent url("../../images/main-bg.png") top left;     */
 }
 
-/* header */
+
+/* 
+==========================================
+header
+==========================================
+*/
 
 #header { 
 	/*height: 180px;*/
@@ -81,13 +98,11 @@ a img {
 	color: #993333;
 }
 
-#tagline {
+#header p {
 	margin: 0;
-	/*margin-left: 280px;*/ /* == #header h1 */
 	
     padding: 0;
     padding-left:30px;
-
 
 	text-transform: lowercase;
 	font: bold 18px/100% verdana, arial, sans-serif;
@@ -95,8 +110,11 @@ a img {
 	color: #333;
 }
 
-
-/*---------------------------------------------------*/
+/* 
+==========================================
+content
+==========================================
+*/
 
 #content{
 	padding: 0 35px;
@@ -116,7 +134,10 @@ a img {
 	padding: 0;
 }
 
-#content ul, #content ol, #content dl, #content blockquote {
+#content ul, 
+#content ol, 
+#content dl, 
+#content blockquote {
 	line-height: 150%; 
 }
 
@@ -126,8 +147,11 @@ a img {
     margin-bottom: 10px;
 }
 
-
-/* funky titles */
+/* 
+------------------------------------------
+top level section title 
+------------------------------------------
+*/
 #content h2 {
 
 	font-size: 120%;
@@ -151,8 +175,11 @@ a img {
     letter-spacing: 1px;    
 }
 
-
-
+/* 
+------------------------------------------
+secondary level section title
+------------------------------------------
+*/
 #content h3 {
 
 	font-size: 110%;
@@ -181,15 +208,16 @@ a img {
 }
 
 
-
 #content hr {
     display: none;
 }
 
 
-
-
-/* ...and finally we place the list of links */
+/* 
+==========================================
+menu
+==========================================
+*/
 
 #sidebar{
 	
@@ -214,13 +242,8 @@ a img {
 	list-style: none;
 	
 	margin: 0;	
-
-
 	padding: 0;	
-    
-
 }
-
 
 #sidebar ul li {
 
@@ -229,7 +252,6 @@ a img {
     
     display: inline;    
 }
-
 
 #sidebar ul#nav li {
 
@@ -240,35 +262,11 @@ a img {
 }
 
 
-
-
-
-/* hyperlink */
-/*---------------------------------------------------*/
-
-a:link, a:visited, a:hover, a:active {
-	color: #993333;
-	
-	
-	text-decoration: none;	
-    border-bottom: 1px solid  #CC6666; /* lighter */
-	
-    font-weight: bold;
-    padding: 0 2px;
-}
-
-a:visited {
-	color: #666;
-	border-bottom: 1px solid #666; /* lighter */
-}
-
-a:hover {
-    color: #fafafa;
-    background: #993333;
-    
-    border-bottom: none;      
-}
-
+/* 
+==========================================
+footer
+==========================================
+*/
 
 #footer {
 	margin: 0; 
@@ -291,13 +289,52 @@ a:hover {
 
 
 
-/* utilities */
-/*---------------------------------------------------*/
+/* 
+==========================================
+link
+==========================================
+*/
+
+a:link, a:visited, a:hover, a:active {
+	color: #993333;
+	
+	
+	text-decoration: none;	
+    border-bottom: 1px solid  #CC6666; /* lighter */
+	
+    font-weight: bold;
+    padding: 0 2px;
+}
+
+a:visited {
+	color: #666;
+	border-bottom: 1px solid #ccc; /* lighter */
+}
+
+a:hover {
+    color: #fafafa;
+    background: #993333;
+    
+    border-bottom: none;      
+}
+
+
+
+/* 
+==========================================
+utility classes
+==========================================
+*/
 
 .cut {clear: both; line-height: 0; height: 0;}
 .hidden {display: none;}
 
-/*---------------------------------------------------*/
+
+/* 
+==========================================
+breadcrumd, TBD
+==========================================
+*/
 
 ul#breadcrumb {
 	list-style: none;
@@ -320,60 +357,13 @@ ul#breadcrumb li:last-child {
 	font-weight: bold;
 }
 
-/*
-#searchBtn {
-	margin-left: 5px;
-}
 
 
+/* 
+------------------------------------------
+alert box
+------------------------------------------
 */
-/* -------------------------------------------------- */
-
-.photo {
-
-	float: left;
-	
-	margin: 5px 0;
-	margin-right: 10px;
-
-    padding: 0;
-
-}
-
-.photo a:link, .photo a:visited {
-    border: 1px solid #0099CC;    
-    
-    display: block;
-}
-
-.photo a:link:hover, .photo a:visited:hover {
-    border: 1px solid #903;
-}
-
-.photo img {
-    display: block;
-    
-    margin:0;
-    
-    padding: 5px;
-    background: #fff;
-}
-
-
-
-
-.transport {
-
-
-    width: auto;
-
-    /*border: 2px solid  #069;*/
-    text-align: center;
-    
-    padding: 5px 0;
-}
-
-
 
 #alert {
     background: #069;
@@ -399,13 +389,12 @@ ul#breadcrumb li:last-child {
 }
 
 
-/* @@ fix, it's ugly looking */
-.comment:target {
-    border: 1px solid #099;
-    
-}
 
-
+/* 
+------------------------------------------
+entry / reply
+------------------------------------------
+*/
 
 .entry {
     
@@ -413,39 +402,37 @@ ul#breadcrumb li:last-child {
     margin-bottom: 20px;
     
     padding: 0 15px 15px 15px;  
-
-        
-    border: 2px solid #fafafa;
+    border: 2px solid #fafafa;     
 }
-
 
 .reply {
 
-    padding: 15px;  
-    
+    padding: 15px;      
     border: 2px solid #E5E5E5;
+
+    /* background: #fff will be cool but we need to fix gfx */
 }
 
+
+/* 
+==========================================
+generic table styles
+==========================================
+*/
 
 table {
     border-collapse: collapse;
     width:95%;
     
-
     margin: 15px 0;
-
 }
-
-
 
 tr.alt {
     background: #E5E5E5 url('../../images/tr-alt-bg.png') top right repeat-y;    
 }
 
-
 thead {
 
-    
     border-bottom: 2px solid #993333;
     color: #333;
     
@@ -457,6 +444,7 @@ thead {
 }
 
 tbody {        
+
 }
 
 th {    
@@ -477,11 +465,18 @@ td {
 }
 
 
+/* 
+==========================================
+misc.
+==========================================
+*/
+
+
 .help {
     font-size: 85%;    
 }
 
-
+/* @@ really needed? */
 h2 span, h3 span {
  
     display: block;
@@ -498,6 +493,18 @@ h2 span, h3 span {
     letter-spacing: 0;    
 }
 
+
+/* next... */
+.browser {
+    text-align: right;
+}
+
+
+/* 
+==========================================
+attached picture 
+==========================================
+*/
 
 .picture {
     margin: 20px 0;    
@@ -531,7 +538,3 @@ h2 span, h3 span {
 
 }
 
-/* next... */
-.browser {
-    text-align: right;
-}

@@ -20,8 +20,8 @@ class SimpleChecker:
     __implements__ = checkers.ICredentialsChecker
     credentialInterfaces = (credentials.IUsernamePassword,)
 
-    def __init__(self, userdb):
-        self.userdb = IUsersDatabase(userdb)
+    def __init__(self, store):
+        self.userdb = IUsersDatabase(store)
 
     #implements ICredentialChecker
     def requestAvatarId(self, creds):
@@ -49,7 +49,7 @@ class SimpleChecker:
         if matched:
             return user
         else:
-            print "password didn't match: ",user['username']
+            print "password didn't match: ",user['login']
             return failure.Failure(error.UnauthorizedLogin())
 
 class SimpleRealm:

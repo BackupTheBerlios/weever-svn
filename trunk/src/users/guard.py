@@ -25,6 +25,14 @@ from nevow import inevow
 #
 # * http auth
 # * cookie path (i.e. url.root, not '/')
+#
+# * provide a way to store the sessions on a database, proposed
+#   architecture:
+#   - write an ISessionContainer that acts like self.sessions dict
+#    but knows how to expire its content to avoid calling:
+#    self.sessions[sessionID].expire() but rather:
+#    ISessionContainer(self.sessions).expire(sessionID)
+#   - discuss about this stuff with other people
 
 # TEST:
 # * mind support

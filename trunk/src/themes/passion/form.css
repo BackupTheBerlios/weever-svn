@@ -50,7 +50,7 @@ input[type='text'],  textarea {
 }
 
 textarea {
-
+    width: 95%;
 }
 
 

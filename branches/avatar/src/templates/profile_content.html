@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
+    <div id="content">
+    
+        <div class="panel">
+    
+            <h2>Profile</h2>
+            <p>Costomize your Weever profile</p>
+            
+            <n:invisible n:render="form">
+                <form n:pattern="freeform-form" method="post">
+                    <n:attr name="action">
+                        <n:slot name="form-action" />
+                    </n:attr>
+                    <n:attr name="id">
+                        <n:slot name="form-id" />
+                    </n:attr>
+                    <n:attr name="name">
+                        <n:slot name="form-name" />
+                    </n:attr>
+                    <n:invisible n:pattern="argument!!email">
+                        <label for="email_">E-mail address <span class="error"><n:slot name="error" /></span></label>
+                        <n:slot name="input" />
+                        <p class="help"><strong>Must</strong>be valid</p>
+                    </n:invisible>
+                    
+                    <n:invisible n:pattern="argument!!password">
+                        <label for="password_">Password <span class="error"><n:slot name="error" /></span></label>
+                        <n:slot name="input" />
+                        <p class="help">Leave empty to keep your current password</p>
+                    </n:invisible>
+                    
+                    <n:invisible n:pattern="argument!!password2">
+                        <label for="password_">Retype your password <span class="error"><n:slot name="error" /></span></label>
+                        <n:slot name="input" />
+                        <p class="help">Leave empty to keep your current password</p>
+                    </n:invisible>
+                    
+                    
+                    <n:invisible n:pattern="argument!!name">
+                        <label for="name_">Screen name <span class="error"><n:slot name="error" /></span></label>
+                        <n:slot name="input" />                        
+                    </n:invisible>
+                    <n:invisible n:pattern="argument!!homepage">
+                        <label for="homepage_">Home page</label>
+                        <n:slot name="input" />
+                    </n:invisible>
+                    <fieldset>
+                        <legend>Required information</legend>
+                        <n:slot name="argument!!email" />
+                    </fieldset>
+                    <fieldset>
+                        <legend>Optional personal information</legend>
+                        <n:slot name="argument!!name" />
+                        <n:slot name="argument!!homepage" />
+                    </fieldset>
+                    
+
+                    <fieldset>
+                        <legend>Change password</legend>
+                        <n:slot name="argument!!password" />
+                        <n:slot name="argument!!password2" />
+                    </fieldset>
+                    <fieldset>
+                        <n:slot name="form-button" />
+                    </fieldset>
+                </form>
+            </n:invisible>
+        
+        </div>
+        
+    </div>
+</n:invisible>

@@ -1,0 +1,25 @@
+Done Since 0.1:
+- Quote&Reply
+- More pervasive permission system, and more dynamic too.
+- Optimize and clean here and there
+- use more stored procedures/triggers
+- Thread view
+- Markdown support
+- Quoting support
+- permalinks
+- handle already existing username
+- binary field for storing user preferences with a pickled dict
+
+Needed for 0.2 (priority order):
+- New header
+- Activate the form in the topics to select the number of posts per page
+- User profile page
+- Last 15 topics RSS/Atom feed
+- Mail Confirmation
+- Full text indexing (page for getting results and submitting queries)
+- make new topic link, aware of the section from which the click came from
+- Store the password hashed, not the cleartext one.
+
+Future:
+- add pgasync support
+- More database backends

@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
+    <div id="content">
+        <n:invisible n:render="firstTopic">
+            <!-- /mainTitle -->
+            <div class="topic">
+                <h2><n:slot name="title">Topic title goes here.</n:slot></h2>
+               
+                <p class="datetime">
+				<!-- *** MOVE TO PYTHON *** 
+					just replaces with a placeholder:
+				    Posted by John Doe on Thu, MMM DD YYYY @ HH:MM &bull; Permalink
+				-->				
+				Posted by 
+                <a onclick="alert('Soon...'); return false;" href="">
+                    <n:attr name="href">
+                        <n:slot name="userpref" />
+                    </n:attr>
+                    <n:slot name="owner">Owner</n:slot></a>
+                on 
+                <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
+                
+                <a href="#">
+                <n:attr name="href">
+                    <n:slot name="permalink" />
+                </n:attr>Permalink</a>
+
+				<!-- *** END OF MOVE TO PYTHON *** -->			
+				</p>
+
+
+                <n:slot name="body">Topic body goes here.</n:slot>
+                
+                <div class="actions">                    
+				<!-- *** MOVE TO PYTHON *** 
+					just replaces with a placeholder:
+				    Quiite &amp; Reply * Edit 
+				-->				
+                    <n:invisible n:render="isLogged">
+                        <n:invisible n:pattern="True">
+                            <a onclick="#" href="#">
+                                <n:attr name="onclick">
+                                    <n:slot name="quote" />
+                                </n:attr>Quote &amp; Reply</a>
+                            <!-- /a -->
+                            <a href="#">
+                                <n:attr name="href">
+                                    <n:slot name="edit" />
+                                </n:attr>Edit</a>
+                            <!-- /a -->
+                        </n:invisible>
+                        <n:invisible n:pattern="False">
+                            Please <a href="/login">login</a> or 
+                            <a href="/register">register</a> to reply or edit
+                        </n:invisible>
+                    </n:invisible>    
+					
+					<!-- *** END OF MOVE TO PYTHON *** -->            
+                </div>
+                <!-- dynamic quick reply form -->
+                <div id="reply_123"><n:attr name="id">reply_<n:slot name="id" /></n:attr></div>
+                <!-- /topic -->
+                <p>See the <a href="#"><n:attr name="href"><n:slot name="thread" /></n:attr>topic</a> from which this post was taken</p>             
+            </div>
+        </n:invisible>
+               
+        <!-- /data /sequence-->
+        <n:invisible n:render="isLogged">
+            <n:invisible n:pattern="True">
+                <n:invisible n:render="form">
+                    <form n:pattern="freeform-form" method="post">
+                        <!-- @@ remove me -->
+                        <!-- <h2> -->
+                            <n:slot name="form-description" />
+                        <!-- </h2> -->
+                        <n:attr name="action">
+                            <n:slot name="form-action" />
+                        </n:attr>
+                        <n:attr name="id">
+                            <n:slot name="form-id" />
+                        </n:attr>
+                        <n:attr name="name">
+                            <n:slot name="form-name" />
+                        </n:attr>
+                        <n:invisible n:pattern="argument!!title">
+                            <!-- <legend>Topic</legend>  -->
+                            <label for="title_">Title</label>
+                            <n:slot name="input" />
+                        </n:invisible>
+                        <n:invisible n:pattern="argument!!content">
+                            <label for="content_">Message 
+                            <span>(Markdown formatting rules are supported)</span></label>
+                            <span class="error">
+                                <n:slot name="error" />
+                            </span>
+                            <n:slot name="input" />
+                        </n:invisible>
+                        <!-- <n:slot name="form-arguments"/> -->
+                        <fieldset>
+                            <n:slot name="argument!!title" />
+                            <n:slot name="argument!!content" />
+                        </fieldset>
+                        <fieldset>
+                            <n:slot name="form-button" />
+                        </fieldset>
+                    </form>
+                </n:invisible>
+            </n:invisible>
+            <n:invisible n:pattern="False">
+                <!--<p>Please <a href="/login">login</a> or
+                <a href="/register">register</a> to reply.</p>-->
+            </n:invisible>
+        </n:invisible>  
+        <!-- /content -->
+    </div>
+</n:invisible>

@@ -122,7 +122,7 @@ class MasterPage(ManualFormMixin, rend.Page):
             #ctx.tag.fillSlots('link', '/'+guard.LOGOUT_AVATAR)
         else:
             ctx.tag.fillSlots('status', 'Login')
-            ctx.tag.fillSlots('link', url.root.clear().child('login'))
+            ctx.tag.fillSlots('link', url.root.clear().child('login').child(''))
             #ctx.tag.fillSlots('link', '/login')
         return ctx.tag
         

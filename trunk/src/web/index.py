@@ -55,7 +55,7 @@ class IndexContent(main.BaseContent):
         return idata.ITopicsDatabase(IS(ctx)).getTopTopics(15)
 
     def render_topicHead(self, ctx, data):
-        link = url.root.clear().child('topic').child(data['tid'])
+        link = url.root.clear().child('topic').child(data['tid']).child('')
         #link = '/topic/%s/' % data['tid']
         title = data['ttitle']
         if len(title) > 20 and len(title.split()) < 2:
@@ -73,7 +73,7 @@ class IndexContent(main.BaseContent):
         return idata.ISectionsDatabase(IS(ctx)).getAllSections()
 
     def render_section(self, ctx, data):
-        link = url.root.clear().child('section').child(data['sid'])
+        link = url.root.clear().child('section').child(data['sid']).child('')
         if data['lastmod']: tm = pptime(data['lastmod'])
         else: tm = "-"
         if data['thread_num']: n = data['thread_num']
@@ -102,6 +102,6 @@ class LoginContent(main.BaseContent):
                 referer = url.URL.fromString(last_url)
                 referer.pathList(copy=False).insert(0, guard.LOGIN_AVATAR)
             else: 
-                referer = url.root.clear().child(guard.LOGIN_AVATAR)
+                referer = url.root.clear().child(guard.LOGIN_AVATAR).child('')
         ctx.tag.fillSlots('action', referer)
         return ctx.tag

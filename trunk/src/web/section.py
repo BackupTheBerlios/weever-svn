@@ -19,7 +19,7 @@ def rememberTitle(result, ctx):
     ctx.remember(result[0].get('stitle'), iw.IMainTitle)
     return result
 
-class Section(MasterPage):
+class Section(MasterPage):        
     def data_head(self, ctx, data):
         if len(self.args) >= 1:
             return idb.ISectionsDatabase(idb.IS(ctx)).getSectionInfo(self.args[0]).addCallback(rememberTitle, ctx)

@@ -50,8 +50,8 @@ class NewTopic(MasterPage):
 
     def beforeRender(self, ctx):
         if not IA(ctx).get('uid'):
-            inevow.ISession(ctx).setComponent(iw.ILastURL, '/newtopic')
-            return inevow.IRequest(ctx).redirect('/login')
+            inevow.ISession(ctx).setComponent(iw.ILastURL, '/newtopic/')
+            return inevow.IRequest(ctx).redirect('/login/')
 
     def data_head(self, ctx, data):
         return [{'ttitle':'New Topic -- Weever'}]
@@ -75,7 +75,7 @@ class NewTopic(MasterPage):
                               )
         def redirectTo(result):
             req = inevow.IRequest(ctx)
-            req.setComponent(iformless.IRedirectAfterPost,'/topic/%s' % result)
+            req.setComponent(iformless.IRedirectAfterPost,'/topic/%s/' % result)
             return result
         d = idb.ITopicsDatabase(idb.IS(ctx)
                                 ).addTopic(properties_topic,

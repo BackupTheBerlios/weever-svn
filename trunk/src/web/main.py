@@ -7,7 +7,30 @@ from nevow import inevow, tags as t
 
 from web import interfaces as iweb
 from database.interfaces import IS
+from users.interfaces import IA
 
+
+class RememberWrapper:
+    __implements__ = inevow.IResource,
+
+    def __init__(self, resource, remember, avatarId):
+        self.resource = resource
+        self.remember = remember
+        self.avatarId = avatarId
+
+    def beforeRender(self, ctx):
+        inevow.ISession(ctx).setComponent(IA, self.avatarId)
+
+    def locateChild(self, ctx, segments):
+        for interface, adapter in self.remember:
+            ctx.remember(adapter, interface)
+        return self.resource, segments
+
+    def renderHTTP(self, ctx):
+        for interface, adapter in self.remember:
+            ctx.remember(adapter, interface)
+        return self.resource.renderHTTP(ctx)
+    
 
 class MasterPage(rend.Page):
     docFactory = loaders.xmlfile('templates/index.html')

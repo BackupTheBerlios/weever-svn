@@ -222,12 +222,13 @@ class Topic(MasterPage):
     def quick_reply(self, ctx, title, content):
         if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
-        properties = dict(thread_id=self.args[0],
+        properties = dict(reply_to=self.args[0],
                           owner_id=iusers.IA(ctx)['uid'],
                           creation=datetime.now(),
                           modification=datetime.now(),
                           title=title,
-                          body=content
+                          body=content,
+                          parsed_body=content
                          )
         d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
         return d

@@ -25,7 +25,7 @@ class IRegister(annotate.TypedInterface):
                  password=annotate.Password(required=True,
                                             requiredFailMessage=noPwd
                                             ),
-                 screename=annotate.String(),
+                 name=annotate.String(),
                  homepage=annotate.String()
                 ):
         """ Register """
@@ -55,8 +55,8 @@ class Register(MasterPage):
         return [{'ttitle':'Register -- Weever'}]
 
     def register(self, ctx, username, email,
-                 password, screename, homepage):
-        properties = dict(screename=screename or username,
+                 password, name, homepage):
+        properties = dict(name=name or username,
                           login=username,
                           password=password,
                           group_id=3,

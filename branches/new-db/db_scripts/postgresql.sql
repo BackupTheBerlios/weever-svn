@@ -2,6 +2,7 @@ DROP TABLE groups CASCADE;
 DROP TABLE users CASCADE;
 DROP TABLE sections CASCADE;
 DROP TABLE posts CASCADE;
+DROP FUNCTION reply(int, int, timestamp, timestamp, varchar(100), text, text);
 
 CREATE TABLE groups (
     id serial NOT NULL PRIMARY KEY,
@@ -43,6 +44,36 @@ CREATE TABLE posts (
     FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(section_id) REFERENCES sections(id) ON DELETE CASCADE
 );
+
+CREATE FUNCTION reply(int, int, timestamp, timestamp, varchar(100), text, text) RETURNS int AS '
+DECLARE
+    reply_to_ ALIAS FOR $1;
+    owner_id_ ALIAS FOR $2;
+    creation_ ALIAS FOR $3;
+    modification_ ALIAS FOR $4;
+    title_ ALIAS FOR $5;
+    body_ ALIAS for $6;
+    parsed_body_ ALIAS FOR $7;
+    origin RECORD;
+    new int;
+BEGIN
+    SELECT INTO origin * FROM posts WHERE id = reply_to_;
+    IF origin.references_ IS NULL THEN
+       INSERT INTO posts (section_id, owner_id, creation, modification,
+                          title, body, parsed_body, references_)
+            VALUES (origin.section_id, owner_id_, creation_, modification_,
+                    title_, body_, parsed_body_, ARRAY[reply_to_]);
+    ELSE
+       INSERT INTO posts (section_id, owner_id, creation, modification,
+                          title, body, parsed_body, references_)
+            VALUES (origin.section_id, owner_id_, creation_, modification_,
+                    title_, body_, parsed_body_, array_append(origin.references_, reply_to_));
+    END IF;
+    SELECT INTO new MAX(id) FROM posts;
+    RETURN new;                
+END;
+' LANGUAGE plpgsql;
+
 
 CREATE VIEW user_posts AS
     SELECT u.id AS uid, COUNT(*) AS posts_num

@@ -98,10 +98,10 @@ class TopicsDatabase(object):
         return self.store.runQuery(q.top_threads, num)
     getTopTopics = defcache.DeferredCache(getTopTopics)
 
-    def addTopic(self, args1, args2):        
+    def addTopic(self, args):        
         return self.store.runInteraction(self._addTopic, \
-                                         queries=(q.add_topic,q.add_post),
-                                         args=(args1, args2)
+                                         q.add_topic,
+                                         args
                                          )
     addTopic = cleanCache(getTopTopics)(addTopic)
 
@@ -113,16 +113,11 @@ class TopicsDatabase(object):
         d.addCallback(_transformResult)
         return d
     
-    def _addTopic(self, curs, queries, args):
-        add_topic = queries[0]
-        add_post = queries[1]
-        topic_args = args[0]
-        post_args = args[1]
-        curs.execute(add_topic, topic_args)
-        curs.execute("SELECT MAX(t.id) FROM thread t")
+    def _addTopic(self, curs, query, args):
+        curs.execute(query, args)
+        ## XXX
+        curs.execute("SELECT max(posts.id)")
         lid = curs.fetchone()
-        post_args['thread_id'] = lid[0]
-        curs.execute(add_post, post_args)
         return lid[0]
         
 util.backwardsCompatImplements(TopicsDatabase)                 

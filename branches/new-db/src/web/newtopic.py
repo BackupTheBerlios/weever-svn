@@ -69,26 +69,20 @@ class NewTopic(MasterPage):
         if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
         curr = datetime.now()
-        properties_topic = dict(title=title,
-                                owner_id=iusers.IA(ctx)['uid'],
-                                creation=curr,
-                                section_id=section,
-                                noise=0,
-                               )
-        properties_post = dict(thread_id='',
-                               owner_id=iusers.IA(ctx)['uid'],
-                               creation=curr,
-                               modification=curr,
-                               title=title,
-                               body=content
-                              )
+        properties = dict(title=title,
+                          owner_id=iusers.IA(ctx)['uid'],
+                          creation=curr,
+                          modification=curr,
+                          section_id=section,
+                          body=content,
+                          parsed_body=content
+                          )
         def redirectTo(result):
             req = inevow.IRequest(ctx)
             req.setComponent(iformless.IRedirectAfterPost,'/topic/%s/' % result)
             return result
         d = idb.ITopicsDatabase(idb.IS(ctx)
-                                ).addTopic(properties_topic,
-                                           properties_post)
+                                ).addTopic(properties)
         d.addCallback(redirectTo)
         return d
 

@@ -15,15 +15,18 @@ def pptime(date):
 class Main(main.MasterPage):
     firstPage = True
     def child_topic(self, ctx, data=None):
+        reload(topic)
         return topic.Topic(data, ctnt=topic.TopicContent)
 
     def child_newtopic(self, ctx, data=None):
+        reload(newtopic)
         return newtopic.NewTopic(data, ctnt=newtopic.NewTopicContent)
 
     def child_login(self, ctx, data=None):
         return Login(data, ctnt=LoginContent)
     
     def child_register(self, ctx, data=None):
+        reload(register)
         return register.Register(data, ctnt=register.RegisterContent)
     
     #def section(self, id):

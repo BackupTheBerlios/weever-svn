@@ -57,7 +57,14 @@ class IndexContent(main.BaseContent):
     def render_topicHead(self, ctx, data):
         link = url.root.clear().child('topic').child(data['tid'])
         #link = '/topic/%s/' % data['tid']
-        ctx.tag.fillSlots('title', t.a(href=link)[data['ttitle']])
+        title = data['ttitle']
+        if len(title.split()) < 2:
+            if len(title) > 20:
+                title = title[:20]+"&hellip;"
+        else:
+            if len(title) > 35:
+                title = title[:35]+"&hellip;"
+        ctx.tag.fillSlots('title', t.a(href=link)[t.xml(title)])
         ctx.tag.fillSlots('posts_num', int(data['posts_num'])-1)
         ctx.tag.fillSlots('author', data['towner'])
         ctx.tag.fillSlots('section', data['stitle'])

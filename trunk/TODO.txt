@@ -1,0 +1,15 @@
+Needed for 0.2:
+- Last 15 topics RSS/Atom feed
+- Quoting support
+- Mail Confirmation
+- New header
+- User profile page
+- Full text indexing (page for getting results and submitting queries)
+- Activate the form in the topics to select the number of posts per page
+- Quote&Reply
+- reST support
+- permalinks
+- More pervasive permission system, and more dynamic too.
+
+Future:
+- Thread view

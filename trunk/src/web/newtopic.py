@@ -76,7 +76,7 @@ class NewTopic(MasterPage):
                           modification=curr,
                           section_id=section,
                           body=content,
-                          parsed_body=unicode(parsed)
+                          parsed_body=unicode(parsed.decode('utf-8'))
                           )
         def redirectTo(result):
             req = inevow.IRequest(ctx)

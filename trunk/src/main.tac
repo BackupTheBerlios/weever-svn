@@ -51,7 +51,9 @@ site = appserver.NevowSite (
 #            resource = main.RememberWrapper(mainPage, [(IS, store)])
             )
 
-webservice = internet.TCPServer(8080, site, backlog=511)
+port = int(parser.get('Server', 'port'))
+backlog = int(parser.get('Server', 'backlog'))
+webservice = internet.TCPServer(port, site, backlog=backlog)
 webservice.setServiceParent(application)
 
 sh = telnet.ShellFactory()

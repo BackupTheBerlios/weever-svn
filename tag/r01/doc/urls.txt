@@ -1,0 +1,71 @@
+This document explains the semantics of each url that we are going to implement. Currently it's different.
+
+The new semantics are:
+
+http://weever/ is the root url hot topics and sections
+http://weever/viewtopic/4 topic #4
+http://weever/viewsection/6 section #6
+http://weever/viewreply/56 permalink for replies, view reply #56
+http://weever/feedtopic/5 feed for section #5
+http://weever/feedsection/5 feed for topic #6
+http://weever/feed/ whole forum feed
+
+All numbers are _absolute_ numbers, except the offset.
+
+# ----------------------------------------------------
+deelan's alt. proposal  #1:
+# ----------------------------------------------------
+
+> http://weever/ is the root url hot topics and sections
+ok
+
+> http://weever/viewtopic/4 topic #4
+> http://weever/viewsection/6 section #6
+> http://weever/viewreply/56 permalink for replies, view reply #56
+rewrite those as:
+
+http://weever/topic/4 topic #4
+http://weever/section/6 section #6
+http://weever/reply/56 permalink for replies, view reply #56
+
+"view" is the default (and most obvious) action, hence
+you can supress it from the URL. 
+
+> http://weever/feedtopic/5 feed for section #5
+> http://weever/feedsection/5 feed for topic #6
+> http://weever/feed/ whole forum feed
+
+rename those in:
+
+> http://weever/topicfeed/5 feed for section #5
+> http://weever/sectionfeed/5 feed for topic #6
+> http://weever/feed/ whole forum feed
+
+
+# ----------------------------------------------------
+deelan's alt. proposal  #2:
+# ----------------------------------------------------
+
+a bit more verbose but also more consistent:
+
+> http://weever/ is the root url hot topics and sections
+ok.
+
+> http://weever/viewtopic/4 topic #4
+> http://weever/viewsection/6 section #6
+> http://weever/viewreply/56 permalink for replies, view reply #56
+rewrite those as:
+
+http://weever/topicview/4 topic #4
+http://weever/sectionview/6 section #6
+http://weever/replyview/56 permalink for replies, view reply #56
+
+> http://weever/feedtopic/5 feed for section #5
+> http://weever/feedsection/5 feed for topic #6
+> http://weever/feed/ whole forum feed
+
+like proposal #1
+
+read this URLs as "the view for the topic", "the feed for the section",
+and so on.
+

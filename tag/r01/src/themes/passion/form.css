@@ -1,0 +1,84 @@
+form {
+	margin: 0;
+}
+
+fieldset {
+    margin: 0;
+    margin-top: 10px;
+    
+    border-style: none;
+    padding: 0;
+}
+
+label {
+    display: block; 
+    
+    margin: 0; 
+    margin-top: 10px; 
+    margin-bottom: 2px; 
+    
+    font-weight: bold;
+}
+
+/* help text form labels */
+#content label span {
+    font-size: 85%;
+    
+    font-weight: normal;
+}
+
+select {
+    font: normal small/100% "Trebuchet MS", Verdana, sans-serif;
+    padding: 0 2px;
+}
+
+
+/*    opacity: 0.8; */
+input, textarea, select {
+    font: normal small/100% "Trebuchet MS", Verdana, sans-serif;
+    color: #444;
+    
+
+}
+
+input[type='text'], input[type='password'], textarea {
+    padding: 2px 4px;
+}
+
+input[type='text'],  textarea {
+   /* width: 95%;*/  /* a BAD idea */
+}
+
+textarea {
+    width: 95%;
+}
+
+
+input[type='text'], input[type='password'], textarea {
+    border: 1px solid #ccc;    
+    background: #fff;        
+    
+    background: #fff url(text-bg.gif) top left repeat-x;    
+}
+
+input[type='text']:focus, input[type='password']:focus, textarea:focus {
+    border-color: #993333;
+    
+    background: #fff;        
+}
+
+input[type='button'], input[type='submit'], input[type='password'] {
+    font-weight: bold;
+}
+
+input[type='button']:hover, input[type='submit']:hover {
+    background: #993333;
+    color: #fff;
+}
+
+
+
+
+
+
+

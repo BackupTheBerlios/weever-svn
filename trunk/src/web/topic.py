@@ -86,8 +86,9 @@ class TopicContent(BaseContent):
                 link = url.here.child(self.start)
             else:
                 link = url.here.parent().child(self.start)
+            link = link.fragment("replies")                
             remaining = self.posts_num-self.start+1
-            toDisplay = (remaining, self.LIMIT)[int(self.LIMIT)<remaining]
+            toDisplay = ("Last "+str(remaining), "Next "+self.LIMIT)[int(self.LIMIT)<remaining]
             ctx.tag.fillSlots('num', toDisplay)
             ctx.tag.fillSlots('href', link)
             return ctx.tag

@@ -1,6 +1,7 @@
 from utils import util
 
 from database import interfaces as idb
+from database import defcache
 import queries as q
 
 def _transformResult(result):
@@ -8,6 +9,20 @@ def _transformResult(result):
         return result[0]
     else:
         return None
+
+def cleanCache(*fn):
+    def clear(res, fnc):
+        for f in fnc:
+            f.clearCache()
+        return res
+    def _(fun):
+        def _1(self, *args, **kwargs):
+            d = fun(self, *args, **kwargs)
+            d.addCallback(clear, fn)
+            return d
+        return _1
+    return _
+
 
 class UsersDatabase(object):
     
@@ -44,9 +59,11 @@ class SectionsDatabase(object):
 
     def getAllSections(self):
         return self.store.runQuery(q.all_sections)
+    getAllSections = defcache.DeferredCache(getAllSections)
     
     def simpleGetAllSections(self):
         return self.store.runQuery(q.simple_all_sections)
+    simpleGetAllSections = defcache.DeferredCache(simpleGetAllSections)
     
     def getSectionInfo(self, sid):
         return self.store.runQuery(q.simple_section, sid) #.addCallback(_transformResult)
@@ -56,9 +73,11 @@ class SectionsDatabase(object):
 
     def addSection(self, properties):
         return self.store.runOperation(q.add_section, properties)
+    addSection = cleanCache([getAllSections, simpleGetAllSections])(addSection)
     
     def delSection(self, sid):
         return self.store.runOperation(q.del_section, sid)
+    delSection = cleanCache(delSection)
 
 util.backwardsCompatImplements(SectionsDatabase)
 
@@ -77,12 +96,14 @@ class TopicsDatabase(object):
 
     def getTopTopics(self, num):
         return self.store.runQuery(q.top_threads, num)
+    getTopTopics = defcache.DeferredCache(getTopTopics)
 
     def addTopic(self, args1, args2):        
         return self.store.runInteraction(self._addTopic, \
                                          queries=(q.add_topic,q.add_post),
                                          args=(args1, args2)
                                          )
+    addTopic = cleanCache(getTopTopics)(addTopic)
 
     def addPost(self, properties):
         return self.store.runOperation(q.add_post, properties)

@@ -38,9 +38,11 @@ class QuickForm(rend.Fragment):
         if title == '':
             title = data.get('ttitle')
         title = clean(title)
+        hd_inpt = t.input(type="hidden", id="reply_to",
+                          name="reply_to", value=data.get('pid'))
         inpt = t.input(type="text", id="title_", name="title",
                        maxlength="70", size="60", value=title)
-        return inpt
+        return t.invisible[hd_inpt, inpt]
 
     def body(self, ctx, data):
         d = data.get('pbody').split('\r\n')
@@ -81,6 +83,7 @@ class QuickForm(rend.Fragment):
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
        ctx=annotate.Context(),
+       reply_to=annotate.Integer(hidden=True, default=0),
        title=forms.StyleString(required=True,
                              requiredFailMessage="Missing Title",
                              maxlength="70",
@@ -219,10 +222,10 @@ class Topic(MasterPage):
         self.args.append(start)
         return Topic(self.args)
     
-    def quick_reply(self, ctx, title, content):
+    def quick_reply(self, ctx, reply_to, title, content):
         if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
-        properties = dict(reply_to=self.args[0],
+        properties = dict(reply_to=reply_to or self.args[0],
                           owner_id=iusers.IA(ctx)['uid'],
                           creation=datetime.now(),
                           modification=datetime.now(),

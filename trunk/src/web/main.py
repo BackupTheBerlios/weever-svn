@@ -52,10 +52,12 @@ class MasterPage(rend.Page):
         return [{'ttitle':'Weever'}]
 
     def render_title(self, ctx, data):
-        if not data[0].get("ttitle").endswith('Weever'):
-            return ctx.tag.clear()[data[0].get("ttitle") + '  --  Weever']
-        else:
-            return ctx.tag.clear()[data[0].get("ttitle")]
+        for item in data: 
+            if item.get("ttitle").endswith('Weever'):
+                return ctx.tag.clear()[data[0].get("ttitle") + '  --  Weever']
+            else:
+                return ctx.tag.clear()[data[0].get("ttitle")]
+            break
         
     def render_startTimer(self, ctx, data):
         ctx.remember(now(), iweb.ITimer)

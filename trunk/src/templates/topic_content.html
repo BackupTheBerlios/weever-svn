@@ -37,7 +37,7 @@
                         </a></h3>
                         <fieldset>
                             <label for="title_">Title</label>
-                            <input type="text" id="title_" name="title" maxlength="70" size="50" value="Re: Donec eu tellus nec risus" />
+                            <input type="text" id="title_" name="title" maxlength="70" size="70" value="Re: Donec eu tellus nec risus" />
                             <label for="content_">Message 
                             <span>(reST formatting rules are supported)</span></label>
                             <textarea id="content_" name="content" cols="80" rows="8">Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Your reply here.</textarea>
@@ -72,8 +72,7 @@
                         <n:slot name="ptitle">Reply title goes here.</n:slot>
                     </h3>
                     <n:slot name="body">Reply body goes here.</n:slot>
-                    <p class="datetime">Reply #
-                    <n:slot name="progression">1</n:slot>by 
+                    <p class="datetime">Reply #<n:slot name="progression">1</n:slot> by 
                     <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
                         <n:attr name="href">
                             <n:slot name="userpref" />
@@ -84,23 +83,28 @@
                     <a href="reply.xhtml">
                     <n:attr name="href">
                         <n:slot name="quote" />
-                    </n:attr>Quote &amp; Reply</a>&bull; 
+                    </n:attr>Quote &amp; Reply</a> &bull; 
                     <a href="edit.xhtml">
                     <n:attr name="href">
                         <n:slot name="edit" />
-                    </n:attr>Edit</a>&bull; 
+                    </n:attr>Edit</a> &bull; 
                     <a href="permalink.xhtml">
                     <n:attr name="href">
                         <n:slot name="permalink" />
                     </n:attr>Permalink</a></p>
                     <div class="picture" n:pattern="image">
                         <h4>Attached Picture</h4>
-                        <img src="images/attached.jpg" width="330" height="405" alt="Attached picture, 17KB" />
+                        <p>Sample attached picture.</p>
                     </div>
                 </div>
                 <!-- /item -->
                 <hr noshade="noshade" n:pattern="divider" />
-                <div class="topic reply" n:pattern="empty" n:render="empty"></div>
+                
+                
+                <div class="topic reply" n:pattern="empty" n:render="empty">
+                    <p>No replies for this topic.</p>
+                </div>
+                                
                 <div class="browser" n:pattern="footer">
                     <a href="#">Blah</a>
                     <n:invisible n:render="nextPosts">&bull; 
@@ -108,7 +112,7 @@
                     <n:attr name="href">
                         <n:slot name="href" />
                     </n:attr>
-                    <n:slot name="num">Next 10</n:slot>Replies »</a></n:invisible>
+                    <n:slot name="num">Next XX</n:slot> Replies &raquo;</a></n:invisible>
                 </div>
             </n:invisible>
             <!-- /data /sequence-->

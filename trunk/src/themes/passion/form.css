@@ -46,7 +46,7 @@ input[type='text'], input[type='password'], textarea {
 }
 
 input[type='text'],  textarea {
-    width: 95%;
+   /* width: 95%;*/  /* a BAD idea */
 }
 
 textarea {

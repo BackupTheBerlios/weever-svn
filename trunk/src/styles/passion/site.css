@@ -377,27 +377,28 @@ alert box
 */
 
 #alert {
-    background: #069;
-    color: white;
+
+	border: 18px solid #e5e5e5;
+
+    background: #FAFAFA;
+
+    padding: 10px; 
+
+    width: 400px;
+    height: 80px;
+
+    position: absolute;
     
-    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    
+    margin: 0;
+    margin-left: -228px;
+    margin-top: -60px;
 
-    margin-bottom: 20px;
+    text-align: center;
 }
 
-
-
-#alert ul {
-    list-style: none;
-
-    padding: 0;
-    margin: 0;    
-}
-
-
-#alert ul li {
-    margin: 5px 10px;
-}
 
 
 

@@ -3,7 +3,7 @@
 <n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
 xmlns:n="http://nevow.com/ns/nevow/0.1">
   <div id="content"> 
-    <h2>Start a new topic</h2>
+    <h2>New topic</h2>
         
     <form action="" method="post">
     
@@ -30,9 +30,16 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
         </fieldset>
         -->
 
+        <fieldset>
+            Topic will be be created in 
+            <select name="section">
+                <option value="">---choose---</option>
+                <option value="1">Cazzi e Mazzi</option>
+            </select>
+        </fieldset>
+    
       <fieldset>
-        <input type="submit" name="" value="Post Reply" />
-
+        <input type="submit" name="" value="Post Topic" />
         <input type="submit" name="" value="Preview" />
       </fieldset>
     </form>    

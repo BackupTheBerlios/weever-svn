@@ -6,10 +6,8 @@
 basic settings 
 
 TODO:
-* fix rel paths
 * add IE filters
 * restyle header
-* "sidebar" to be renamed in "menu"
 ==========================================
 */
 
@@ -19,7 +17,7 @@ html {
 	margin: 0;
 	padding: 0;
     
-    background: #933 url("../../images/bg2.png") top left repeat-x;         
+    background: #933 url("/images/bg2.png") top left repeat-x;         
 }
 
 body { 
@@ -101,7 +99,7 @@ header
 	color: #993333;
     
     height: 70px;
-    background: #fcc url("../../images/logo.png") right top no-repeat;     
+    background: #fcc url("/images/logo.png") right top no-repeat;     
 }
 
 
@@ -177,7 +175,7 @@ top level section title
 
 
     /*color: #fafafa;    */
-    background: #e5e5e5  url("../../images/tr-alt-bg.png") top right repeat-y;
+    background: #e5e5e5  url("/images/tr-alt-bg.png") top right repeat-y;
     
     border-bottom: 2px solid #993333;
     
@@ -199,7 +197,7 @@ secondary level section title
 	color: #333;
 		
     /*color: #fafafa;    */
-    background: #fcc  url("../../images/h2-bg3.png") top right repeat-y;
+    background: #fcc  url("/images/h2-bg3.png") top right repeat-y;
     
     border-bottom: 2px solid #993333;
 
@@ -231,7 +229,7 @@ menu
 ==========================================
 */
 
-#sidebar{
+#menu{
 	
 /*    border: 1px solid #069;*/
 
@@ -246,19 +244,19 @@ menu
 	width: auto; 
 }
 
-#main>#sidebar {
+#main>#menu {
 	width: auto; 
 }
 
 
-#sidebar ul {
+#menu ul {
 	list-style: none;
 	
 	margin: 0;	
 	padding: 0;	
 }
 
-#sidebar ul li {
+#menu ul li {
 
 	margin: 0;	
 	padding: 0 15px; 
@@ -266,11 +264,11 @@ menu
     display: inline;    
 }
 
-#sidebar ul#nav li {
+#menu ul#nav li {
 
 }
 
-#sidebar ul#nav li.sep {
+#menu ul#nav li.sep {
     padding-left: 40px;
 }
 
@@ -441,7 +439,7 @@ table {
 }
 
 tr.alt {
-    background: #E5E5E5 url('../../images/tr-alt-bg.png') top right repeat-y;    
+    background: #E5E5E5 url('/images/tr-alt-bg.png') top right repeat-y;    
 }
 
 thead {
@@ -453,7 +451,7 @@ thead {
     
     font-style: italic;
     
-    background: #fcc url('../../images/h2-bg3.png') top right repeat-y;    
+    background: #fcc url('/images/h2-bg3.png') top right repeat-y;    
 }
 
 tbody {        

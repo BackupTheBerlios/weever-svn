@@ -15,7 +15,7 @@ BUTTON = 'post_btn'
 def render_isLogged(self, ctx, data):
     true_pattern = inevow.IQ(ctx).onePattern('True')
     false_pattern = inevow.IQ(ctx).onePattern('False')
-    if iusers.IA(ctx).get('uid'): return true_pattern or ctx.tag().clear()
+    if iusers.IA(ctx).creds.get('uid'): return true_pattern or ctx.tag().clear()
     else: return false_pattern or ctx.tag().clear()
 
 class ManualFormMixin(rend.Page):
@@ -103,7 +103,7 @@ class MasterPage(ManualFormMixin, rend.Page):
             break
 
     def render_welcome(self, ctx, data):
-        user = iusers.IA(ctx).get('ulogin', None)
+        user = iusers.IA(ctx).creds.get('ulogin', None)
         if user:         
             uri = url.URL.fromContext(ctx)
             uri.pathList(copy=False).insert(0, guard.LOGOUT_AVATAR)

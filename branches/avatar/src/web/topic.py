@@ -6,7 +6,6 @@ from formless import webform, annotate, iformless
 
 from utils import util, napalm
 from main import MasterPage, BaseContent
-from database import interfaces as idb #import IS, ITopicsDatabase
 from users import interfaces as iusers #interfaces import IA
 from web import interfaces as iweb #import IMainTitle
 from web import getTemplate, forms
@@ -146,12 +145,12 @@ class TopicContent(BaseContent):
         # remember to remove this ugly stuff once there is a
         # 'all topics' page
         for topic_id in self.args:
-            return idb.ITopicsDatabase(idb.IS(ctx)).getAllPosts(topic_id, self.LIMIT, self.offset)
+            return iusers.IA(ctx).topics.getAllPosts(topic_id, self.LIMIT, self.offset)
         return []
 
     def data_numPosts(self, ctx, data):
         for topic_id in self.args:
-            return idb.ITopicsDatabase(idb.IS(ctx)).getPostsNum(topic_id)
+            return iusers.IA(ctx).topics.getPostsNum(topic_id)
         return []
 
     def render_repliesnum(self, ctx, data):
@@ -218,8 +217,8 @@ class Topic(MasterPage):
         LIMIT = '1'
         OFFSET = '0'
         if len(self.args):
-            return idb.ITopicsDatabase(idb.IS(ctx)).getAllPosts(self.args[0],
-                                                        LIMIT, OFFSET
+            return iusers.IA(ctx).topics.getAllPosts(self.args[0],
+                                                     LIMIT, OFFSET
                       ).addCallback(rememberTitle, ctx)
         return MasterPage.data_head(self, ctx, data)
 
@@ -235,18 +234,18 @@ class Topic(MasterPage):
         return Topic(self.args)
     
     def quick_reply(self, ctx, reply_to, title, content):
-        if not iusers.IA(ctx).get('uid'):
+        if not iusers.IA(ctx).creds.get('uid'):
             raise WebException("You must login first")
         text = loaders.stan(napalm.MarkdownParser(content).parse()).load()[0]
         properties = dict(reply_to=reply_to or self.args[0],
-                          owner_id=iusers.IA(ctx)['uid'],
+                          owner_id=iusers.IA(ctx).creds['uid'],
                           creation=datetime.now(),
                           modification=datetime.now(),
                           title=title,
                           body=content,
                           parsed_body=unicode(text.decode('utf-8'))
                          )
-        d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
+        d = iusers.IA(ctx).topics.addPost(properties)
         return d
 util.backwardsCompatImplements(Topic)
 

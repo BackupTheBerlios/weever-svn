@@ -3,7 +3,7 @@ from formless import webform, annotate
 
 from utils import util
 from web import main, getTemplate
-from database import interfaces as idb
+from users import interfaces as iusers
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -31,7 +31,7 @@ class ASectionsContent(main.BaseContent):
                                  ignoreDocType=True)
     
     def data_Sections(self, ctx, data):
-        return idb.ISectionsDatabase(idb.IS(ctx)).simpleGetAllSections()
+        return iusers.IA(ctx).sections.simpleGetAllSections()
 
     def render_section(self, ctx, data):
         delete = "./freeform_post!!delete?id=%s" % data['sid']
@@ -66,10 +66,10 @@ class ASections(main.MasterPage):
         pass
     def insert(self, ctx, title, description):
         properties = dict(title=title, description=description)
-        d = idb.ISectionsDatabase(idb.IS(ctx)).addSection(properties)
+        d = iusers.IA(ctx).sections.addSection(properties)
         return d
     def delete(self, ctx, id):
-        d = idb.ISectionsDatabase(idb.IS(ctx)).delSection(dict(sid=id))
+        d = iusers.IA(ctx).sections.delSection(dict(sid=id))
         return d
 
 util.backwardsCompatImplements(ASections)

@@ -2,12 +2,9 @@ from itertools import izip
 
 from twisted.enterprise import adbapi
 
-from database import interfaces as idb
 from utils import util
 
 class Store(object):
-
-    util.implements(idb.IS)
 
     def __init__(self, db_adapter, db_params):
         database_dsn = "dbname=%(dbname)s user=%(user)s password=%(password)s" % (db_params)
@@ -35,5 +32,3 @@ class Store(object):
     def runInteraction(self, fun, queries=(), args=()):
         d = self.__pool.runInteraction(fun, queries, args)
         return d
-
-util.backwardsCompatImplements(Store)

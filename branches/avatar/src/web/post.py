@@ -1,7 +1,7 @@
 from nevow import loaders, url, liveevil
 
 from web import topic, getTemplate
-from database import interfaces as idb
+from users import interfaces as iusers
 
 class PostContent(topic.TopicContent):
     docFactory = loaders.xmlfile(getTemplate('post_content.html'),
@@ -31,8 +31,7 @@ class Post(topic.Topic):
 
     def data_head(self, ctx, data):
         if len(self.args):
-            return idb.ITopicsDatabase(idb.IS(ctx)
-                                       ).getPost(self.args[0]
+            return iusers.IA(ctx).topics.getPost(self.args[0]
                                        ).addCallback(topic.rememberTitle,ctx)
         return None
 

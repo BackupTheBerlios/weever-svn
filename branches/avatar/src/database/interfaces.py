@@ -1,8 +1,5 @@
 from utils.util import Interface
 
-class IS(Interface):
-    """ Store interface """
-
 class IUsersDatabase(Interface):
     def findAllUsers(self):
         """ Returns all users in the database with a sequence of

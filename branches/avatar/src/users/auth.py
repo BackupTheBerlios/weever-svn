@@ -8,7 +8,7 @@ from twisted.cred import error
 from nevow import inevow
 
 from database import interfaces as idb #import IUsersDatabase, IS
-from users import interfaces as iusers
+from users import interfaces as iusers, avatar
 from web import index
 
 
@@ -22,6 +22,7 @@ class SimpleChecker:
 
     def __init__(self, store):
         self.userdb = idb.IUsersDatabase(store)
+        self.store = store
 
     #implements ICredentialChecker
     def requestAvatarId(self, creds):
@@ -43,11 +44,11 @@ class SimpleChecker:
                 self._cbPasswordMatch, user)
         else:
             print "No user named: ",creds.username
-            raise error.UnauthorizedLogin()
+            return failure.Failure(error.UnauthorizedLogin())            
 
     def _cbPasswordMatch(self, matched, user):
         if matched:
-            return user
+            return avatar.Avatar(user, self.store)
         else:
             print "password didn't match: ",user['ulogin']
             return failure.Failure(error.UnauthorizedLogin())
@@ -57,6 +58,8 @@ class SimpleRealm:
     For web, this gives us the LoggedIn page.
     """
     __implements__ = portal.IRealm,
+    def __init__(self, store):
+        self.store = store
 
     def requestAvatar(self, avatarId, mind, *interfaces):
         for iface in interfaces:
@@ -68,7 +71,7 @@ class SimpleRealm:
                 # in the session to parametrize page rendering
                 resc = index.Main()
                 if avatarId == ():
-                    avatarId = {}
+                    avatarId = avatar.Avatar({}, self.store)
                 resc.remember(avatarId, iusers.IA)
                 resc.remember(self, iusers.IRealm)
                 

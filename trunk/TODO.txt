@@ -10,6 +10,9 @@ Needed for 0.2:
 - reST support
 - permalinks
 - More pervasive permission system, and more dynamic too.
+- Optimize and clean here and there (imports, code reuse and such)
+- Store the password hashed, not the cleartext one.
+- binary field for storing user preferences with a pickled dict
 
 Future:
 - Thread view

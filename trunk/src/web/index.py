@@ -58,12 +58,10 @@ class IndexContent(main.BaseContent):
         link = url.root.clear().child('topic').child(data['tid'])
         #link = '/topic/%s/' % data['tid']
         title = data['ttitle']
-        if len(title.split()) < 2:
-            if len(title) > 20:
-                title = title[:20]+"&hellip;"
-        else:
-            if len(title) > 35:
-                title = title[:35]+"&hellip;"
+        if len(title) > 20 and len(title.split()) < 2:
+            title = title[:20]+"&hellip;"
+        elif len(title.split()) >= 2 and len(title) > 35:
+            title = title[:35]+"&hellip;"
         ctx.tag.fillSlots('title', t.a(href=link)[t.xml(title)])
         ctx.tag.fillSlots('posts_num', int(data['posts_num'])-1)
         ctx.tag.fillSlots('author', data['towner'])

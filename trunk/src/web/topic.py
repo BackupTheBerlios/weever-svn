@@ -3,14 +3,13 @@ from datetime import datetime
 
 from nevow import loaders, url, tags as t
 from formless import webform, annotate, iformless
-from nevow.compy import newImplements as implements
-from nevow.compy import backwardsCompatImplements as bkwImplements
 
+from utils import util
 from main import MasterPage, BaseContent
+from database import interfaces as idb #import IS, ITopicsDatabase
+from users import interfaces as iusers #interfaces import IA
+from web import interfaces as iweb #import IMainTitle
 from web import getTemplate, forms
-from database.interfaces import IS, ITopicsDatabase
-from users.interfaces import IA
-from web.interfaces import IMainTitle
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -33,15 +32,11 @@ class IQuickReply(annotate.TypedInterface):
                                         action="Post Reply")
 
 def rememberTitle(result, ctx):
-    ctx.remember(result[0].get('ptitle'), IMainTitle)
+    ctx.remember(result[0].get('ptitle'), iweb.IMainTitle)
     return result
 
 class Topic(MasterPage):
-    implements(IQuickReply)
-
-    ## TOREMOVE:
-    __implements__ = MasterPage.__implements__, IQuickReply
-
+    util.implements(IQuickReply)
 
     def data_head(self, ctx, data):
         # It's the first post of the whole query (even if it's a 200
@@ -49,7 +44,7 @@ class Topic(MasterPage):
         LIMIT = '1'
         OFFSET = '0'
         if len(self.args):
-            return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0],
+            return idb.ITopicsDatabase(idb.IS(ctx)).getAllPosts(self.args[0],
                                                         LIMIT, OFFSET
                       ).addCallback(rememberTitle, ctx)
         return MasterPage.data_head(self, ctx, data)
@@ -66,18 +61,18 @@ class Topic(MasterPage):
         return Topic(self.args, ctnt=TopicContent)
     
     def quick_reply(self, ctx, title, content):
-        if not IA(ctx).get('uid'):
+        if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
         properties = dict(thread_id=self.args[0],
-                          owner_id=IA(ctx)['uid'],
+                          owner_id=iusers.IA(ctx)['uid'],
                           creation=datetime.now(),
                           modification=datetime.now(),
                           title=title,
                           body=content
                          )
-        d = ITopicsDatabase(IS(ctx)).addPost(properties)
+        d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
         return d
-
+util.backwardsCompatImplements(Topic)
 
 class TopicContent(BaseContent):
 
@@ -112,12 +107,12 @@ class TopicContent(BaseContent):
         # remember to remove this ugly stuff once there is a
         # 'all topics' page
         for topic_id in self.args:
-            return ITopicsDatabase(IS(ctx)).getAllPosts(topic_id, self.LIMIT, self.offset)
+            return idb.ITopicsDatabase(idb.IS(ctx)).getAllPosts(topic_id, self.LIMIT, self.offset)
         return []
 
     def data_numPosts(self, ctx, data):
         for topic_id in self.args:
-            return ITopicsDatabase(IS(ctx)).getPostsNum(topic_id)
+            return idb.ITopicsDatabase(idb.IS(ctx)).getPostsNum(topic_id)
         return []
 
     def render_repliesnum(self, ctx, data):
@@ -159,6 +154,6 @@ class TopicContent(BaseContent):
 
     def render_form(self, ctx, data):
         defaults=iformless.IFormDefaults(ctx).getAllDefaults('quick_reply')
-        defaults['title'] = "Re: "+IMainTitle(ctx, '')
+        defaults['title'] = "Re: "+iweb.IMainTitle(ctx, '')
         return webform.renderForms()[ctx.tag]
 

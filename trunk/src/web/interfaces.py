@@ -1,5 +1,5 @@
 
-from nevow.compy import Interface
+from utils.util import Interface
 
 class ITimer(Interface):
     """Timer interface, to bench rendering time"""

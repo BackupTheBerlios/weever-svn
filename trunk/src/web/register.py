@@ -1,12 +1,13 @@
 from nevow import loaders, url, tags as t, inevow
 from formless import annotate, webform, iformless
-from nevow.compy import newImplements as implements
 
+from utils import util
 from main import MasterPage, BaseContent
-from web import getTemplate, interfaces as iw
+from web import getTemplate, interfaces as iweb
+from database import interfaces as idb #import IS, ITopicsDatabase, IUsersDatabase
+from users import interfaces as iusers #import IA
+
 import index
-from database.interfaces import IS, ITopicsDatabase, IUsersDatabase
-from users.interfaces import IA
 
 noUsername = "Missing username"
 noEmail = "Missing email"
@@ -32,15 +33,12 @@ class IRegister(annotate.TypedInterface):
 
 class Register(MasterPage):
 
-    implements(IRegister)
-
-    ## TODO: Remove this stuff
-    __implements__ = MasterPage.__implements__, IRegister
+    util.implements(IRegister)
 
     def beforeRender(self, ctx):
         session = inevow.ISession(ctx)
         request = inevow.IRequest(ctx)
-        session.setComponent(iw.ILastURL, request.getHeader('referer') or '')
+        session.setComponent(iweb.ILastURL, request.getHeader('referer') or '')
 
     def data_head(self, ctx, data):
         return [{'ttitle':'Register -- Weever'}]
@@ -56,7 +54,7 @@ class Register(MasterPage):
                           ) 
             
         def success(result, ctx, username):
-            d = IUsersDatabase(IS(ctx)).findUser(username)
+            d = idb.IUsersDatabase(idb.IS(ctx)).findUser(username)
             d.addCallback(login, ctx)
             return d
         def login(avatar, ctx):
@@ -66,17 +64,17 @@ class Register(MasterPage):
             # s.setComponent(creds, ignoreClass=True)
             s = inevow.ISession(ctx)
             res = index.Main()
-            res.remember(avatar, IA)
+            res.remember(avatar, iusers.IA)
             s.setResourceForPortal(res, s.guard.resource.portal, res.logout)
             #
-        uri = iw.ILastURL(inevow.ISession(ctx), None)
+        uri = iweb.ILastURL(inevow.ISession(ctx), None)
         if uri:
             inevow.ISession(ctx).unsetComponent(iw.ILastURL)
         inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,uri or '')
-        d = IUsersDatabase(IS(ctx)).addUser(properties)
+        d = idb.IUsersDatabase(idb.IS(ctx)).addUser(properties)
         d.addCallback(success, ctx, username)        
         return d
-
+util.backwardsCompatImplements(Register)
 
 class RegisterContent(BaseContent):
     

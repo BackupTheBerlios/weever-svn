@@ -1,7 +1,6 @@
-from nevow.compy import newImplements as implements
+from utils import util
 
-from database.interfaces import IUsersDatabase, ISectionsDatabase, ITopicsDatabase
-
+from database import interfaces as idb
 import queries as q
 
 def _transformResult(result):
@@ -13,8 +12,7 @@ def _transformResult(result):
 
 class UsersDatabase(object):
     
-    implements(IUsersDatabase)
-    __implements__ = IUsersDatabase,
+    util.implements(idb.IUsersDatabase)
 
     def __init__(self, db):
         self.store = db
@@ -36,10 +34,11 @@ class UsersDatabase(object):
     def addUser(self, properties):
         return self.store.runOperation(q.add_user, properties)
 
+util.backwardsCompatImplements(UsersDatabase)
+
 class SectionsDatabase(object):
 
-    implements(ISectionsDatabase)
-    __implements__ = ISectionsDatabase,
+    util.implements(idb.ISectionsDatabase)
 
     def __init__(self, db):
         self.store = db
@@ -62,10 +61,11 @@ class SectionsDatabase(object):
     def delSection(self, sid):
         return self.store.runOperation(q.del_section, sid)
 
+util.backwardsCompatImplements(SectionsDatabase)
+
 class TopicsDatabase(object):
 
-    implements(ITopicsDatabase)
-    __implements__ = ITopicsDatabase,
+    util.implements(idb.ITopicsDatabase)
 
     def __init__(self, db):
         self.store = db
@@ -100,4 +100,4 @@ class TopicsDatabase(object):
         curs.execute(add_post, post_args)
         return lid[0]
         
-                 
+util.backwardsCompatImplements(TopicsDatabase)                 

@@ -7,8 +7,8 @@ from twisted.cred import error
 
 from nevow import inevow
 
-from database.interfaces import IUsersDatabase, IS
-from users.interfaces import IA
+from database import interfaces as idb #import IUsersDatabase, IS
+from users import interfaces as iusers
 from web import index
 
 
@@ -21,7 +21,7 @@ class SimpleChecker:
     credentialInterfaces = (credentials.IUsernamePassword,)
 
     def __init__(self, store):
-        self.userdb = IUsersDatabase(store)
+        self.userdb = idb.IUsersDatabase(store)
 
     #implements ICredentialChecker
     def requestAvatarId(self, creds):
@@ -69,7 +69,7 @@ class SimpleRealm:
                 resc = index.Main()
                 if avatarId == ():
                     avatarId = {}
-                resc.remember(avatarId, IA)
+                resc.remember(avatarId, iusers.IA)
                 #resc = main.RememberWrapper(mainPage, avatarId)
                 resc.realm = self
                 return (inevow.IResource, resc, resc.logout)

@@ -1,16 +1,12 @@
 from time import time as now
 
-from nevow import rend, loaders, static, url, util, compy
-from nevow.compy import newImplements as implements
+from nevow import rend, loaders, static, url, util, compy, guard
 from nevow.rend import _CARRYOVER
 from nevow import inevow, tags as t
-from formless import iformless
 
 from web import interfaces as iweb, getTemplate
 from web import getTheme, WebException
-from database.interfaces import IS
-from users.interfaces import IA
-from users import guard
+from users import interfaces as iusers #import IA
 
 FIRST_POST = 0
 SUBMIT = '_submit'
@@ -19,7 +15,7 @@ BUTTON = 'post_btn'
 def render_isLogged(self, ctx, data):
     true_pattern = inevow.IQ(ctx).onePattern('True')
     false_pattern = inevow.IQ(ctx).onePattern('False')
-    if IA(ctx).get('uid'): return true_pattern or ctx.tag().clear()
+    if iusers.IA(ctx).get('uid'): return true_pattern or ctx.tag().clear()
     else: return false_pattern or ctx.tag().clear()
 
 class ManualFormMixin(rend.Page):
@@ -52,7 +48,6 @@ class MasterPage(ManualFormMixin, rend.Page):
     docFactory = loaders.xmlfile(getTemplate('index.html'))
     child_theme = static.File(getTheme())
     addSlash = True
-    firstPage = False
 
     def __init__(self, data=[], ctnt=None):
         super(MasterPage, self).__init__()
@@ -109,7 +104,7 @@ class MasterPage(ManualFormMixin, rend.Page):
             break
 
     def render_welcome(self, ctx, data):
-        user = IA(ctx).get('ulogin', None)
+        user = iusers.IA(ctx).get('ulogin', None)
         if user:         
             uri = url.URL.fromContext(ctx)
             uri.pathList(copy=False).insert(0, guard.LOGOUT_AVATAR)
@@ -141,6 +136,7 @@ class BaseContent(rend.Fragment):
     
     render_isLogged = render_isLogged
 
+from utils.util import implements
 class Page404(rend.Page):
     implements(inevow.ICanHandleNotFound)
     docFactory = loaders.xmlfile(getTemplate('404.html'))

@@ -2,15 +2,14 @@ from time import time as now
 from datetime import datetime
 
 from nevow import loaders, inevow, url
-from nevow.compy import newImplements as implements
 from formless import webform, annotate, iformless
 
+from utils import util
 from main import MasterPage, BaseContent
-from users.interfaces import IA
+from users import interfaces as iusers #import IA
 from database import interfaces as idb
-from web import getTemplate, WebException
-from web import forms
-from web import interfaces as iw
+from web import getTemplate, WebException, forms
+from web import interfaces as iweb
 
 def gatherSections(ctx, data):
     return idb.ISectionsDatabase(idb.IS(ctx)).simpleGetAllSections()
@@ -43,31 +42,28 @@ class INewTopic(annotate.TypedInterface):
     post_topic = annotate.autocallable(post_topic, action="Post Topic")
 
 class NewTopic(MasterPage):
-    implements(INewTopic)
-
-    ## TODO: remove this stuff 
-    __implements__ = MasterPage.__implements__, INewTopic
+    util.implements(INewTopic)
 
     def beforeRender(self, ctx):
-        if not IA(ctx).get('uid'):
-            inevow.ISession(ctx).setComponent(iw.ILastURL, '/newtopic/')
+        if not iu.IA(ctx).get('uid'):
+            inevow.ISession(ctx).setComponent(iweb.ILastURL, '/newtopic/')
             return inevow.IRequest(ctx).redirect('/login/')
 
     def data_head(self, ctx, data):
         return [{'ttitle':'New Topic -- Weever'}]
 
     def post_topic(self, ctx, title, content, section):
-        if not IA(ctx).get('uid'):
+        if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
         curr = datetime.now()
         properties_topic = dict(title=title,
-                                owner_id=IA(ctx)['uid'],
+                                owner_id=iusers.IA(ctx)['uid'],
                                 creation=curr,
                                 section_id=section,
                                 noise=0,
                                )
         properties_post = dict(thread_id='',
-                               owner_id=IA(ctx)['uid'],
+                               owner_id=iusers.IA(ctx)['uid'],
                                creation=curr,
                                modification=curr,
                                title=title,
@@ -82,6 +78,8 @@ class NewTopic(MasterPage):
                                            properties_post)
         d.addCallback(redirectTo)
         return d
+
+util.backwardsCompatImplements(NewTopic)
 
 class NewTopicContent(BaseContent):
     

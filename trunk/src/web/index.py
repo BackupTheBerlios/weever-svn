@@ -6,21 +6,17 @@ from twisted.python import util
 from nevow import rend, loaders, url, inevow
 from nevow import tags as t, guard
 
-from database import interfaces as idata
-from database.interfaces import IS
-
 from web import main, topic, newtopic, getTemplate, register, section, admin
 from web import WebException
-from web import interfaces as iw
 
-from users import interfaces as iu
+from web import interfaces as iweb
+from users import interfaces as iusers
+from database import interfaces as idb
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
 class Main(main.MasterPage):
-    firstPage = True
-    
     def child_topic(self, ctx, data=None):
         reload(topic)
         return topic.Topic(data, ctnt=topic.TopicContent)
@@ -43,7 +39,7 @@ class Main(main.MasterPage):
     def child_admin(self, ctx, data=None):
         reload(admin)
         # Need to make 2 dynamic
-        if iu.IA(ctx).get('gpermissionlevel', sys.maxint) > 1:
+        if iusers.IA(ctx).get('gpermissionlevel', sys.maxint) > 1:
             raise WebException("Not Enough Permissions to enter this section")
         else:
             return admin.Admin(data, ctnt=admin.AdminContent)
@@ -52,11 +48,10 @@ class IndexContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('index_content.html'), ignoreDocType=True)
 
     def data_HotTopics(self, ctx, data):
-        return idata.ITopicsDatabase(IS(ctx)).getTopTopics(15)
+        return idb.ITopicsDatabase(idb.IS(ctx)).getTopTopics(15)
 
     def render_topicHead(self, ctx, data):
         link = url.root.clear().child('topic').child(data['tid']).child('')
-        #link = '/topic/%s/' % data['tid']
         title = data['ttitle']
         if len(title) > 20 and len(title.split()) < 2:
             title = title[:20]+"&hellip;"
@@ -70,7 +65,7 @@ class IndexContent(main.BaseContent):
         return ctx.tag
 
     def data_Sections(self, ctx, data):
-        return idata.ISectionsDatabase(IS(ctx)).getAllSections()
+        return idb.ISectionsDatabase(idb.IS(ctx)).getAllSections()
 
     def render_section(self, ctx, data):
         link = url.root.clear().child('section').child(data['sid']).child('')
@@ -92,9 +87,9 @@ class LoginContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('login_content.html'), ignoreDocType=True)
 
     def render_login(self, ctx, data):
-        referer = iw.ILastURL(inevow.ISession(ctx), None)
+        referer = iweb.ILastURL(inevow.ISession(ctx), None)
         if referer:
-            inevow.ISession(ctx).unsetComponent(iw.ILastURL)
+            inevow.ISession(ctx).unsetComponent(iweb.ILastURL)
             referer = "/%s%s" % (guard.LOGIN_AVATAR, referer)
         else:
             last_url = inevow.IRequest(ctx).getHeader('referer')

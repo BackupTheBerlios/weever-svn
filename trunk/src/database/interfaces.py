@@ -1,4 +1,4 @@
-from nevow.compy import Interface
+from utils.util import Interface
 
 class IS(Interface):
     """ Store interface """

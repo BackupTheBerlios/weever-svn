@@ -68,9 +68,20 @@ class ISectionsDatabase(Interface):
         return = {'sid':sid,
                   'stitle':stitle,
                   'sdesc':sdesc,
-                  'topics_num':topics_num,
+                  'thread_num':topics_num,
+                  'lastmod':lastmod
                  }
         """
+
+    def simpleGetAllSections(self):
+        """ returns a list of sections' dicts with these keys:
+            
+            {'sid':sid,
+             'stitle':stitle,
+             'sdesc':sdesc
+            }
+        """
+    
     def getSection(self, sid):
         """ Returns the topics in the section number sid in a sequence
         of dicts, ordered by modification date:
@@ -83,7 +94,6 @@ class ISectionsDatabase(Interface):
                   'towner':towner,
                   'tnoise':tnoise,
                   'tcreation':tcreation,
-                  'tmodification':tmodification,
                   'posts_num':posts_num,
                  }
         """

@@ -11,6 +11,19 @@ from database import interfaces as idb
 from web import getTemplate
 
 choices = ['cazzi e ammazzi', 'prova1']
+
+def gatherSections(ctx, data):
+    return idb.ISectionsDatabase(idb.IS(ctx)).simpleGetAllSections()
+
+def stringify(x):
+    return x['stitle']
+
+def valueToKey(x):
+    return str(x['sid'])
+
+def keyToValue(x):
+    return int(x)
+
 class INewTopic(annotate.TypedInterface):
     def post_topic(self,
        ctx=annotate.Context(),
@@ -21,7 +34,10 @@ class INewTopic(annotate.TypedInterface):
                              size="50"),
        content=annotate.Text(required=True,
                              requiredFailMessage="Missing body in this post"),
-       section=annotate.Choice(choices)
+       section=annotate.Choice(gatherSections, 
+                               stringify=stringify, 
+                               valueToKey=valueToKey,
+                               keyToValue=keyToValue)
     ):
         """ """
     post_topic = annotate.autocallable(post_topic, action="Post Topic")
@@ -40,7 +56,7 @@ class NewTopic(MasterPage):
         properties_topic = dict(title=title,
                                 owner_id=IA(ctx)['uid'],
                                 creation=curr,
-                                section_id=3,
+                                section_id=section,
                                 noise=0,
                                )
         properties_post = dict(thread_id='',

@@ -7,6 +7,7 @@ import queries as q
 class UsersDatabase(object):
     
     implements(IUsersDatabase)
+    __implements__ = IUsersDatabase,
 
     def __init__(self, db):
         self.store = db
@@ -38,12 +39,16 @@ class UsersDatabase(object):
 class SectionsDatabase(object):
 
     implements(ISectionsDatabase)
+    __implements__ = ISectionsDatabase,
 
     def __init__(self, db):
         self.store = db
 
     def getAllSections(self):
         return self.store.runQuery(q.all_sections)
+    
+    def simpleGetAllSections(self):
+        return self.store.runQuery(q.simple_all_sections)
 
     def getSection(self, sid):
         return self.store.runQuery(q.section, sid)
@@ -51,6 +56,7 @@ class SectionsDatabase(object):
 class TopicsDatabase(object):
 
     implements(ITopicsDatabase)
+    __implements__ = ITopicsDatabase,
 
     def __init__(self, db):
         self.store = db

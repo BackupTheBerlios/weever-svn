@@ -30,6 +30,8 @@ all_sections = """ SELECT sid, stitle, sdescription, thread_num, lastmod
 FROM all_sections
 """
 
+simple_all_sections = """ SELECT id AS sid, title AS stitle, description AS sdescription FROM sections """
+
 top_threads = """ SELECT sid, stitle, sdescription, tid, ttitle,
 towner, tnoise, tcreation, tmodification, posts_num
 FROM all_threads LIMIT %s

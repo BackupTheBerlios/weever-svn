@@ -33,7 +33,7 @@ def getRemoteShParameters(filename):
 
 def _parse(filename):
     parser = cp.ConfigParser()
-    util.sibpath(__file__, 'files')
+    path = util.sibpath(__file__, 'files')
     config_file = op.join(path, filename)
     log.msg(config_file)
     log.msg(sys.executable)

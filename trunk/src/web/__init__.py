@@ -7,9 +7,9 @@ from utils import util
 try: __file__
 except NameError: __file__ = sys.executable
 
-template_path = op.join(util.sibpath(op.split(__file__)[0],'templates'))
-images_path = op.join(util.sibpath(op.split(__file__)[0],'images'))
-styles_path = op.join(util.sibpath(op.split(__file__)[0],'styles'))
+template_path = util.sibpath(op.split(__file__)[0],'templates')
+images_path = util.sibpath(op.split(__file__)[0],'images')
+styles_path = util.sibpath(op.split(__file__)[0],'styles')
 
 def getTemplate(name):
     return op.join(template_path, name)

@@ -56,7 +56,6 @@ class MasterPage(rend.Page):
             self.content = IndexContent
 
     def beforeRender(self, ctx):
-        #ctx.remember(IS(ctx), IS)
         ctx.remember(IA(inevow.ISession(ctx)), IA)
 
     def locateChild(self, ctx, segments):

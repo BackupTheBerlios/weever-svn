@@ -20,9 +20,9 @@ from config import parser as cfgFile
 
 #You may provide different filenames under config/ directory
 #or directly modify those files.
-adapter, dsn = cfgFile.getDatabaseParameters('general.ini')
-netString = cfgFile.getNetworkParameters('general.ini')
-remoteEnabled, remoteShellP = cfgFile.getRemoteShParameters('general.ini')
+adapter, dsn = cfgFile.getDatabaseParameters('weever.ini')
+netString = cfgFile.getNetworkParameters('weever.ini')
+remoteEnabled, remoteShellP = cfgFile.getRemoteShParameters('weever.ini')
 
 #
 # Don't touch anything below this line

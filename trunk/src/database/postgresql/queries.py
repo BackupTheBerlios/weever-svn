@@ -68,3 +68,5 @@ DELETE FROM sections WHERE id = %(sid)s
 
 posts_num = """ SELECT COUNT(*) AS posts_num FROM posts p WHERE p.thread_id = %s """
 
+get_post = """ SELECT id, thread_id, owner_id, creation, modification,
+noise, title, body, parsed_body FROM posts WHERE id = %s """

@@ -14,11 +14,13 @@ from web import getTemplate, forms
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
-def sendReplyForm(client, current):
-    client.append('reply_%s' % current, QuickForm(current))
+def clean(title):
+    title = ' '.join([word.strip() for word in title.split()])
+    if title.startswith('Re: '):
+        return title
+    else: return "Re: "+title
 
 def fillReply(ctx, d):
-    ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm, d.get('pid')))
     ctx.tag.fillSlots('id', d.get('pid'))
     ctx.tag.fillSlots('edit', '/edit.xhtml')
     ctx.tag.fillSlots('permalink', '/permalink.xhtml')
@@ -31,7 +33,7 @@ def fillReply(ctx, d):
 class QuickForm(rend.Fragment):
     docFactory = loaders.stan(
         t.div(_class='quick', render=t.directive("form"))[
-            t.form(action="", method="post")[
+            t.form(action="./freeform_post!!quick_reply", method="post")[
                 t.h3["Quote & Reply ",
                      t.a(render=t.directive("onclick"),href="#")[
                          t.img(src="/theme/close.png")
@@ -39,11 +41,21 @@ class QuickForm(rend.Fragment):
                 ],
                 t.fieldset[
                     t.label(_for="title_")["Title"],
-                    t.input(type="text", id="title_", name="title", maxlength="70", size="70", value="Re: Donec eu tellus nec risus"),
+                    t.input(type="text", id="title_", name="title",
+                            maxlength="70", size="70",
+                            #id="quick_reply-title",
+                            render=t.directive("title")),
+                    
                     t.label(_for="content_")["Message",
                         t.span[" (reST formatting rules are supported)"]
                     ],
-                    t.textarea(id="content_", name="content", cols="70", rows="8", size="70", maxlength="70")["Your reply here."]
+                    t.textarea(id="content_", name="content",
+                               cols="70", rows="8", size="70",
+                               maxlength="70",
+                               #id="quick_reply-content"
+                               )[
+                        t.invisible(render=t.directive("body"))
+                    ]
                 ],
                 t.fieldset[
                     t.input(type="submit", name="", value="Post Reply")
@@ -51,12 +63,23 @@ class QuickForm(rend.Fragment):
             ]
         ]
     )
+
+    def render_title(self, ctx, data):
+        t = data.get('ptitle')
+        if t == '':
+            t = data.get('ttitle')
+        t = clean(t)
+        return ctx.tag(value=t)
+
+    def render_body(self, ctx, data):
+        return ctx.tag[data.get('pbody')]
+        
     def render_onclick(self, ctx, data):
         return ctx.tag(onclick="removeNode('replform_%s'); return \
-    false;" % (data))
+                false;" % (data.get('pid')))
 
     def render_form(self, ctx, data):
-        return ctx.tag(id="replform_%s" % data)
+        return ctx.tag(id="replform_%s" % data.get('pid'))
     
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
@@ -76,7 +99,10 @@ class IQuickReply(annotate.TypedInterface):
                                         action="Post Reply")
 
 def rememberTitle(result, ctx):
-    ctx.remember(result[0].get('ptitle'), iweb.IMainTitle)
+    t = result[0].get('ptitle')
+    if t == '':
+        t = result[0].get('ttitle')
+    ctx.remember(t, iweb.IMainTitle)
     return result
 
 class Topic(MasterPage):
@@ -135,8 +161,15 @@ class TopicContent(BaseContent):
 
     def render_firstTopic(self, ctx, data):
         d = self.data
+        def sendReplyForm(client):
+            current = d.get('pid')
+            client.append('reply_%s' % current, QuickForm(d))
+            
         if d:
+            ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
+            ##
             fillReply(ctx, d)
+            ##
             return ctx.tag
         return ctx.tag.clear()["Sorry, this page is not available yet"]
 
@@ -163,13 +196,24 @@ class TopicContent(BaseContent):
         return ctx.tag
 
     def render_reply(self, ctx, data):
+        def sendReplyForm(client):
+            current = data.get('pid')
+            client.append('reply_%s' % current, QuickForm(data))
+
         ctx.tag.fillSlots('progression', self.start)
         ctx.tag.fillSlots('ptitle', data.get('ptitle'))
+        ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
+        ##
         fillReply(ctx, data)
+        ##
         self.start = self.start + 1
         return ctx.tag
 
+    def render_divider(self, ctx, data):
+        return ctx.tag
+
     def render_nextPosts(self, ctx, data):
+        print "CHIAMATOOOOO"
         if self.start < self.posts_num:
             if self.offset == '1': 
                 link = url.here.child(self.start)
@@ -181,7 +225,9 @@ class TopicContent(BaseContent):
             ctx.tag.fillSlots('num', toDisplay)
             ctx.tag.fillSlots('href', link)
             return ctx.tag
-        else: return ctx.tag.clear()
+        else:
+            print self.start, self.posts_num
+            return ctx.tag.clear()
 
     def render_form(self, ctx, data):
         defaults=iformless.IFormDefaults(ctx).getAllDefaults('quick_reply')

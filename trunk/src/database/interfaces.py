@@ -162,6 +162,9 @@ class ITopicsDatabase(Interface):
     
     def addPost(self, properties):
         """ add a post to the posts database, properties contains all the right infos """
+
+    def getPost(self, id):
+        """ get and return the post with id 'id' """
     
     def removePost(self, pid):
         """ is this really needed """

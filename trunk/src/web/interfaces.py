@@ -9,3 +9,4 @@ class ILastURL(Interface):
 
 class IMainTitle(Interface):
     """ Represents the thread title """
+

@@ -70,7 +70,6 @@ class SimpleRealm:
                 if avatarId == ():
                     avatarId = {}
                 resc.remember(avatarId, iusers.IA)
-                resc.remember(mind, iusers.IMind)
                 resc.remember(self, iusers.IRealm)
                 
                 #resc = main.RememberWrapper(mainPage, avatarId)

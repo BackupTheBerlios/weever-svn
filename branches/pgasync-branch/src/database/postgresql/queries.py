@@ -10,7 +10,7 @@ VALUES(%(screename)s, %(login)s, %(password)s, %(group_id)s, %(email)s, %(homepa
 
 user = """ SELECT uid, uscreename, ulogin, upassword,
 ugroup_id, uemail, uhomepage, gdescription, gpermissionlevel
-FROM users_permissions WHERE ulogin=%s
+FROM users_permissions WHERE ulogin=%(ulogin)s
 """
 
 all_users_stats = """ SELECT uid, uname, usurname, ulogin,
@@ -23,7 +23,7 @@ user_stats = """ SELECT uid, uscreename, ulogin,
 upassword, ugroup_id, uemail, uhomepage, gdescription,
 gpermissionlevel, total_posts
 FROM users_permissions_posts
-     WHERE ulogin = %s
+     WHERE ulogin = %(ulogin)s
 """
 
 all_sections = """ SELECT sid, stitle, sdescription, thread_num, lastmod
@@ -32,12 +32,12 @@ FROM all_sections
 
 top_threads = """ SELECT sid, stitle, sdescription, tid, ttitle,
 towner, tnoise, tcreation, tmodification, posts_num
-FROM all_threads LIMIT %s
+FROM all_threads LIMIT %(num)s
 """
 
 section = """ SELECT sid, stitle, sdescription, tid, ttitle,
 towner, tnoise, tcreation, posts_num
-FROM all_threads WHERE sid=%s """
+FROM all_threads WHERE sid=%(sid)s """
 
 topic = """ SELECT ttitle, tcreation, pmodification, pid, ptid,
 pcreation, pnoise, ptitle, pbody, powner
@@ -54,5 +54,5 @@ INSERT INTO posts (thread_id, owner_id, creation, modification, title, body)
 VALUES(%(thread_id)s, %(owner_id)s, %(creation)s, %(modification)s, %(title)s, %(body)s);
 """
 
-posts_num = """ SELECT COUNT(*) AS posts_num FROM posts p WHERE p.thread_id = %s """
+posts_num = """ SELECT COUNT(*) AS posts_num FROM posts p WHERE p.thread_id = %(tid)s """
 

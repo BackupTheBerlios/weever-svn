@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from datetime import datetime
+
 from nevow import loaders, url, tags as t
 from formless import webform, annotate
 from nevow.compy import newImplements as implements
@@ -7,6 +9,7 @@ from nevow.compy import backwardsCompatImplements as bkwImplements
 from main import MasterPage, BaseContent
 from web import getTemplate
 from database.interfaces import IS, ITopicsDatabase
+from users.interfaces import IA
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -27,6 +30,12 @@ class IQuickReply(annotate.TypedInterface):
                                         action="Post Reply")
 
 class Topic(MasterPage):
+    implements(IQuickReply)
+
+    ## TOREMOVE:
+    __implements__ = MasterPage.__implements__, IQuickReply
+
+
     def data_head(self, ctx, data):
         # It's the first post of the whole query (even if it's a 200
         # results query.
@@ -47,14 +56,19 @@ class Topic(MasterPage):
         self.args.append(start)
         return Topic(self.args, ctnt=TopicContent)
     
-    def configurable_content(self, ctx):
-        return self.content
+    def quick_reply(self, ctx, title, content):
+        properties = dict(thread_id=self.args[0],
+                          owner_id=IA(ctx)['uid'],
+                          creation=datetime.now(),
+                          modification=datetime.now(),
+                          title=title,
+                          body=content
+                         )
+        d = ITopicsDatabase(IS(ctx)).addPost(properties)
+        return d
+
 
 class TopicContent(BaseContent):
-    implements(IQuickReply)
-
-    ## TOREMOVE:
-    __implements__ = BaseContent.__implements__, IQuickReply
 
     docFactory = loaders.xmlfile(getTemplate('topic_content.html'),
             ignoreDocType=True)
@@ -133,8 +147,5 @@ class TopicContent(BaseContent):
         else: return ctx.tag.clear()
 
     def render_form(self, ctx, data):
-        return webform.renderForms('content')[ctx.tag]
-
-    def quick_reply(self, ctx, title, content):
-        print title, content
+        return webform.renderForms()[ctx.tag]
 

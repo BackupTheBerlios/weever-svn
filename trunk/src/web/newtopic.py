@@ -43,4 +43,5 @@ class NewTopicContent(BaseContent):
         return webform.renderForms('content')[ctx.tag]
 
     def post_topic(self, ctx, title, content, section):
-        print title, content, section
+        print 'foo'
+        #idb.ITopicsDatabase(ctx).addTopic()

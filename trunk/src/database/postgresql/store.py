@@ -18,4 +18,6 @@ class Store(object):
         columns = [d[0] for d in curs.description]
         return [dict(zip(columns, r)) for r in result]
 
-    
+    def runOperation(self, query, *args):
+        d = self.__pool.runOperation(query, args[0])
+        return d

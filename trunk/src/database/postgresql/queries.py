@@ -36,11 +36,11 @@ FROM all_threads LIMIT %s
 """
 
 section = """ SELECT sid, stitle, sdescription, tid, ttitle,
-towner, tnoise, tcreation, tmodification, posts_num
+towner, tnoise, tcreation, posts_num
 FROM all_threads WHERE sid=%s """
 
-topic = """ SELECT ttitle, tcreation, tmodification, pid, ptid,
-pcreation, pmodification, pnoise, ptitle, pbody, powner
+topic = """ SELECT ttitle, tcreation, pmodification, pid, ptid,
+pcreation, pnoise, ptitle, pbody, powner
 
 FROM discussion WHERE ptid=%s LIMIT %s OFFSET %s"""
 

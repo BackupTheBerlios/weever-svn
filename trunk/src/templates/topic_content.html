@@ -150,7 +150,7 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
 <!-- /data /sequence-->
 
     <n:invisible n:render="form">
-        <form n:pattern="freeform-form">
+        <form n:pattern="freeform-form" method="post">
             <h2> <n:slot name="form-description" /> </h2>
             <n:attr name="action"><n:slot name="form-action"/></n:attr>
             <n:attr name="id"><n:slot name="form-id"/></n:attr>

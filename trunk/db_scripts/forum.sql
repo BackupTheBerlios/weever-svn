@@ -35,7 +35,6 @@ CREATE TABLE thread (
     section_id int NOT NULL,
     noise smallint NOT NULL default 0,
     creation timestamp NOT NULL,
-    modification timestamp NOT NULL,
     
     FOREIGN KEY(owner_id) REFERENCES users(id),
     FOREIGN KEY(section_id) REFERENCES sections(id)
@@ -62,15 +61,26 @@ CREATE VIEW user_posts AS
         GROUP BY uid;
 
 CREATE VIEW last_modified AS
-    SELECT s.id AS sid, MAX(t.modification) AS lastmod FROM thread t JOIN sections s ON (t.section_id = s.id)
+    SELECT s.id AS sid, MAX(p.modification) AS lastmod 
+    FROM sections s JOIN thread t ON (t.section_id = s.id)
+         JOIN posts p ON (t.id = p.thread_id)
         GROUP BY sid;
 
 CREATE VIEW threads_in_section AS
-    SELECT s.id AS sid, COUNT(*) AS thread_num FROM thread t JOIN sections s ON (t.section_id = s.id)
+    SELECT s.id AS sid, COUNT(*) AS thread_num 
+    FROM thread t JOIN sections s ON (t.section_id = s.id)
         GROUP BY sid;
 
 CREATE VIEW posts_in_thread AS
-    SELECT t.id AS tid, COUNT(*) AS posts_num FROM posts p JOIN thread t ON (p.thread_id = t.id) GROUP BY tid;
+    SELECT t.id AS tid, COUNT(*) AS posts_num 
+    FROM posts p JOIN thread t ON (p.thread_id = t.id) 
+    GROUP BY tid;
+    --ORDER BY p.modification;
+
+CREATE VIEW last_modified_in_thread AS
+       SELECT t.id AS tid, MAX(p.modification) AS pmodification
+       FROM posts p JOIN thread t ON (p.thread_id = t.id)
+       GROUP BY tid;
 
 CREATE VIEW users_permissions_posts AS
     SELECT u.id AS uid, u.name_surname AS uname_surname, u.login AS ulogin, 
@@ -93,19 +103,19 @@ CREATE VIEW all_sections AS
                     JOIN threads_in_section ts ON (ts.sid = s.id);
     
 CREATE VIEW discussion AS
-    SELECT t.title AS ttitle, t.creation AS tcreation, t.modification AS tmodification, p.id AS pid, 
-            p.thread_id AS ptid, p.creation AS pcreation, p.modification AS pmodification, 
-            p.noise AS pnoise, p.title AS ptitle, p.body AS pbody, u.login AS powner
+    SELECT t.title AS ttitle, t.creation AS tcreation, p.modification AS pmodification, p.id AS pid, 
+            p.thread_id AS ptid, p.creation AS pcreation, p.noise AS pnoise, 
+            p.title AS ptitle, p.body AS pbody, u.login AS powner
     FROM thread t JOIN posts p ON (t.id = p.thread_id) JOIN users u ON (p.owner_id = u.id) 
         ORDER BY p.id;
 
 CREATE VIEW all_threads AS
     SELECT s.id AS sid, s.title AS stitle, s.description AS sdescription, t.id AS tid, t.title AS ttitle, 
-            u.login AS towner, t.noise AS tnoise, t.creation AS tcreation, t.modification AS tmodification, 
+            u.login AS towner, t.noise AS tnoise, t.creation AS tcreation, lmt.pmodification AS tmodification, 
             pt.posts_num AS posts_num 
     FROM sections s JOIN thread t ON (s.id = t.section_id) JOIN users u ON (t.owner_id = u.id)
-                    JOIN posts_in_thread pt ON (pt.tid = t.id)
-        ORDER BY t.modification;
+                    JOIN posts_in_thread pt ON (pt.tid = t.id) JOIN last_modified_in_thread lmt ON (lmt.tid = t.id)
+        ORDER BY tmodification DESC;
 
 INSERT INTO groups(description, permissionlevel) VALUES ('Owner', 0);
 INSERT INTO groups(description, permissionlevel) VALUES ('Admin', 1);
@@ -117,22 +127,22 @@ INSERT INTO users(name_surname, login, password, group_id, email, homepage)
 INSERT INTO users(name_surname, login, password, group_id, email) 
                   VALUES('Fuffo Tone', 'admin', 'passw', 2, 'fuffo.tone@provider.com');
 INSERT INTO users(name_surname, login, password, group_id, email) 
-                  VALUES('Mario Rossi', 'mr', 'rossi0', 3, 'mario.rossi@provider.com');
+                  VALUES('Mario Rossi', 'guest', 'guest', 3, 'mario.rossi@provider.com');
 
 INSERT INTO sections (title, description) VALUES ('Test', 'Qua si fanno tante belle prove prove');
 INSERT INTO sections (title, description) VALUES ('Intro', 'Qui ci vanno gli iniziati');
 INSERT INTO sections (title, description) VALUES ('Sticazzi', 'Discussioni con le palle');
 
-INSERT INTO thread (title, owner_id, section_id, noise, creation, modification)
-                     VALUES('Test1',1,1,0,'2004-09-20','2004-09-24');
-INSERT INTO thread (title, owner_id, section_id, noise, creation, modification)
-                     VALUES('Test2',2,2,0,'2004-09-21','2004-09-24');                     
-INSERT INTO thread (title, owner_id, section_id, noise, creation, modification)
-                     VALUES('Test3',3,3,1,'2004-09-22','2004-09-24');
-INSERT INTO thread (title, owner_id, section_id, noise, creation, modification)
-                     VALUES('Test4',3,3,0,'2004-09-23','2004-09-24');
-INSERT INTO thread (title, owner_id, section_id, noise, creation, modification)
-                     VALUES('Test5',3,2,0,'2004-09-24','2004-09-24');                    
+INSERT INTO thread (title, owner_id, section_id, noise, creation)
+                     VALUES('Test1',1,1,0,'2004-09-20');
+INSERT INTO thread (title, owner_id, section_id, noise, creation)
+                     VALUES('Test2',2,2,0,'2004-09-21');                     
+INSERT INTO thread (title, owner_id, section_id, noise, creation)
+                     VALUES('Test3',3,3,1,'2004-09-22');
+INSERT INTO thread (title, owner_id, section_id, noise, creation)
+                     VALUES('Test4',3,3,0,'2004-09-23');
+INSERT INTO thread (title, owner_id, section_id, noise, creation)
+                     VALUES('Test5',3,2,0,'2004-09-24');                    
 
 INSERT INTO posts (thread_id, owner_id, creation, modification, title, body)
                    VALUES(1,1,'2004-09-20','2004-09-20', '', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc ornare venenatis enim. Pellentesque libero turpis, consectetuer a, dignissim tincidunt, euismod vitae, justo. Nullam fringilla dapibus purus. Maecenas dolor diam, aliquam in, consequat sed, laoreet ac, quam. Proin fermentum. Nunc placerat odio vitae tellus. Nunc cursus, nulla vitae vehicula dignissim, ante leo ultricies mauris, nec iaculis diam velit quis nisl. Vivamus a felis ut sapien placerat tempus. Sed auctor pretium lorem. Ut quis nisl nec tellus pellentesque viverra. In ut massa at metus consequat pellentesque. Donec mauris lorem, bibendum sit amet, nonummy a, semper sed, dui.

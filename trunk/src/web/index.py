@@ -29,11 +29,11 @@ class IndexContent(main.BaseContent):
 
     def render_topicHead(self, ctx, data):
         link = url.root.child('topic').child(data['tid'])
-        ctx.fillSlots('title', t.a(href=link)[data['ttitle']])
-        ctx.fillSlots('posts_num', data['posts_num'])
-        ctx.fillSlots('author', data['towner'])
-        ctx.fillSlots('section', data['stitle'])
-        ctx.fillSlots('modification', pptime(data['tmodification']))
+        ctx.tag.fillSlots('title', t.a(href=link)[data['ttitle']])
+        ctx.tag.fillSlots('posts_num', data['posts_num'])
+        ctx.tag.fillSlots('author', data['towner'])
+        ctx.tag.fillSlots('section', data['stitle'])
+        ctx.tag.fillSlots('modification', pptime(data['tmodification']))
         return ctx.tag
 
     def data_Sections(self, ctx, data):
@@ -41,9 +41,9 @@ class IndexContent(main.BaseContent):
 
     def render_section(self, ctx, data):
         link = url.root.child('section').child(data['sid'])
-        ctx.fillSlots('title', t.a(href=link)[data['stitle']])
-        ctx.fillSlots('thread_num', data['thread_num'])
-        ctx.fillSlots('description', t.p(_class="desc")[data['sdescription']])
-        ctx.fillSlots('lastMod', pptime(data['lastmod']))
+        ctx.tag.fillSlots('title', t.a(href=link)[data['stitle']])
+        ctx.tag.fillSlots('thread_num', data['thread_num'])
+        ctx.tag.fillSlots('description', t.p(_class="desc")[data['sdescription']])
+        ctx.tag.fillSlots('lastMod', pptime(data['lastmod']))
         return ctx.tag
 

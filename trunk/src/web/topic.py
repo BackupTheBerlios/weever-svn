@@ -35,11 +35,11 @@ class TopicContent(BaseContent):
         else:
             if self.args[1] != '':
                 try:
-                    self.start = self.counter = int(self.args[1])
+                    self.start = int(self.args[1])
                 except ValueError:
-                    self.start = self.counter = 0
+                    self.start = 0
             else:
-                self.start = self.counter = 0
+                self.start = 0
         if not self.start: self.offset = '1'
         else: self.offset = str(self.start)
 
@@ -69,15 +69,15 @@ class TopicContent(BaseContent):
 
     def render_reply(self, ctx, data):
         self.start = self.start + 1
-        ctx.fillSlots('progression', self.start)
-        ctx.fillSlots('quote', '/reply.xhtml')
-        ctx.fillSlots('edit', '/edit.xhtml')
-        ctx.fillSlots('permalink', '/permalink.xhtml')
-        ctx.fillSlots('ptitle', data.get('ptitle'))
-        ctx.fillSlots('body', data.get('pbody'))
-        ctx.fillSlots('userpref', data.get('powner')+'.xhtml')
-        ctx.fillSlots('owner', data.get('powner'))
-        ctx.fillSlots('when', pptime(data.get('pmodification')))
+        ctx.tag.fillSlots('progression', self.start)
+        ctx.tag.fillSlots('quote', '/reply.xhtml')
+        ctx.tag.fillSlots('edit', '/edit.xhtml')
+        ctx.tag.fillSlots('permalink', '/permalink.xhtml')
+        ctx.tag.fillSlots('ptitle', data.get('ptitle'))
+        ctx.tag.fillSlots('body', data.get('pbody'))
+        ctx.tag.fillSlots('userpref', data.get('powner')+'.xhtml')
+        ctx.tag.fillSlots('owner', data.get('powner'))
+        ctx.tag.fillSlots('when', pptime(data.get('pmodification')))
         return ctx.tag
 
     def render_nextPosts(self, ctx, data):

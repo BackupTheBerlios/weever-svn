@@ -70,9 +70,9 @@ class MasterPage(rend.Page):
 
     def render_content(self, ctx, data):
         if data != 'Weever':
-            ctx.fillSlots('content', self.content(self.args, data[0]))
+            ctx.tag.fillSlots('content', self.content(self.args, data[0]))
         else:
-            ctx.fillSlots('content', self.content(self.args))
+            ctx.tag.fillSlots('content', self.content(self.args))
         return ctx.tag
 
 

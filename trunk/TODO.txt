@@ -1,30 +1,25 @@
-Needed for 0.2:
-- Last 15 topics RSS/Atom feed
-- Quoting support
-- Mail Confirmation
-- New header
-- User profile page
-- Full text indexing (page for getting results and submitting queries)
-- Activate the form in the topics to select the number of posts per page
+Done Since 0.1:
 - Quote&Reply
-- reST support
-- permalinks
-- More pervasive permission system, and more dynamic too.
+- More pervasive permission system, and more dynamic too. (branch new-db)
 - Optimize and clean here and there (imports, code reuse and such)
-- Store the password hashed, not the cleartext one.
-- binary field for storing user preferences with a pickled dict
-- add pgasync support
+- use more stored procedures/triggers (branch new-db)
+- Thread view (branch new-db)
+
+Needed for 0.2 (priority order):
 - handle already existing username/password
-- use more stored procedures/triggers
+- textile/markdown support
+- New header
+- Quoting support
+- Activate the form in the topics to select the number of posts per page
+- binary field for storing user preferences with a pickled dict
+- User profile page
+- permalinks
+- Last 15 topics RSS/Atom feed
+- Mail Confirmation
+- Full text indexing (page for getting results and submitting queries)
 - make new topic link, aware of the section from which the click came from
+- Store the password hashed, not the cleartext one.
 
 Future:
-- Thread view
+- add pgasync support
 - More database backends
-- Distributed clients
-- Remote Forum cloning (to create a local webserver for local browsing)
-- Blog Mod (each user has a blog [current sections], each blog post is a new 
-            topic) [Needs a bit of work on permissions, 
-- Mailing List like interface
-- NNTP interface
-- XML-RPC, SOAP interfaces

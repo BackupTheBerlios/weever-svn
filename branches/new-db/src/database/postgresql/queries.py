@@ -46,7 +46,7 @@ FROM all_threads WHERE sid=%s """
 topic = """ SELECT preferences_, ttitle, tcreation, pmodification, pid, tid,
 pcreation, pnoise, ptitle, pbody, powner, pparsed_body
 
-FROM discussion WHERE tid=%s LIMIT %s OFFSET %s"""
+FROM discussion(%s) ORDER BY preferences_ LIMIT %s OFFSET %s"""
 
 add_topic = """
 INSERT INTO posts (section_id, owner_id, creation, modification,
@@ -67,7 +67,7 @@ del_section = """
 DELETE FROM sections WHERE id = %(sid)s
 """
 
-posts_num = """ SELECT posts_num FROM posts_in_thread WHERE tid=%s """
+posts_num = """ SELECT posts_num FROM posts_in_thread() WHERE tid=%s """
 
 get_post = """ SELECT id, thread_id, owner_id, creation, modification, references_
 noise, title, body, parsed_body FROM posts WHERE id = %s """

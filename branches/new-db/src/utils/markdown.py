@@ -266,10 +266,25 @@ class Markdown:
                 el = doc.createTextNode('')
             return el
 
-        elif block.startswith(">") :
+        elif block.startswith(">"):
+
+            
             el = doc.createElement('blockquote')
-            for line in block[1:].split('\n'):
-                el.appendChild(doc.createTextNode(line))
+##             block_list = [[word.strip() for word in line.split('>')]for line in a.splitlines()]
+##             structure = [doc.createElement('blockquote') for nested_level in enumerate(block_list[0][:-1])]
+##             for idx, line in block_list[:-1]:
+##                 if len(line) < len(block_list[idx+1]):
+##                     new_el = doc.createElement('blockquote')
+##                     new_el
+
+                    
+            for line in block.split('\n'):
+                if line.startswith('> '): toRemove = 2
+                elif line.startswith('>'): toRemove = 1
+                else: toRemove = 0
+                el.appendChild(doc.createTextNode(line[toRemove:]))
+                if line.strip() != '':
+                    el.appendChild(doc.createElement('br'))
             return el
         
         elif block.startswith("<") : # very permisive test for HTML
@@ -356,7 +371,7 @@ class Markdown:
         """
         doc = xml.dom.minidom.Document()
         #body = doc.createElementNS("http://www.w3.org/1999/xhtml", "body")
-        body = doc.createElement("span")
+        body = doc.createElement("div")
         body.setAttribute('class', 'markdown')
         doc.appendChild(body)
 

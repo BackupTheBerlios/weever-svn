@@ -24,35 +24,56 @@ def cleanCache(*fn):
     return _
 
 def reorderThread(thread):
-    r = [[x.get('preferences_') or '{}', x] for x in thread]
-    #t = [x[1] for x in r]
-    # Get a list of ints from a string
-    for el in r:
-        tmp = []
-        for x in el[0][1:-1].split(','):
-            if x:
-                tmp.append(int(x))
-        el[0] = tmp
+    try:
+        first = thread[0]
+    except IndexError:
+        return thread
+    else:
+        first_indent = len(first.get('preferences_').split('.'))-1
+        for post in thread:
+            indent = len(post.get('preferences_').split('.'))-1
+            indent_level = indent - first_indent
+            if indent_level < 0:
+                indent_level = 0
+            post['indent_level'] = indent_level
+        return thread
 
-    tree = []
-    r.sort()
-    base = len(r[0][0])
-    for idx, node in enumerate(r):
-        if not idx:
-            tree.append(node)
-            node[1]['indent_level'] = 0
-        else:
-            if len(node[0]) == base:
-                tree.append(node)
-                node[1]['indent_level'] = 0
-            else:
-                for i, t in enumerate(tree):
-                    if t[0] == node[0][:-1]:
-                        if t[1].get('pid') == node[0][-1]:
-                            tree.insert(i+1, node)
-                            node[1]['indent_level'] = i+1
-                            break
-    return [x[1] for x in tree]
+##     r = [[x.get('preferences_') or '{}', x] for x in thread]
+##     #t = [x[1] for x in r]
+##     # Get a list of ints from a string
+##     for el in r:
+##         tmp = []
+##         for x in el[0][1:-1].split(','):
+##             if x:
+##                 tmp.append(int(x))
+##         el[0] = tmp
+
+##     tree = []
+##     r.sort()
+##     base = len(r[0][0])
+##     for idx, node in enumerate(r):
+##         appended = 0
+##         if idx == 0:
+##             tree.append(node)
+##             node[1]['indent_level'] = 0
+##             appended = 1
+##         else:
+##             if len(node[0]) == base:
+##                 tree.append(node)
+##                 node[1]['indent_level'] = 0
+##                 appended = 1
+##             else:
+##                 for i, t in enumerate(tree):
+##                     if t[0] == node[0][:-1]:
+##                         if t[1].get('pid') == node[0][-1]:
+##                             tree.insert(i+1, node)
+##                             node[1]['indent_level'] = len(t[0])+1-base
+##                             appended = 1
+##                             break
+##         if not appended:
+##             tree.append(node)
+##             node[1]['indent_level'] = 0
+##     return [x[1] for x in tree]
 
 class UsersDatabase(object):
     

@@ -2,16 +2,20 @@ from time import time as now
 
 from zope.interface import implements
 
-from nevow import rend, loaders, static, url
+from nevow import rend, loaders, static, url, util, compy
+from nevow.rend import _CARRYOVER
 from nevow import inevow, tags as t
+from formless import iformless
 
 from web import interfaces as iweb, getTemplate
-from web import getStyles, getImages
+from web import getStyles, getImages, WebException
 from database.interfaces import IS
 from users.interfaces import IA
 from users import guard
 
-FIRST_POST,_ = range(2)
+FIRST_POST = 0
+SUBMIT = '_submit'
+BUTTON = 'post_btn'
 
 class RememberWrapper:
     __implements__ = inevow.IResource,
@@ -34,13 +38,37 @@ class RememberWrapper:
             ctx.remember(adapter, interface)
         return self.resource.renderHTTP(ctx)
     
+class ManualFormMixin(rend.Page):
+    def locateChild(self, ctx, segments):
+        # Handle the form post
+        if segments[0].startswith(SUBMIT):
+            # Get a method name from the action in the form plus
+            # the firt word in the button name (or simply the form action if
+            # no button name is specified
+            kwargs = {}
+            args = inevow.IRequest(ctx).args
+            bindingName = ''
+            for key in args:
+                if key != BUTTON: 
+                    if args[key] != ['']: 
+                        kwargs[key] = (args[key][0], args[key])[len(args[key])>1]
+                else: 
+                    bindingName = args[key][0]
+            name_prefix = segments[0].split('!!')[1]
+            if bindingName == '': name = name_prefix
+            else: name = name_prefix + '_' + bindingName.split()[0].lower()
+            method = getattr(self, 'form_'+name, None)            
+            if method is not None:
+                return self.onManualPost(ctx, method, bindingName, kwargs)
+            else: 
+                raise WebException("You should define a form_action_button method")
+        return super(ManualFormMixin, self).locateChild(ctx, segments)    
 
-class MasterPage(rend.Page):
+class MasterPage(ManualFormMixin, rend.Page):
     docFactory = loaders.xmlfile(getTemplate('index.html'))
     child_styles = static.File(getStyles())
     child_images = static.File(getImages())
     addSlash = True
-    
 
     def __init__(self, data=[], ctnt=None):
         rend.Page.__init__(self)
@@ -59,7 +87,29 @@ class MasterPage(rend.Page):
 
     def locateChild(self, ctx, segments):
         ctx.remember(Page404(), inevow.ICanHandleNotFound)
-        return rend.Page.locateChild(self, ctx, segments)
+        return super(MasterPage, self).locateChild(ctx, segments)
+    
+    def onManualPost(self, ctx, method, bindingName, kwargs):
+        # This is copied from rend.Page.onWebFormPost
+        def redirectAfterPost(aspects):
+            redirectAfterPost = request.getComponent(iformless.IRedirectAfterPost, None)
+            if redirectAfterPost is None:
+                ref = request.getHeader('referer') or ''
+            else:
+                ## Use the redirectAfterPost url
+                ref = str(redirectAfterPost)
+            from nevow import url
+            refpath = url.URL.fromString(ref)
+            magicCookie = str(now())
+            refpath = refpath.replace('_nevow_carryover_', magicCookie)
+            _CARRYOVER[magicCookie] = C = compy.Componentized(aspects)
+            request.redirect(str(refpath))
+            from nevow import static
+            return static.Data('You posted a form to %s' % bindingName, 'text/plain'), ()
+        request = inevow.IRequest(ctx)
+        return util.maybeDeferred(method, **kwargs
+            ).addCallback(self.onPostSuccess, request, ctx, bindingName,redirectAfterPost
+            ).addErrback(self.onPostFailure, request, ctx, bindingName,redirectAfterPost)
 
     def data_head(self, ctx, data):
         return [{'ttitle':'Weever'}]

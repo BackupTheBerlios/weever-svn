@@ -26,6 +26,7 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
 
         on 
         <n:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</n:slot> 
+
         &bull;
         <a href="reply.xhtml">
         <n:attr name="href">
@@ -80,6 +81,7 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
 
 <!-- fix me -->
       <p class="help"></p>
+
       
     <n:invisible n:data="posts" n:render="sequence">
       <div class="entry reply" n:pattern="item" n:render="reply">
@@ -146,7 +148,7 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
     </n:invisible>
 
 <!-- /data /sequence-->
-    <form action="" method="post">
+    <form action="_submit!!quickreply" method="post">
       <h2>Quick reply</h2>
 
       <fieldset>
@@ -163,9 +165,8 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
       </fieldset>
 
       <fieldset>
-        <input type="submit" name="" value="Post Reply" />
-
-        <input type="submit" name="" value="Preview" />
+        <input type="submit" name="post_btn" value="Post Reply" />
+        <input type="submit" name="post_btn" value="Preview" />
       </fieldset>
     </form>
 

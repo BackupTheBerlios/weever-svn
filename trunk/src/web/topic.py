@@ -8,14 +8,6 @@ from database.interfaces import IS, ITopicsDatabase
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
-class NewTopic(MasterPage):
-    def data_head(self, ctx, data):
-        return [{'ttitle':'New Topic -- Weever'}]
-
-class NewTopicContent(BaseContent):
-    docFactory = loaders.xmlfile(getTemplate('newtopic_content.html'),
-            ignoreDocType=True)
-
 class Topic(MasterPage):
     def data_head(self, ctx, data):
         # It's the first post of the whole query (even if it's a 200
@@ -29,6 +21,14 @@ class Topic(MasterPage):
     def childFactory(self, ctx, segment):
         self.args.append(segment)
         return Topic(self.args, ctnt=TopicContent)
+    
+    def form_quickreply_post(self, title, content):
+        print "Title:", title
+        print "Content:", content
+        
+    def form_quickreply_preview(self, title, content):
+        print "Title:", title
+        print "Content:", content
 
 class TopicContent(BaseContent):
     docFactory = loaders.xmlfile(getTemplate('topic_content.html'),

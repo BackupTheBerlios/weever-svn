@@ -7,7 +7,7 @@ from nevow import tags as t
 from database import interfaces as idata
 from database.interfaces import IS
 
-from web import main, topic, getTemplate
+from web import main, topic, newtopic, getTemplate
 from interfaces import ILastURL
 
 def pptime(date):
@@ -18,7 +18,7 @@ class Main(main.MasterPage):
         return topic.Topic(data, ctnt=topic.TopicContent)
 
     def child_newtopic(self, ctx, data=None):
-        return topic.NewTopic(data, ctnt=topic.NewTopicContent)
+        return newtopic.NewTopic(data, ctnt=newtopic.NewTopicContent)
 
     def child_login(self, ctx, data=None):
         return Login(data, ctnt=LoginContent)

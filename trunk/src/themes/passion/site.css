@@ -198,6 +198,8 @@ secondary level section title
     padding: 0;
 	
     font-size: 85%;
+
+    color: #999;
 }
 
 
@@ -301,12 +303,12 @@ a:link, a:visited, a:hover, a:active {
 }
 
 a:visited {
-	color: #666;
-	border-bottom: 1px solid #ccc; /* lighter */
+	color: #633;
+	border-bottom: 1px solid #993333; /* lighter */
 }
 
 a:hover {
-    color: #fafafa;
+    color: #fff;
     background: #993333;
     
     border-bottom: none;      

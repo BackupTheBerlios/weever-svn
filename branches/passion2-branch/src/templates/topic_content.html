@@ -1,195 +1,115 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-xmlns:n="http://nevow.com/ns/nevow/0.1">
-  <div id="content">
-    <n:invisible n:render="firstTopic">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
 
+<div id="content">
+
+ <n:invisible n:render="firstTopic"> 
 <!-- /mainTitle -->
-      <div class="topic">
-        <h2>Topic: <n:slot name="title">Topic title goes here.</n:slot></h2>
-            
-        <n:slot name="body">Topic body goes here.</n:slot>
-
-        <p class="datetime">Posted by 
-        <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
-          <n:attr name="href">
-            <n:slot name="userpref" />
-          </n:attr>
-
-          <n:slot name="owner">Owner</n:slot>
-        </a>
-
-        on 
-        <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> 
-
-        &bull;
-        <a href="reply.xhtml">
-        <n:attr name="href">
-          <n:slot name="quote" />
-        </n:attr>        
-        Quote &amp; Reply</a>
-        &bull;
-        <a href="edit.xhtml">
-        <n:attr name="href">
-          <n:slot name="edit" />
-        </n:attr>
-        Edit</a>
-        &bull;
-        <a href="permalink.xhtml">
-        <n:attr name="href">
-          <n:slot name="permalink" />
-        </n:attr>
-        Permalink</a>    
-        </p>
-
-    <!-- sample form -->
-    <div class="quick" id="reply123">
-        <form action="" method="post">
-          <h3>Quote &amp; Reply <a onclick="document.getElementById('reply123').style.display='none'; return false;" href="#"><img src="/themes/passion/close.png" /></a></h3>
-          <fieldset>
-          <label for="title_">Title</label>
-          <input type="text" id="title_" name="title" maxlength="70" size="50" value="Re:  Donec eu tellus nec risus" />
-          <label for="content_">Message <span>(reST formatting rules are supported)</span></label>
-          <textarea id="content_" name="content" cols="80" rows="8">
+<div class="topic"> 
+  <h2>Topic: <n:slot name="title">Topic title goes here.</n:slot></h2>
+  <n:slot name="body">Topic body goes here.</n:slot> 
+  <p class="datetime">Posted by <a onclick="alert('Link a pagina profilo utente'); return false;" href=""> 
+    <n:attr name="href"> <n:slot name="userpref" /> </n:attr> <n:slot name="owner">Owner</n:slot> 
+    </a> on <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; <a href="reply.xhtml"> 
+    <n:attr name="href"> <n:slot name="quote" /> </n:attr> Quote &amp; Reply</a> 
+    &bull; <a href="edit.xhtml"> <n:attr name="href"> <n:slot name="edit" /> </n:attr> 
+    Edit</a> &bull; <a href="permalink.xhtml"> <n:attr name="href"> <n:slot name="permalink" /> 
+    </n:attr> Permalink</a> </p>
+  <!-- sample form -->
+  <div class="quick" id="reply123"> 
+    <form action="" method="post">
+      <h3>Quote &amp; Reply <a onclick="document.getElementById('reply123').style.display='none'; return false;" href="#"><img src="/themes/passion/close.png" /></a></h3>
+      <fieldset>
+      <label for="title_">Title</label>
+      <input type="text" id="title_" name="title" maxlength="70" size="50" value="Re:  Donec eu tellus nec risus" />
+      <label for="content_">Message <span>(reST formatting rules are supported)</span></label>
+      <textarea id="content_" name="content" cols="80" rows="8">
     Sample quoted text. Sample quoted text. Sample quoted text. 
     Sample quoted text. Sample quoted text. Sample quoted text. 
     Sample quoted text. Sample quoted text. Sample quoted text. 
           
 Your reply here.        
           </textarea>
-          </fieldset>
-          <fieldset>
-              <input type="submit" name="" value="Post Reply" />
-              <!-- <input type="submit" name="" value="Preview" />  -->
-          </fieldset>
-        </form>
-    </div>
-    
-        <!-- /topic -->
-        </div>
-    </n:invisible>
-
-    <div id="view">
-
-    <form style="" method="POST" action="">    
-      <h2><n:invisible n:data="numPosts" n:render="repliesnum">2</n:invisible> replies</h2>
-
-        Sort by 
-        <select name="order">
-          <option value="1" selected="selected">Date - newest first</option>
-          <option value="2">Date - oldest first</option>
-        </select>
-        with 
-        <select name="comments_per_page">
-          <option value="10">10 comments</option>
-          <option value="30">30 comments</option>
-          <option value="50" selected="selected">50 comments</option>
-        </select>
-        per page 
-        <input type="submit" name="" value="Apply"  />
-
-      <!--    <p><b>Note</b>: Select your preferred way to display the comments and click <i>Change view</i> to activate your changes.</p>  -->
+      </fieldset>
+      <fieldset>
+      <input type="submit" name="" value="Post Reply" />
+      <!-- <input type="submit" name="" value="Preview" />  -->
+      </fieldset>
     </form>
-
-    
-    <n:invisible n:data="posts" n:render="sequence">
-      <div class="topic reply" n:pattern="item" n:render="reply">
-        <h3>
-        <n:slot name="ptitle">Reply title goes here.</n:slot>
-        </h3>
-
-        <n:slot name="body">Reply body goes here.</n:slot>
-
-        <p class="datetime">Reply #<n:slot name="progression">1</n:slot>
-        by 
-        <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
-          <n:attr name="href">
-            <n:slot name="userpref" />
-          </n:attr>
-
-          <n:slot name="owner">Owner</n:slot></a>
-
-        on 
-        <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot>
-        &bull; 
-        <a href="reply.xhtml">
-        <n:attr name="href">
-          <n:slot name="quote" />
-        </n:attr>
-        Quote &amp; Reply</a>
-        &bull; 
-        <a href="edit.xhtml">
-        <n:attr name="href">
-          <n:slot name="edit" />
-        </n:attr>        
-        Edit</a>
-        &bull;
-        <a href="permalink.xhtml">
-        <n:attr name="href">
-          <n:slot name="permalink" />
-        </n:attr>
-        Permalink</a>
-        </p>
-
-        <div class="picture" n:pattern="image">
-          <h4>Attached Picture</h4>
-          <img src="images/attached.jpg" width="330" height="405" alt="Attached picture, 17KB" />
-        </div>
-      </div>
-
-<!-- /item -->
-      <hr noshade="noshade" n:pattern="divider" />
-      <div class="topic reply" n:pattern="empty" n:render="empty">
-
-      </div>
-      <div class="browser" n:pattern="footer">
-   	   <a href="#">Blah</a>
-			<n:invisible n:render="nextPosts">
-   		   • 
-		      <a href="#">
-		      	<n:attr name="href"><n:slot name="href" /></n:attr>
-		      	<n:slot name="num">Next 10</n:slot> Replies »
-		      </a>
-   	   </n:invisible>
-      </div>
-    </n:invisible>
-
-<!-- /data /sequence-->
-
-    <n:invisible n:render="form">
-        <form n:pattern="freeform-form" method="post">
-            <h2> <n:slot name="form-description" /> </h2>
-            <n:attr name="action"><n:slot name="form-action"/></n:attr>
-            <n:attr name="id"><n:slot name="form-id"/></n:attr>
-            <n:attr name="name"><n:slot name="form-name"/></n:attr>
-
-            <n:invisible n:pattern="argument!!title">
-                <!-- <legend>Topic</legend>  -->    
-                <label for="title_">Title</label>
-                <n:slot name="input" />
-            </n:invisible>
-
-            <n:invisible n:pattern="argument!!content">
-                <label for="content_">Message 
-                <span>(reST formatting rules are supported)</span></label>
-                <span class="error"><n:slot name="error" /></span>
-                <n:slot name="input" />
-            </n:invisible>
-
-            <!-- <n:slot name="form-arguments"/> -->
-            <fieldset>                        
-                <n:slot name="argument!!title" />
-                <n:slot name="argument!!content" />
-            </fieldset>
-            
-            <fieldset>
-                <n:slot name="form-button" />
-            </fieldset>
-        </form>
-    </n:invisible>
-    
-<!-- /content -->
   </div>
-</n:invisible>
+  <!-- /topic -->
+</div>
+</n:invisible> 
+<div id="view"> 
+  <form style="" method="POST" action="">
+    <h2><n:invisible n:data="numPosts" n:render="repliesnum">2</n:invisible> replies</h2>
+    Sort by 
+    <select name="order">
+      <option value="1" selected="selected">Date - newest first</option>
+      <option value="2">Date - oldest first</option>
+    </select>
+    with 
+    <select name="comments_per_page">
+      <option value="10">10 comments</option>
+      <option value="30">30 comments</option>
+      <option value="50" selected="selected">50 comments</option>
+    </select>
+    per page 
+    <input type="submit" name="" value="Apply"  />
+    <!--    <p><b>Note</b>: Select your preferred way to display the comments and click <i>Change view</i> to activate your changes.</p>  -->
+  </form>
+  <n:invisible n:data="posts" n:render="sequence"> 
+  <div class="topic reply" n:pattern="item" n:render="reply"> 
+    <h3> <n:slot name="ptitle">Reply title goes here.</n:slot> </h3>
+    <n:slot name="body">Reply body goes here.</n:slot> 
+    <p class="datetime">Reply #<n:slot name="progression">1</n:slot> by <a onclick="alert('Link a pagina profilo utente'); return false;" href=""> 
+      <n:attr name="href"> <n:slot name="userpref" /> </n:attr> <n:slot name="owner">Owner</n:slot></a> 
+      on <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; <a href="reply.xhtml"> 
+      <n:attr name="href"> <n:slot name="quote" /> </n:attr> Quote &amp; Reply</a> 
+      &bull; <a href="edit.xhtml"> <n:attr name="href"> <n:slot name="edit" /> 
+      </n:attr> Edit</a> &bull; <a href="permalink.xhtml"> <n:attr name="href"> 
+      <n:slot name="permalink" /> </n:attr> Permalink</a> </p>
+    <div class="picture" n:pattern="image"> 
+      <h4>Attached Picture</h4>
+      <img src="images/attached.jpg" width="330" height="405" alt="Attached picture, 17KB" /> 
+    </div>
+  </div>
+  <!-- /item -->
+  <hr noshade="noshade" n:pattern="divider" />
+  <div class="topic reply" n:pattern="empty" n:render="empty"> </div>
+  <div class="browser" n:pattern="footer"> <a href="#">Blah</a> <n:invisible n:render="nextPosts"> 
+    • <a href="#"> <n:attr name="href"><n:slot name="href" /></n:attr> <n:slot name="num">Next 
+    10</n:slot> Replies » </a> </n:invisible> </div>
+  </n:invisible> 
+  <!-- /data /sequence-->
+  <n:invisible n:render="form"> 
+  <form n:pattern="freeform-form" method="post">
+    <h2> <n:slot name="form-description" /> </h2>
+    <n:attr name="action"><n:slot name="form-action"/></n:attr> <n:attr name="id"><n:slot name="form-id"/></n:attr> 
+    <n:attr name="name"><n:slot name="form-name"/></n:attr> <n:invisible n:pattern="argument!!title"> 
+    <!-- <legend>Topic</legend>  -->
+    <label for="title_">Title</label>
+    <n:slot name="input" /> </n:invisible> <n:invisible n:pattern="argument!!content"> 
+    <label for="content_">Message <span>(reST formatting rules are supported)</span></label>
+    <span class="error"><n:slot name="error" /></span> <n:slot name="input" /> 
+    </n:invisible> 
+    <!-- <n:slot name="form-arguments"/> -->
+    <fieldset>
+    <n:slot name="argument!!title" /> <n:slot name="argument!!content" /> 
+    </fieldset>
+    <fieldset>
+    <n:slot name="form-button" /> 
+    </fieldset>
+  </form>
+  </n:invisible> 
 
+</div>
+
+  <!-- /content -->
+</div>
+
+
+
+  
+</n:invisible>

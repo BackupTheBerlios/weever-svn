@@ -30,7 +30,7 @@ class IndexContent(main.BaseContent):
     def render_topicHead(self, ctx, data):
         link = url.root.child('topic').child(data['tid'])
         ctx.tag.fillSlots('title', t.a(href=link)[data['ttitle']])
-        ctx.tag.fillSlots('posts_num', data['posts_num'])
+        ctx.tag.fillSlots('posts_num', int(data['posts_num'])-1)
         ctx.tag.fillSlots('author', data['towner'])
         ctx.tag.fillSlots('section', data['stitle'])
         ctx.tag.fillSlots('modification', pptime(data['tmodification']))

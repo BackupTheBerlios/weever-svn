@@ -83,5 +83,6 @@ class TopicsDatabase(object):
         lid = curs.fetchone()
         post_args['thread_id'] = lid[0]
         curs.execute(add_post, post_args)
+        return lid[0]
         
                  

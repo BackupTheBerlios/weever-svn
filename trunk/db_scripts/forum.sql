@@ -105,13 +105,13 @@ CREATE VIEW all_sections AS
 CREATE VIEW discussion AS
     SELECT t.title AS ttitle, t.creation AS tcreation, p.modification AS pmodification, p.id AS pid, 
             p.thread_id AS ptid, p.creation AS pcreation, p.noise AS pnoise, 
-            p.title AS ptitle, p.body AS pbody, u.login AS powner
+            p.title AS ptitle, p.body AS pbody, u.screename AS powner
     FROM thread t JOIN posts p ON (t.id = p.thread_id) JOIN users u ON (p.owner_id = u.id) 
         ORDER BY p.id;
 
 CREATE VIEW all_threads AS
     SELECT s.id AS sid, s.title AS stitle, s.description AS sdescription, t.id AS tid, t.title AS ttitle, 
-            u.login AS towner, t.noise AS tnoise, t.creation AS tcreation, lmt.pmodification AS tmodification, 
+            u.screename AS towner, t.noise AS tnoise, t.creation AS tcreation, lmt.pmodification AS tmodification, 
             pt.posts_num AS posts_num 
     FROM sections s JOIN thread t ON (s.id = t.section_id) JOIN users u ON (t.owner_id = u.id)
                     JOIN posts_in_thread pt ON (pt.tid = t.id) JOIN last_modified_in_thread lmt ON (lmt.tid = t.id)

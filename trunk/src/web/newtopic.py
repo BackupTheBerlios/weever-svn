@@ -3,7 +3,7 @@ from datetime import datetime
 
 from nevow import loaders, inevow, url
 from nevow.compy import newImplements as implements
-from formless import webform, annotate
+from formless import webform, annotate, iformless
 
 from main import MasterPage, BaseContent
 from users.interfaces import IA
@@ -50,7 +50,14 @@ class NewTopic(MasterPage):
                                title=title,
                                body=content
                               )
-        d = idb.ITopicsDatabase(idb.IS(ctx)).addTopic(properties_topic, properties_post)
+        def redirectTo(result):
+            req = inevow.IRequest(ctx)
+            req.setComponent(iformless.IRedirectAfterPost,'/topic/%s' % result)
+            return result
+        d = idb.ITopicsDatabase(idb.IS(ctx)
+                                ).addTopic(properties_topic,
+                                           properties_post)
+        d.addCallback(redirectTo)
         return d
 
 class NewTopicContent(BaseContent):

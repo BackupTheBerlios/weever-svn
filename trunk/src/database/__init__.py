@@ -1,9 +1,13 @@
+import ConfigParser as cp
+import os
+
 from twisted.python import reflect
 from twisted.python import components
+from twisted.python import util, log
 
 import interfaces
 
-from config import general
+
 
 database_adapters = """
 database.postgresql.adapt.UsersDatabase       database.postgresql.store.Store      database.interfaces.IUsersDatabase
@@ -23,4 +27,10 @@ def load(S):
 
 load(database_adapters)
 
-store = reflect.namedAny('database.'+general.database+'.store')
+parser = cp.ConfigParser()
+config_file = os.path.join(util.sibpath(os.path.split(__file__)[0],'config'),'general.ini')
+log.msg(config_file)
+parser.read(config_file)
+dbms = parser.get('Database', 'dbms')
+
+store = reflect.namedAny('database.'+dbms+'.store')

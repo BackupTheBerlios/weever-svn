@@ -5,14 +5,17 @@ from twisted.python import failure
 from twisted.internet import reactor, defer
 
 from database import store, interfaces
-from config import general as c
 
+database_adapter = 'psycopg'
+
+#parameters are:
+# dbname, host, user, password, sslmode, port
+database_dsn = 'dbname=weever user=testuser password=test'
 class DbTestCase(unittest.TestCase):
 
     def testReturnTypes(self):
-        db_bknd = store.Store(c.database_adapter, c.database_name,
-                              c.database_user, c.database_password,
-                              )
+        db_bknd = store.Store(database_adapter, database_dsn)
+
         def println(r):
             print r
         

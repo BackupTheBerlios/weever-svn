@@ -51,6 +51,15 @@ class IUsersDatabase(Interface):
         """ Returns the user with all the posting stats in a sequence
         of dicts like getUsersWithStats method.
         """
+    
+    def addUser(properties):
+        """ properties is a dict containing all the informations about the user """
+    
+    def delUser(username):
+        """ Removes user with username 'username' """
+    
+    def updatePassword(username, newPassword, oldPassword):
+        """ First verify oldPassword, then change it to newPassword, for user username """
 
 class ISectionsDatabase(Interface):
     def getAllSections():
@@ -79,7 +88,15 @@ class ISectionsDatabase(Interface):
                   'posts_num':posts_num,
                  }
         """
-
+    
+    def addSection(properties):
+        """ properties is a dict containing all the informations that deal with
+        Section creation.
+        """
+        
+    def delSection(sid):
+        """ removes section 'sid' """
+    
 class ITopicsDatabase(Interface):
     def getAllPosts(tid, num, offset):
         """ Returns all posts ordered by post_id, inside the current
@@ -115,3 +132,19 @@ class ITopicsDatabase(Interface):
 
         """
         
+    def addTopic(properties):
+        """ properties is a dict containing all informations to add a new topic """
+    
+    def allowTopicOnlyToPartecipants(properties):
+        """ Use this option to let only users that already posted at least
+        one message to see this topic """
+    
+    def removeTopic(tid):
+        """ Is this really needed? """
+    
+    def addPost(properties):
+        """ add a post to the posts database, properties contains all the right infos """
+    
+    def removePost(pid):
+        """ is this really needed """
+    

@@ -60,14 +60,13 @@ class MasterPage(ManualFormMixin, rend.Page):
         if not self.content:
             from web.index import IndexContent
             self.content = IndexContent
-
-    def beforeRender(self, ctx):
-        if self.firstPage:
-            inevow.ISession(ctx).setComponent(IA, IA(ctx))
-        ctx.remember(IA(inevow.ISession(ctx)), IA)
-
+            
     def locateChild(self, ctx, segments):
         ctx.remember(Page404(), inevow.ICanHandleNotFound)
+        session = inevow.ISession(ctx)
+        if IA(session, None) or IA(session, None) != IA(ctx):
+            session.setComponent(IA, IA(ctx))
+        ctx.remember(IA(session), IA)
         return super(MasterPage, self).locateChild(ctx, segments)
     
     def onManualPost(self, ctx, method, bindingName, kwargs):

@@ -17,7 +17,7 @@ html {
 	margin: 0;
 	padding: 0;
     
-    background: #933 url("bg2.png") top left repeat-x;         
+    background: #933 url("bg.jpg") top left repeat-x;         
 }
 
 body { 
@@ -185,7 +185,7 @@ top level section title
     padding: 5px 10px;
     font-style: italic;
     
-    letter-spacing: 1px;    
+    letter-spacing: 0;    
 }
 
 /* 
@@ -209,7 +209,7 @@ secondary level section title
     padding: 5px 5px;
     font-style: italic;
         
-    letter-spacing: 1px;    
+    letter-spacing: 0;    
 }
 
 #content p.datetime {
@@ -549,7 +549,7 @@ attached picture
     
     font-style: italic;
         
-    letter-spacing: 1px;    
+    letter-spacing: 0;    
 
 }
 

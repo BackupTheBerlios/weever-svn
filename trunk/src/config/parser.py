@@ -32,6 +32,8 @@ def _parse(filename):
     parser = cp.ConfigParser()
     config_file = util.sibpath(__file__,filename)
     log.msg(config_file)
+    log.msg(sys.executable)
+    log.msg(__file__)
     parser.read(config_file)
     return parser
 

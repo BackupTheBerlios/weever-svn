@@ -47,39 +47,24 @@ def _parse(filename):
     parser.read(config_file)
     return parser
 
-def _SSL(cfg):
-    conn = 'ssl'
-    for entry in 'port privatekey certKey sslmethod interface backlog'.split():
+def _SOCKET(cfg, conn, special, parameters):
+    for entry in parameters.split():
         if cfg.has_option('Server', entry.lower()):
             el = cfg.get('Server', entry.lower())
-            if entry != 'port':
+            if entry != special:
                 conn = "%s:%s=%s" % (conn, entry, el)
             else:
                 conn = "%s:%s" % (conn, el)
     return conn
+                
+def _SSL(cfg):
+    return _SOCKET(cfg, 'ssl', 'port', 'port privatekey certKey sslmethod interface backlog')
 
 def _UNIX(cfg):
-    conn = 'unix'
-    for entry in 'address mode backlog'.split():
-        if cfg.has_option('Server', entry.lower()):
-            el = cfg.get('Server', entry.lower())
-            if entry != 'address':
-                conn = "%s:%s=%s" % (conn, entry, el)
-            else:
-                conn = "%s:%s" % (conn, el)
-    return conn
-
+    return _SOCKET(cfg, 'unix', 'address', 'address mode backlog')
 
 def _TCP(cfg):
-    conn = 'tcp'
-    for entry in 'port interface backlog'.split():
-        if cfg.has_option('Server', entry.lower()):
-            el = cfg.get('Server', entry.lower())
-            if entry != 'port':
-                conn = "%s:%s=%s" % (conn, entry, el)
-            else:
-                conn = "%s:%s" % (conn, el)
-    return conn
+    return _SOCKET(cfg, 'tcp', 'port', 'port interface backlog')
 
 _disp = {'tcp':_TCP,
          'ssl':_SSL,

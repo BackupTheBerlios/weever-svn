@@ -30,15 +30,10 @@ class Store(object):
         return d
 
     def _mapQuery(self, curs, query, *args):
-        print "before :", curs, query, args
         curs.execute(query, *args)
-        print "after :", curs
         dx = u.maybeDeferred(curs.fetchall)
-        print "after fetchall in maybeDeferred:", curs
         def mapper(result, xcurs):
-            print "inside the first callback", xcurs 
             columns = [d[0] for d in xcurs.description]
-            print "after the first half of transformation", xcurs
             return [dict(zip(columns, r)) for r in result]  
         def _error(error):
             print error      

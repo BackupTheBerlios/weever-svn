@@ -17,23 +17,31 @@
                 on 
                 <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
                 
-                <n:invisible n:render="isLogged">
+<!--                <n:invisible n:render="isLogged">
                     <n:invisible n:pattern="True">
-                        <a href="reply.xhtml">
-                            <n:attr name="href">
+                        <a onclick="#" href="#">
+                            <n:attr name="onclick">
                                 <n:slot name="quote" />
                             </n:attr>Quote &amp; Reply</a> 
+                            
+                        <div id="#">
+                            <n:attr name="id">
+                                reply_<n:slot name="id" />
+                            </n:attr>
+                        </div>
                     </n:invisible>
                     <n:invisible n:pattern="False">
                         Please <a href="/login">login</a> or 
                         <a href="/register">register</a> to reply
                     </n:invisible>
                 </n:invisible>
+
                 &bull; 
                 <a href="#">
                 <n:attr name="href">
                     <n:slot name="edit" />
                 </n:attr>Edit</a> &bull; 
+-->
                 <a href="#">
                 <n:attr name="href">
                     <n:slot name="permalink" />
@@ -44,10 +52,10 @@
                 <div class="actions">                    
                     <n:invisible n:render="isLogged">
                         <n:invisible n:pattern="True">
-                            <a href="#">
-                                <n:attr name="href">
+                            <a onclick="#" href="#">
+                                <n:attr name="onclick">
                                     <n:slot name="quote" />
-                                </n:attr>Quote &amp; Reply</a> 
+                                </n:attr>Quote &amp; Reply</a>                             
                         </n:invisible>
                         <n:invisible n:pattern="False">
                             Please <a href="/login">login</a> or 
@@ -61,26 +69,11 @@
                 </div>
                 
                 <!-- sample form -->
-                <!--
-                <div class="quick" id="reply123">
-                    <form action="" method="post">
-                        <h3>Quote &amp; Reply 
-                        <a onclick="document.getElementById('reply123').style.display='none'; return false;" href="#">
-                            <img src="/theme/close.png" />
-                        </a></h3>
-                        <fieldset>
-                            <label for="title_">Title</label>
-                            <input type="text" id="title_" name="title" maxlength="70" size="70" value="Re: Donec eu tellus nec risus" />
-                            <label for="content_">Message 
-                            <span>(reST formatting rules are supported)</span></label>
-                            <textarea id="content_" name="content" cols="70" rows="8" size="70" maxlength="70">Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Your reply here.</textarea>
-                        </fieldset>
-                        <fieldset>
-                            <input type="submit" name="" value="Post Reply" />
-                        </fieldset>
-                    </form>
+                
+                <div id="reply_123">
+                    <n:attr name="id">reply_<n:slot name="id" /></n:attr> 
                 </div>
-                -->
+                
                 <!-- /topic -->
             </div>
         </n:invisible>
@@ -125,8 +118,8 @@
                     <div class="actions">
                         <n:invisible n:render="isLogged">
                             <n:invisible n:pattern="True">
-                                <a href="#">
-                                    <n:attr name="href">
+                                <a href="#" onclick="#">
+                                    <n:attr name="onclick">
                                         <n:slot name="quote" />
                                     </n:attr>Quote &amp; Reply</a> 
                             </n:invisible>
@@ -145,6 +138,9 @@
                         <h4>Attached Picture</h4>
                         <p>Sample attached picture.</p>
                     </div>
+                    <div id="reply_123">
+                        <n:attr name="id">reply_<n:slot name="id" /></n:attr> 
+                    </div>    
                 </div>
                 <!-- /item -->
                 <hr noshade="noshade" n:pattern="divider" />

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from datetime import datetime
 
-from nevow import loaders, url, tags as t
+from nevow import loaders, url, tags as t, liveevil
 from formless import webform, annotate, iformless
 
 from utils import util
@@ -13,6 +13,46 @@ from web import getTemplate, forms
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
+
+
+liveevil.DEBUG = True
+
+QUICK_REPLY = t.div(_class='quick', id="replform")[
+    t.form(action="", method="post")[
+        t.h3["Quote & Reply ",
+            t.a(href="#")[
+                t.img(src="/theme/close.png")
+            ]
+        ],
+        t.fieldset[
+            t.label(_for="title_")["Title"],
+            t.input(type="text", id="title_", name="title", maxlength="70", size="70", value="Re: Donec eu tellus nec risus"),
+            t.label(_for="content_")["Message",
+                t.span[" (reST formatting rules are supported)"]
+            ],
+            t.textarea(id="content_", name="content", cols="70", rows="8", size="70", maxlength="70")["Your reply here."
+            ]
+        ],
+        t.fieldset[
+            t.input(type="submit", name="", value="Post Reply")
+        ]   
+    ]
+]
+
+def sendReplyForm(client, current):
+    client.append('reply_%s' % current, QUICK_REPLY)
+
+def fillReply(ctx, d):
+    ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm, d.get('pid')))
+    ctx.tag.fillSlots('id', d.get('pid'))
+    ctx.tag.fillSlots('edit', '/edit.xhtml')
+    ctx.tag.fillSlots('permalink', '/permalink.xhtml')
+    ctx.tag.fillSlots('title', d.get('ttitle'))
+    ctx.tag.fillSlots('body', d.get('pbody'))
+    ctx.tag.fillSlots('userpref', d.get('powner')+'.xhtml')
+    ctx.tag.fillSlots('owner', d.get('powner'))
+    ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
+
 
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
@@ -92,14 +132,7 @@ class TopicContent(BaseContent):
     def render_firstTopic(self, ctx, data):
         d = self.data
         if d:
-            ctx.tag.fillSlots('quote', '/reply.xhtml')
-            ctx.tag.fillSlots('edit', '/edit.xhtml')
-            ctx.tag.fillSlots('permalink', '/permalink.xhtml')
-            ctx.tag.fillSlots('title', d.get('ttitle'))
-            ctx.tag.fillSlots('body', d.get('pbody'))
-            ctx.tag.fillSlots('userpref', d.get('powner')+'.xhtml')
-            ctx.tag.fillSlots('owner', d.get('powner'))
-            ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
+            fillReply(ctx, d)
             return ctx.tag
         return ctx.tag.clear()["Sorry, this page is not available yet"]
 
@@ -127,14 +160,8 @@ class TopicContent(BaseContent):
 
     def render_reply(self, ctx, data):
         ctx.tag.fillSlots('progression', self.start)
-        ctx.tag.fillSlots('quote', '/reply.xhtml')
-        ctx.tag.fillSlots('edit', '/edit.xhtml')
-        ctx.tag.fillSlots('permalink', '/permalink.xhtml')
         ctx.tag.fillSlots('ptitle', data.get('ptitle'))
-        ctx.tag.fillSlots('body', data.get('pbody'))
-        ctx.tag.fillSlots('userpref', data.get('powner')+'.xhtml')
-        ctx.tag.fillSlots('owner', data.get('powner'))
-        ctx.tag.fillSlots('when', pptime(data.get('pmodification')))
+        fillReply(ctx, data)
         self.start = self.start + 1
         return ctx.tag
 

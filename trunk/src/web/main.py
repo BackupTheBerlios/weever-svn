@@ -127,6 +127,10 @@ class MasterPage(ManualFormMixin, rend.Page):
     def render_content(self, ctx, data):
         ctx.tag.fillSlots('content', self.content(self.args, data[FIRST_POST]))
         return ctx.tag
+    
+    def render_glue(self, ctx, data):
+        ctx.tag.fillSlots('glue', liveevil.glue)
+        return ctx.tag
 
 
 class BaseContent(rend.Fragment):

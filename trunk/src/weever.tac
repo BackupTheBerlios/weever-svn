@@ -11,6 +11,8 @@ warnings.filterwarnings('ignore', '',
                         twisted.python.components.ComponentsDeprecationWarning)
 
 from nevow import appserver, guard, liveevil
+liveevil.debug = True
+
 from users import auth
 from database import interfaces as idb
 from config import parser as cfgFile

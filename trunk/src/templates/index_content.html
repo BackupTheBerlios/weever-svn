@@ -16,8 +16,8 @@
                 <tbody n:data="HotTopics" n:render="sequence">
                     <tr n:pattern="item" n:render="topicHead">
                         <td>
-                        <n:slot name="title">Topic title</n:slot>(
-                        <n:slot name="posts_num">XX</n:slot>)</td>
+                        <n:slot name="title">Topic title</n:slot>
+                        (<n:slot name="posts_num">XX</n:slot>)</td>
                         <td>
                             <n:slot name="author">Author name</n:slot>
                         </td>
@@ -30,8 +30,8 @@
                     </tr>
                     <tr class="alt" n:pattern="item" n:render="topicHead">
                         <td>
-                        <n:slot name="title">Topic title 2</n:slot>(
-                        <n:slot name="posts_num">YYY</n:slot>)</td>
+                        <n:slot name="title">Topic title 2</n:slot>
+                        (<n:slot name="posts_num">YYY</n:slot>)</td>
                         <td>
                             <n:slot name="author">Author name</n:slot>
                         </td>
@@ -58,7 +58,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
                         <th>Last changed</th>
                     </tr>
                 </thead>
@@ -67,11 +67,12 @@
                         <td>
                         <n:slot name="title">
                             <a href="#">Section title</a>
-                        </n:slot>(
-                        <n:slot name="thread_num">YY</n:slot>) 
+                        </n:slot>
+                        (<n:slot name="thread_num">YY</n:slot>) 
                         <n:slot name="description">
                             <p class="desc">Section description.</p>
                         </n:slot>
+
                         </td>
                         <td>
                             <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
@@ -85,11 +86,12 @@
                         <td>
                         <n:slot name="title">
                             <a href="#">Section title</a>
-                        </n:slot>(
-                        <n:slot name="thread_num">XX</n:slot>) 
+                        </n:slot>
+                        (<n:slot name="thread_num">XX</n:slot>) 
                         <n:slot name="description">
                             <p class="desc">Section description.</p>
                         </n:slot>
+
                         </td>
                         <td>
                             <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>

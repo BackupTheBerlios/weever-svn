@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+import sys
+
 from twisted.python import util
 
 from nevow import rend, loaders, url, inevow
@@ -7,8 +9,11 @@ from nevow import tags as t, guard
 from database import interfaces as idata
 from database.interfaces import IS
 
-from web import main, topic, newtopic, getTemplate, register, section
+from web import main, topic, newtopic, getTemplate, register, section, admin
+from web import WebException
 from web import interfaces as iw
+
+from users import interfaces as iu
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -34,6 +39,14 @@ class Main(main.MasterPage):
     def child_section(self, ctx, data=None):
         reload(section)
         return section.Section(data, ctnt=section.SectionContent)
+    
+    def child_admin(self, ctx, data=None):
+        reload(admin)
+        # Need to make 2 dynamic
+        if iu.IA(ctx).get('gpermissionlevel', sys.maxint) > 1:
+            raise WebException("Not Enough Permissions to enter this section")
+        else:
+            return admin.Admin(data, ctnt=admin.AdminContent)
 
 class IndexContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('index_content.html'), ignoreDocType=True)
@@ -56,11 +69,14 @@ class IndexContent(main.BaseContent):
 
     def render_section(self, ctx, data):
         link = url.root.clear().child('section').child(data['sid'])
-        #link = '/section/%s/' % data['sid']
-        ctx.tag.fillSlots('title', t.a(href=link)[data['stitle']])
-        ctx.tag.fillSlots('thread_num', data['thread_num'])
+        if data['lastmod']: tm = pptime(data['lastmod'])
+        else: tm = "-"
+        if data['thread_num']: n = data['thread_num']
+        else: n = "0"
+        ctx.tag.fillSlots('title', t.a(href=link)[data['stitle']])        
+        ctx.tag.fillSlots('thread_num', n)
         ctx.tag.fillSlots('description', t.p(_class="desc")[data['sdescription']])
-        ctx.tag.fillSlots('lastMod', pptime(data['lastmod']))
+        ctx.tag.fillSlots('lastMod', tm)
         return ctx.tag
 
 class Login(main.MasterPage):

@@ -36,8 +36,8 @@ CREATE TABLE thread (
     noise smallint NOT NULL default 0,
     creation timestamp NOT NULL,
     
-    FOREIGN KEY(owner_id) REFERENCES users(id),
-    FOREIGN KEY(section_id) REFERENCES sections(id)
+    FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(section_id) REFERENCES sections(id) ON DELETE CASCADE
 );
 
 
@@ -52,8 +52,8 @@ CREATE TABLE posts (
     body TEXT,
     parsed_body TEXT,
     
-    FOREIGN KEY(owner_id) REFERENCES users(id),
-    FOREIGN KEY(thread_id) REFERENCES thread(id)
+    FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(thread_id) REFERENCES thread(id) ON DELETE CASCADE
 );
 
 CREATE VIEW user_posts AS
@@ -100,8 +100,8 @@ CREATE VIEW users_permissions AS
 CREATE VIEW all_sections AS
     SELECT s.id AS sid, s.title AS stitle, s.description AS sdescription, 
             ts.thread_num AS thread_num, lm.lastmod AS lastmod
-    FROM sections s JOIN last_modified lm ON (lm.sid = s.id) 
-                    JOIN threads_in_section ts ON (ts.sid = s.id);
+    FROM sections s LEFT JOIN last_modified lm ON (lm.sid = s.id) 
+                    LEFT JOIN threads_in_section ts ON (ts.sid = s.id);
     
 CREATE VIEW discussion AS
     SELECT t.title AS ttitle, t.creation AS tcreation, p.modification AS pmodification, p.id AS pid, 
@@ -126,6 +126,8 @@ INSERT INTO groups(description, permissionlevel) VALUES ('User', 2);
 
 INSERT INTO users(screename, login, password, group_id, email, homepage) 
                   VALUES('Valentino Volonghi', 'dialtone', 'fooo1', 1, 'dialtone@gmail.com', 'http://vvolonghi.blogspot.com');
+                  INSERT INTO users(screename, login, password, group_id, email, homepage) 
+                  VALUES('Andrea Peltrin', 'dee', 'pwd', 1, 'deelan@gmail.com', 'http://www.deelan.com');
 INSERT INTO users(screename, login, password, group_id, email) 
                   VALUES('Fuffo Tone', 'admin', 'passw', 2, 'fuffo.tone@provider.com');
 INSERT INTO users(screename, login, password, group_id, email) 

@@ -58,5 +58,13 @@ INSERT INTO posts (thread_id, owner_id, creation, modification, title, body)
 VALUES(%(thread_id)s, %(owner_id)s, %(creation)s, %(modification)s, %(title)s, %(body)s);
 """
 
+add_section = """
+INSERT INTO sections (title, description) VALUES (%(title)s, %(description)s);
+"""
+
+del_section = """
+DELETE FROM sections WHERE id = %(sid)s
+"""
+
 posts_num = """ SELECT COUNT(*) AS posts_num FROM posts p WHERE p.thread_id = %s """
 

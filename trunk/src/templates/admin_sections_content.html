@@ -4,66 +4,117 @@
     <div id="content">
          <div class="panel">
             <h2>Sections</h2>
+
             <p>Manage (create, delete and edit) forum section.</p>            
-            
-            <p><a href="#">Create a new section</a>.</p>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Last changed</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody n:data="Sections" n:render="sequence">
-                    <tr n:pattern="item" n:render="section">
-                        <td>
-                        <n:slot name="title">
-                            <a href="#">Section title</a>
-                        </n:slot>(
-                        <n:slot name="thread_num">YY</n:slot>) 
-                        </td>
-                        <td>
-                            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
-                        </td>
-                        <td>
-                            <a href="edit">Edit</a> &bull; <a onclick="return confirm('Are you sure to delete this section?');" href="delete">Delete</a>
-                        </td>                        
-                    </tr>
-                    <tr class="alt" n:pattern="item" n:render="section">
-                        <td>
-                        <n:slot name="title">
-                            <a href="#">Section title</a>
-                        </n:slot>(
-                        <n:slot name="thread_num">XX</n:slot>) 
-                        </td>
-                        <td>
-                            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
-                        </td>                        
-                        <td>
-                            <a href="edit">Edit</a> &bull; <a onclick="return confirm('Are you sure to delete this section?');" href="delete">Delete</a>
-                        </td>                        
-                    </tr>                                    
-                    <tr n:pattern="empty">
-                        <td colspan="3">Sorry, no sections here.</td>                    
-                    </tr>
 
-                    <tr n:pattern="footer" n:render="section">
-                        <td>
-                            <input type="text" size="30" name="title"/>
-                        </td>
-                        <td>
-                            &nbsp;
-                        </td>                        
-                        <td>
-                            <!-- <a title="Create a new section" href="create">Create</a> -->
-                            <input type="submit" name="" value="Create" />
-                        </td>                        
-                    </tr>  
+            
 
-                </tbody>
-            </table>
+            <!--<p><a href="#">Create a new section</a>.</p>-->                
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+        
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody n:data="Sections" n:render="sequence">
+                            <tr n:pattern="item" n:render="section">
+                                <td>
+                                <n:slot name="title">
+                                    <a href="#">Section title</a>
+                                </n:slot><!--(
+                                <n:slot name="thread_num">YY</n:slot>) 
+                                -->
+                                </td>
+                                <td>
+                                    <n:slot name="descr">Description</n:slot>
+                                </td>
+        
+                                <td>
+                                    <a href="#"><n:attr name="href">
+                                        <n:slot name="edit" /></n:attr>Edit</a> &bull; <a onclick="return confirm('Are you sure to delete this section?');" href="#"><n:attr name="href"><n:slot name="delete" /></n:attr>Delete</a>
+                                </td>                        
+                            </tr>
+                            <tr class="alt" n:pattern="item" n:render="section">
+                                <td>
+                                <n:slot name="title">
+                                    <a href="#">Section title</a>
+                                </n:slot><!--(
+                                <n:slot name="thread_num">XX</n:slot>) 
+                                -->
+                                </td>
+                                <td>
+                                    <n:slot name="descr">Description</n:slot>
+                                </td>                        
+        
+                                <td>
+        
+                                    <a href="#"><n:attr name="href">
+                                        <n:slot name="edit" /></n:attr>Edit</a> &bull; <a onclick="return confirm('Are you sure to delete this section?');" href="#"><n:attr name="href"><n:slot name="delete" /></n:attr>Delete</a>
+                                </td>                        
+                            </tr>                                    
+        
+                            <tr n:pattern="empty" n:render="empty">
+                                <td colspan="3">Sorry, no sections here.</td>                    
+                            </tr>
+                        </tbody>
+                    </table>
+<!--        
+                            <tr n:pattern="footer" n:render="foot">
+                                <td>
+                                    <input type="text" size="30" name="title"/>
+                                </td>
+                                <td>
+                                    <input type="text" size="30" name="description"/>
+                                </td>                        
+
+                                <td>
+                                    <a title="Create a new section" href="create">Create</a>      
+                                    <input type="submit" name="" value="Create" />
+                                </td> 
+                            </tr>  
+                        </tbody>
+                    </table>
+-->                    
+             <n:invisible n:render="form">
+                <form action="" method="post" n:pattern="freeform-form">  
+                    <n:attr name="action">
+                        <n:slot name="form-action" />
+                    </n:attr>
+                    <n:attr name="id">
+                        <n:slot name="form-id" />
+                    </n:attr>
+                    <n:attr name="name">
+                        <n:slot name="form-name" />
+                    </n:attr>
+                    <n:invisible n:pattern="argument!!title">
+                        <n:slot name="input" />
+                        <span class="error">
+                            <n:slot name="error" />
+                        </span>                        
+                    </n:invisible>
+                    <n:invisible n:pattern="argument!!description">
+                        <n:slot name="input" />
+                    </n:invisible>                                
+                    <table>
+                        <tbody>
+                            <td>
+                                Title:<br />
+                                <n:slot name="argument!!title" />
+                            </td>
+                            <td>
+                                Description:<br />
+                                <n:slot name="argument!!description" />
+                            </td>
+                            <td>
+                                <n:slot name="form-button" />
+                            </td>
+                        </tbody>
+                    </table>
+                </form>
+            </n:invisible>    
             <!-- /panel -->
         </div>
    

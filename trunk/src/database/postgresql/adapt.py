@@ -56,6 +56,12 @@ class SectionsDatabase(object):
     def getSection(self, sid):
         return self.store.runQuery(q.section, sid)
 
+    def addSection(self, properties):
+        return self.store.runOperation(q.add_section, properties)
+    
+    def delSection(self, sid):
+        return self.store.runOperation(q.del_section, sid)
+
 class TopicsDatabase(object):
 
     implements(ITopicsDatabase)

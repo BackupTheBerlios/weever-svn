@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 from nevow import loaders, url, tags as t
 from formless import webform, annotate
+from nevow.compy import newImplements as implements
+from nevow.compy import backwardsCompatImplements as bkwImplements
 
 from main import MasterPage, BaseContent
 from web import getTemplate
@@ -48,14 +50,17 @@ class Topic(MasterPage):
         return self.content
 
 class TopicContent(BaseContent):
+    implements(IQuickReply)
+
+    ## TOREMOVE:
     __implements__ = BaseContent.__implements__, IQuickReply
-    
+
     docFactory = loaders.xmlfile(getTemplate('topic_content.html'),
             ignoreDocType=True)
 
     def __init__(self, args, data=None):
-        BaseContent.__init__(self, args, data)
-        if len(self.args) <= 1:
+        super(TopicContent, self).__init__(args, data)
+        if len(args) <= 1:
             self.offset = '1'
             self.start = 1
         else:
@@ -131,3 +136,4 @@ class TopicContent(BaseContent):
 
     def quick_reply(self, title, content):
         print title, content
+

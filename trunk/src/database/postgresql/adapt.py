@@ -1,4 +1,5 @@
-from zope.interface import implements
+from nevow.compy import newImplements as implements
+
 from database.interfaces import IUsersDatabase, ISectionsDatabase, ITopicsDatabase
 
 import queries as q

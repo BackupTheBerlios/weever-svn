@@ -1,5 +1,6 @@
 from nevow import loaders, url, tags as t
 from formless import annotate, webform
+from nevow.compy import newImplements as implements
 
 from main import MasterPage, BaseContent
 from web import getTemplate
@@ -35,6 +36,9 @@ class Register(MasterPage):
 
 class RegisterContent(BaseContent):
 
+    implements(IRegister)
+
+    ## TODO: Remove this stuff
     __implements__ = BaseContent.__implements__, IRegister
     
     docFactory = loaders.xmlfile(getTemplate('register_content.html'),

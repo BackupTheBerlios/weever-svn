@@ -1,8 +1,7 @@
 from time import time as now
 
-from zope.interface import implements
-
 from nevow import rend, loaders, static, url, util, compy
+from nevow.compy import newImplements as implements
 from nevow.rend import _CARRYOVER
 from nevow import inevow, tags as t
 from formless import iformless
@@ -131,7 +130,7 @@ class BaseContent(rend.Fragment):
         self.data = data
 
 class Page404(rend.Page):
-    implements(inevow.ICanHandleNotFound,)
+    implements(inevow.ICanHandleNotFound)
     docFactory = loaders.xmlfile(getTemplate('404.html'))
 
     def renderHTTP_notFound(self, ctx):

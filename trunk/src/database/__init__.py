@@ -1,9 +1,7 @@
-import ConfigParser as cp
-import os
-
 from twisted.python import reflect
-from twisted.python import components
 from twisted.python import util, log
+from nevow import compy
+
 
 import interfaces
 
@@ -23,7 +21,7 @@ def load(S):
             a = reflect.namedAny(a)
             o = reflect.namedAny(o)
             i = reflect.namedAny(i)
-            components.registerAdapter(a,o,i)
+            compy.registerAdapter(a,o,i)
 
 load(database_adapters)
 

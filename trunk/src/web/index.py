@@ -8,7 +8,6 @@ from database import interfaces as idata
 from database.interfaces import IS
 
 from web import main, topic, newtopic, getTemplate, register
-from interfaces import ILastURL
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')

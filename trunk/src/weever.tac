@@ -18,7 +18,7 @@ from config import parser as cfgFile
 # Don't touch anything above this line
 #
 
-#You may provide different filenames under config/ directory
+#You may provide different filenames under files/ directory
 #or directly modify those files.
 DATABASE_CFG='weever.ini'
 NETWORK_CFG='weever.ini'

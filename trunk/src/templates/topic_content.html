@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
     <div id="content">
@@ -154,13 +154,16 @@
                 <div class="browser" n:pattern="footer">
                     <!--<a href="#">Blah</a>-->
                     <n:invisible n:render="nextPosts">
-                    <a href="#">
-                    <n:attr name="href">
-                        <n:slot name="href" />
-                    </n:attr>
-                    <n:slot name="num">Next XX</n:slot> Replies &raquo;</a></n:invisible>
+                        <a href="#">
+                        <n:attr name="href">
+                            <n:slot name="href" />
+                        </n:attr>
+                        <n:slot name="num">Next XX</n:slot> Replies &raquo;</a>
+                    </n:invisible>
                 </div>
-            </n:invisible>
+            </div>
+        </div>
+    </n:invisible>
             <!-- /data /sequence-->
     <n:invisible n:render="isLogged">
         <n:invisible n:pattern="True">

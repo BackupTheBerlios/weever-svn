@@ -1,6 +1,6 @@
 from time import time as now
 
-from nevow import rend, loaders, static, url, util, compy, guard
+from nevow import rend, loaders, static, url, util, compy, guard, liveevil
 from nevow.rend import _CARRYOVER
 from nevow import inevow, tags as t
 
@@ -47,6 +47,7 @@ class ManualFormMixin(rend.Page):
 class MasterPage(ManualFormMixin, rend.Page):
     docFactory = loaders.xmlfile(getTemplate('index.html'))
     child_theme = static.File(getTheme())
+    child_glue = liveevil.glueJS
     addSlash = True
 
     def __init__(self, data=[], ctnt=None):
@@ -62,7 +63,7 @@ class MasterPage(ManualFormMixin, rend.Page):
 
     def logout(self):
         return None
-
+        
     render_isLogged = render_isLogged
     
     def locateChild(self, ctx, segments):

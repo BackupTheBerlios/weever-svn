@@ -10,7 +10,7 @@ import twisted.python.components
 warnings.filterwarnings('ignore', '',
                         twisted.python.components.ComponentsDeprecationWarning)
 
-from nevow import appserver, guard
+from nevow import appserver, guard, liveevil
 from users import auth
 from database import interfaces as idb
 from config import parser as cfgFile
@@ -52,7 +52,7 @@ portal.registerChecker(myChecker)
 log.msg("Auth Layer initialization succeeded in %.2f" % (now()-t))
 t = now()
 site = appserver.NevowSite (
-            resource = guard.SessionWrapper(portal)
+        resource = guard.SessionWrapper(portal, mindFactory=liveevil.LiveEvil)
             )
 site.remember(store, idb.IS)
 log.msg("Site initialization succeeded in %.2f" % (now()-t))

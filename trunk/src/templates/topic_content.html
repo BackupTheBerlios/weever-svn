@@ -133,10 +133,14 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
       <hr noshade="noshade" n:pattern="divider" />
 
       <div class="browser" n:pattern="footer">
-      <a href="#">Blah</a>
-
-      • 
-      <a href="#">Next 10 Replies »</a>
+   	   <a href="#">Blah</a>
+			<n:invisible n:render="nextPosts">
+   		   • 
+		      <a href="#">
+		      	<n:attr name="href"><n:slot name="href" /></n:attr>
+		      	Next <n:slot name="num" /> Replies »
+		      </a>
+   	   </n:invisible>
       </div>
     </n:invisible>
 

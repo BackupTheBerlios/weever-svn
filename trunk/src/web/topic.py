@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from nevow import loaders
+from nevow import loaders, url, tags as t
 
 from main import MasterPage, BaseContent
 from database.interfaces import IS, ITopicsDatabase
@@ -35,14 +35,16 @@ class TopicContent(BaseContent):
         else:
             if self.args[1] != '':
                 try:
-                    self.start = int(self.args[1])
+                    self.start = self.counter = int(self.args[1])
                 except ValueError:
-                    self.start = 0
+                    self.start = self.counter = 0
             else:
-                self.start = 0
+                self.start = self.counter = 0
         if not self.start: self.offset = '1'
         else: self.offset = str(self.start)
-    
+
+        self.LIMIT = '10'
+
     def render_firstTopic(self, ctx, data):
         d = self.data
         ctx.tag.fillSlots('quote', '/reply.xhtml')
@@ -56,14 +58,14 @@ class TopicContent(BaseContent):
         return ctx.tag
 
     def data_posts(self, ctx, data):
-        LIMIT = '50'
-        return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], LIMIT, self.offset)
+        return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], self.LIMIT, self.offset)
 
     def data_numPosts(self, ctx, data):
         return ITopicsDatabase(IS(ctx)).getPostsNum(self.args[0])
 
     def render_repliesnum(self, ctx, data):
-        return ctx.tag.clear()[int(data[0].get('posts_num'))-1]
+        self.posts_num = int(data[0].get('posts_num'))-1
+        return ctx.tag.clear()[self.posts_num]
 
     def render_reply(self, ctx, data):
         self.start = self.start + 1
@@ -77,3 +79,16 @@ class TopicContent(BaseContent):
         ctx.fillSlots('owner', data.get('powner'))
         ctx.fillSlots('when', pptime(data.get('pmodification')))
         return ctx.tag
+
+    def render_nextPosts(self, ctx, data):
+        if self.start < self.posts_num:
+            if self.offset == '1': 
+                link = url.here.child(self.start)
+            else:
+                link = url.here.parent().child(self.start)
+            remaining = self.posts_num-self.start+1
+            toDisplay = (remaining, self.LIMIT)[int(self.LIMIT)<remaining]
+            ctx.tag.fillSlots('num', toDisplay)
+            ctx.tag.fillSlots('href', link)
+            return ctx.tag
+        else: return ctx.tag.clear()

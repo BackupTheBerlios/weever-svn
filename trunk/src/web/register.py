@@ -69,7 +69,7 @@ class Register(MasterPage):
             #
         uri = iweb.ILastURL(inevow.ISession(ctx), None)
         if uri:
-            inevow.ISession(ctx).unsetComponent(iw.ILastURL)
+            inevow.ISession(ctx).unsetComponent(iweb.ILastURL)
         inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,uri or '')
         d = idb.IUsersDatabase(idb.IS(ctx)).addUser(properties)
         d.addCallback(success, ctx, username)        

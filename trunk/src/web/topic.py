@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from datetime import datetime
 
-from nevow import loaders, url, tags as t, liveevil
+from nevow import loaders, url, tags as t, liveevil, rend
 from formless import webform, annotate, iformless
 
 from utils import util
@@ -14,33 +14,8 @@ from web import getTemplate, forms
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
-
-liveevil.DEBUG = True
-
-QUICK_REPLY = t.div(_class='quick', id="replform")[
-    t.form(action="", method="post")[
-        t.h3["Quote & Reply ",
-            t.a(href="#")[
-                t.img(src="/theme/close.png")
-            ]
-        ],
-        t.fieldset[
-            t.label(_for="title_")["Title"],
-            t.input(type="text", id="title_", name="title", maxlength="70", size="70", value="Re: Donec eu tellus nec risus"),
-            t.label(_for="content_")["Message",
-                t.span[" (reST formatting rules are supported)"]
-            ],
-            t.textarea(id="content_", name="content", cols="70", rows="8", size="70", maxlength="70")["Your reply here."
-            ]
-        ],
-        t.fieldset[
-            t.input(type="submit", name="", value="Post Reply")
-        ]   
-    ]
-]
-
 def sendReplyForm(client, current):
-    client.append('reply_%s' % current, QUICK_REPLY)
+    client.append('reply_%s' % current, QuickForm(current))
 
 def fillReply(ctx, d):
     ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm, d.get('pid')))
@@ -53,7 +28,36 @@ def fillReply(ctx, d):
     ctx.tag.fillSlots('owner', d.get('powner'))
     ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
 
+class QuickForm(rend.Fragment):
+    docFactory = loaders.stan(
+        t.div(_class='quick', render=t.directive("form"))[
+            t.form(action="", method="post")[
+                t.h3["Quote & Reply ",
+                     t.a(render=t.directive("onclick"),href="#")[
+                         t.img(src="/theme/close.png")
+                     ]
+                ],
+                t.fieldset[
+                    t.label(_for="title_")["Title"],
+                    t.input(type="text", id="title_", name="title", maxlength="70", size="70", value="Re: Donec eu tellus nec risus"),
+                    t.label(_for="content_")["Message",
+                        t.span[" (reST formatting rules are supported)"]
+                    ],
+                    t.textarea(id="content_", name="content", cols="70", rows="8", size="70", maxlength="70")["Your reply here."]
+                ],
+                t.fieldset[
+                    t.input(type="submit", name="", value="Post Reply")
+                ]   
+            ]
+        ]
+    )
+    def render_onclick(self, ctx, data):
+        return ctx.tag(onclick="removeNode('replform_%s'); return \
+    false;" % (data))
 
+    def render_form(self, ctx, data):
+        return ctx.tag(id="replform_%s" % data)
+    
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
        ctx=annotate.Context(),

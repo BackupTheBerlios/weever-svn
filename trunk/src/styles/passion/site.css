@@ -178,7 +178,7 @@ top level section title
 
 
     /*color: #fafafa;    */
-    background: #e5e5e5  url("/images/tr-alt-bg.png") top right repeat-y;
+    background: transparent  url("/images/tr-alt-bg.png") top left repeat-y;
     
     border-bottom: 2px solid #993333;
     
@@ -200,7 +200,7 @@ secondary level section title
 	color: #333;
 		
     /*color: #fafafa;    */
-    background: #fcc  url("/images/h2-bg3.png") top right repeat-y;
+    background: transparent  url("/images/h2-bg3.png") top left repeat-y;
     
     border-bottom: 2px solid #993333;
 

@@ -1,26 +1,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
     <div id="content">
         <h2>New topic</h2>
-        <form action="_submit!!newtopic" method="post">
-            <fieldset>
-                <!-- <legend>Topic</legend>  -->
-                <label for="title_">Title</label>
-                <input type="text" id="title_" name="title" maxlength="70" size="50" value="Title goes here" />
-                <label for="content_">Message 
-                <span>(Textile formatting rules are supported)</span></label>
-                <textarea id="content_" name="content" cols="80" rows="8">Your reply here.</textarea>
-            </fieldset>
-            <fieldset>Topic will be be created in 
-            <select name="section">
-                <option value="">---choose---</option>
-                <option value="1">Cazzi e Mazzi</option>
-            </select></fieldset>
-            <fieldset>
-                <input type="submit" name="post_btn" value="Post Topic" />
-                <input type="submit" name="post_btn" value="Preview" />
-            </fieldset>
-        </form>
+        <n:invisible n:render="form">
+
+            <form n:pattern="freeform-form">
+                <n:attr name="action"><n:slot name="form-action"/></n:attr>
+                <n:attr name="id"><n:slot name="form-id"/></n:attr>
+                <n:attr name="name"><n:slot name="form-name"/></n:attr>
+
+                <n:invisible n:pattern="argument!!title">
+                    <!-- <legend>Topic</legend>  -->    
+                    <label for="title_">Title</label>
+                    <span class="error"><n:slot name="error" /></span>
+                    <n:slot name="input" />
+                </n:invisible>
+
+                <n:invisible n:pattern="argument!!content">
+                    <label for="content_">Message 
+                    <span>(reST formatting rules are supported)</span></label>
+                    <span class="error"><n:slot name="error" /></span>
+                    <n:slot name="input" />
+                </n:invisible>
+
+                <fieldset n:pattern="argument!!section">
+                    Topic will be be created in
+                    <n:slot name="error" />
+                    <n:slot name="input" />
+                </fieldset>
+
+                <!-- <n:slot name="form-arguments"/> -->
+                <fieldset>                        
+                    <n:slot name="argument!!title" />
+                    <n:slot name="argument!!content" />
+                </fieldset>
+                
+                <fieldset>
+                    <n:slot name="argument!!section" />
+                </fieldset>
+                
+                <fieldset>
+                    <n:slot name="form-button" />
+                </fieldset>
+            </form>
+
+        </n:invisible>
     </div>
 </n:invisible>

@@ -9,21 +9,21 @@
                 <n:slot name="title">Topic title goes here.</n:slot></h2>
                 <n:slot name="body">Topic body goes here.</n:slot>
                 <p class="datetime">Posted by 
-                <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
+                <a onclick="alert('Soon...'); return false;" href="">
                     <n:attr name="href">
                         <n:slot name="userpref" />
                     </n:attr>
                     <n:slot name="owner">Owner</n:slot></a>
                 on 
-                <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot>&bull; 
+                <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
                 <a href="reply.xhtml">
                 <n:attr name="href">
                     <n:slot name="quote" />
-                </n:attr>Quote &amp; Reply</a>&bull; 
+                </n:attr>Quote &amp; Reply</a> &bull; 
                 <a href="edit.xhtml">
                 <n:attr name="href">
                     <n:slot name="edit" />
-                </n:attr>Edit</a>&bull; 
+                </n:attr>Edit</a> &bull; 
                 <a href="permalink.xhtml">
                 <n:attr name="href">
                     <n:slot name="permalink" />
@@ -51,9 +51,8 @@
             </div>
         </n:invisible>
         <div id="view">
-            <form style="" method="post" action="">
-            <h2>
-            <n:invisible n:data="numPosts" n:render="repliesnum">YY</n:invisible>replies</h2>
+            <form style="" method="post" action="">            
+            <h2><n:invisible n:data="numPosts" n:render="repliesnum">YY</n:invisible> replies</h2>
             Sort by 
             <select name="order">
                 <option value="1" selected="selected">Date - newest first</option>
@@ -65,7 +64,9 @@
                 <option value="50" selected="selected">50 comments</option>
             </select> per page 
             <input type="submit" name="" value="Apply" />
-            <!-- <p class="help"><strong>Note</strong>: Select your preferred way to display the comments and click <i>Apply</i> to activate your changes.</p>  --></form>
+            <p class="help"><strong>Note</strong>: Select your preferred way to display the comments and click <i>Apply</i> to activate your changes.</p>              
+            </form>
+            
             <n:invisible n:data="posts" n:render="sequence">
                 <div class="topic reply" n:pattern="item" n:render="reply">
                     <h3>
@@ -79,7 +80,7 @@
                         </n:attr>
                         <n:slot name="owner">Owner</n:slot>
                     </a>on 
-                    <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot>&bull; 
+                    <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
                     <a href="reply.xhtml">
                     <n:attr name="href">
                         <n:slot name="quote" />

@@ -72,10 +72,6 @@ class MasterPage(ManualFormMixin, rend.Page):
     
     def locateChild(self, ctx, segments):
         ctx.remember(Page404(), inevow.ICanHandleNotFound)
-        session = inevow.ISession(ctx)
-        if IA(session, None) or IA(session, None) != IA(ctx):
-            session.setComponent(IA, IA(ctx))
-        ctx.remember(IA(session), IA)
         return super(MasterPage, self).locateChild(ctx, segments)
 
     def onManualPost(self, ctx, method, bindingName, kwargs):
@@ -119,11 +115,9 @@ class MasterPage(ManualFormMixin, rend.Page):
             uri.pathList(copy=False).insert(0, guard.LOGOUT_AVATAR)
             ctx.tag.fillSlots('status', 'Logout (%s)' % (user,))
             ctx.tag.fillSlots('link', uri)
-            #ctx.tag.fillSlots('link', '/'+guard.LOGOUT_AVATAR)
         else:
             ctx.tag.fillSlots('status', 'Login')
             ctx.tag.fillSlots('link', url.root.clear().child('login').child(''))
-            #ctx.tag.fillSlots('link', '/login')
         return ctx.tag
         
     def render_startTimer(self, ctx, data):
@@ -135,7 +129,6 @@ class MasterPage(ManualFormMixin, rend.Page):
         return ctx.tag["%.0f" % ((now()-startTime)*1000,)]
 
     def render_content(self, ctx, data):
-        #self.content = self.content(self.args, data[FIRST_POST])
         ctx.tag.fillSlots('content', self.content(self.args, data[FIRST_POST]))
         return ctx.tag
 

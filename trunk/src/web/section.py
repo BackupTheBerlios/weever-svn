@@ -18,24 +18,6 @@ def rememberTitle(result, ctx):
     ctx.remember(result[0].get('stitle'), iw.IMainTitle)
     return result
 
-class Section(MasterPage):        
-    def data_head(self, ctx, data):
-        if len(self.args) >= 1:
-            return idb.ISectionsDatabase(idb.IS(ctx)).getSectionInfo(self.args[0]).addCallback(rememberTitle, ctx)
-        return [{'ttitle':'Section -- Weever'}]
-
-    
-    def childFactory(self, ctx, segment):
-        if segment != '':
-            try:
-                sid = int(segment)
-            except ValueError:
-                return super(Section, self).childFactory(ctx, segment)
-        else:
-            sid = 1
-        self.args.append(sid)
-        return Section(self.args, ctnt=SectionContent)
-
 class SectionContent(BaseContent):
     docFactory = loaders.xmlfile(getTemplate('section_content.html'),
             ignoreDocType=True)    
@@ -55,3 +37,23 @@ class SectionContent(BaseContent):
         ctx.tag.fillSlots('author', data['towner'])
         ctx.tag.fillSlots('modification', pptime(data['tmodification']))
         return ctx.tag
+
+class Section(MasterPage):
+    content = SectionContent
+    def data_head(self, ctx, data):
+        if len(self.args) >= 1:
+            return idb.ISectionsDatabase(idb.IS(ctx)).getSectionInfo(self.args[0]).addCallback(rememberTitle, ctx)
+        return [{'ttitle':'Section -- Weever'}]
+
+    
+    def childFactory(self, ctx, segment):
+        if segment != '':
+            try:
+                sid = int(segment)
+            except ValueError:
+                return super(Section, self).childFactory(ctx, segment)
+        else:
+            sid = 1
+        self.args.append(sid)
+        return Section(self.args)
+

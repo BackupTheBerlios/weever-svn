@@ -31,9 +31,20 @@ class IRegister(annotate.TypedInterface):
         """ Register """
     register = annotate.autocallable(register, action="Register")
 
+class RegisterContent(BaseContent):
+    
+    docFactory = loaders.xmlfile(getTemplate('register_content.html'),
+                                 ignoreDocType=True)
+
+    def render_form(self, ctx, data):
+        return webform.renderForms()[ctx.tag]
+
+
 class Register(MasterPage):
 
     util.implements(IRegister)
+
+    content = RegisterContent
 
     def beforeRender(self, ctx):
         session = inevow.ISession(ctx)
@@ -76,10 +87,3 @@ class Register(MasterPage):
         return d
 util.backwardsCompatImplements(Register)
 
-class RegisterContent(BaseContent):
-    
-    docFactory = loaders.xmlfile(getTemplate('register_content.html'),
-                                 ignoreDocType=True)
-
-    def render_form(self, ctx, data):
-        return webform.renderForms()[ctx.tag]

@@ -105,45 +105,6 @@ def rememberTitle(result, ctx):
     ctx.remember(t, iweb.IMainTitle)
     return result
 
-class Topic(MasterPage):
-    util.implements(IQuickReply)
-
-    def data_head(self, ctx, data):
-        # It's the first post of the whole query (even if it's a 200
-        # results query.
-        LIMIT = '1'
-        OFFSET = '0'
-        if len(self.args):
-            return idb.ITopicsDatabase(idb.IS(ctx)).getAllPosts(self.args[0],
-                                                        LIMIT, OFFSET
-                      ).addCallback(rememberTitle, ctx)
-        return MasterPage.data_head(self, ctx, data)
-
-    def childFactory(self, ctx, segment):
-        if segment != '':
-            try:
-                start = int(segment)
-            except ValueError:
-                return super(Topic, self).childFactory(ctx, segment)
-        else:
-            start = 1
-        self.args.append(start)
-        return Topic(self.args, ctnt=TopicContent)
-    
-    def quick_reply(self, ctx, title, content):
-        if not iusers.IA(ctx).get('uid'):
-            raise WebException("You must login first")
-        properties = dict(thread_id=self.args[0],
-                          owner_id=iusers.IA(ctx)['uid'],
-                          creation=datetime.now(),
-                          modification=datetime.now(),
-                          title=title,
-                          body=content
-                         )
-        d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
-        return d
-util.backwardsCompatImplements(Topic)
-
 class TopicContent(BaseContent):
 
     docFactory = loaders.xmlfile(getTemplate('topic_content.html'),
@@ -234,4 +195,45 @@ class TopicContent(BaseContent):
         defaults=iformless.IFormDefaults(ctx).getAllDefaults('quick_reply')
         defaults['title'] = "Re: "+iweb.IMainTitle(ctx, '')
         return webform.renderForms()[ctx.tag]
+
+class Topic(MasterPage):
+    content = TopicContent
+    util.implements(IQuickReply)
+
+    def data_head(self, ctx, data):
+        # It's the first post of the whole query (even if it's a 200
+        # results query.
+        LIMIT = '1'
+        OFFSET = '0'
+        if len(self.args):
+            return idb.ITopicsDatabase(idb.IS(ctx)).getAllPosts(self.args[0],
+                                                        LIMIT, OFFSET
+                      ).addCallback(rememberTitle, ctx)
+        return MasterPage.data_head(self, ctx, data)
+
+    def childFactory(self, ctx, segment):
+        if segment != '':
+            try:
+                start = int(segment)
+            except ValueError:
+                return super(Topic, self).childFactory(ctx, segment)
+        else:
+            start = 1
+        self.args.append(start)
+        return Topic(self.args)
+    
+    def quick_reply(self, ctx, title, content):
+        if not iusers.IA(ctx).get('uid'):
+            raise WebException("You must login first")
+        properties = dict(thread_id=self.args[0],
+                          owner_id=iusers.IA(ctx)['uid'],
+                          creation=datetime.now(),
+                          modification=datetime.now(),
+                          title=title,
+                          body=content
+                         )
+        d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
+        return d
+util.backwardsCompatImplements(Topic)
+
 

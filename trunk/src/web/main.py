@@ -50,16 +50,14 @@ class MasterPage(ManualFormMixin, rend.Page):
     child_glue = liveevil.glueJS
     addSlash = True
 
-    def __init__(self, data=[], ctnt=None):
+    content = None
+
+    def __init__(self, data=[]):
         super(MasterPage, self).__init__()
-        self.content = ctnt
 
         self.args = []
         if data:
             self.args.extend(data)
-        if not self.content:
-            from web.index import IndexContent
-            self.content = IndexContent
 
     def logout(self):
         return None

@@ -16,34 +16,6 @@ from database import interfaces as idb
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
-class Main(main.MasterPage):
-    def child_topic(self, ctx, data=None):
-        reload(topic)
-        return topic.Topic(data, ctnt=topic.TopicContent)
-
-    def child_newtopic(self, ctx, data=None):
-        reload(newtopic)
-        return newtopic.NewTopic(data, ctnt=newtopic.NewTopicContent)
-
-    def child_login(self, ctx, data=None):
-        return Login(data, ctnt=LoginContent)
-    
-    def child_register(self, ctx, data=None):
-        reload(register)
-        return register.Register(data, ctnt=register.RegisterContent)
-    
-    def child_section(self, ctx, data=None):
-        reload(section)
-        return section.Section(data, ctnt=section.SectionContent)
-    
-    def child_admin(self, ctx, data=None):
-        reload(admin)
-        # Need to make 2 dynamic
-        if iusers.IA(ctx).get('gpermissionlevel', sys.maxint) > 1:
-            raise WebException("Not Enough Permissions to enter this section")
-        else:
-            return admin.Admin(data, ctnt=admin.AdminContent)
-
 class IndexContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('index_content.html'), ignoreDocType=True)
 
@@ -79,9 +51,34 @@ class IndexContent(main.BaseContent):
         ctx.tag.fillSlots('lastMod', tm)
         return ctx.tag
 
-class Login(main.MasterPage):
-    def data_head(slf, ctx, data):
-        return [dict(ttitle='Login -- Weever')]        
+class Main(main.MasterPage):
+    content = IndexContent
+    def child_topic(self, ctx, data=None):
+        reload(topic)
+        return topic.Topic(data)
+
+    def child_newtopic(self, ctx, data=None):
+        reload(newtopic)
+        return newtopic.NewTopic(data)
+
+    def child_login(self, ctx, data=None):
+        return Login(data)
+    
+    def child_register(self, ctx, data=None):
+        reload(register)
+        return register.Register(data)
+    
+    def child_section(self, ctx, data=None):
+        reload(section)
+        return section.Section(data)
+    
+    def child_admin(self, ctx, data=None):
+        reload(admin)
+        # Need to make 2 dynamic
+        if iusers.IA(ctx).get('gpermissionlevel', sys.maxint) > 1:
+            raise WebException("Not Enough Permissions to enter this section")
+        else:
+            return admin.Admin(data)
 
 class LoginContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('login_content.html'), ignoreDocType=True)
@@ -100,3 +97,10 @@ class LoginContent(main.BaseContent):
                 referer = url.root.clear().child(guard.LOGIN_AVATAR).child('')
         ctx.tag.fillSlots('action', referer)
         return ctx.tag
+
+
+class Login(main.MasterPage):
+    content = LoginContent
+    def data_head(slf, ctx, data):
+        return [dict(ttitle='Login -- Weever')]        
+

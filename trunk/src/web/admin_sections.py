@@ -26,25 +26,6 @@ class IASections(annotate.TypedInterface):
         pass
     edit = annotate.autocallable(edit, invisible=True)
 
-class ASections(main.MasterPage):
-
-    util.implements(IASections)
-
-    def data_head(self, ctx, data):
-        return [{'ttitle':'Admin Sections -- Weever'}]    
-    
-    def edit(self, ctx, id, oldstate):
-        pass
-    def insert(self, ctx, title, description):
-        properties = dict(title=title, description=description)
-        d = idb.ISectionsDatabase(idb.IS(ctx)).addSection(properties)
-        return d
-    def delete(self, ctx, id):
-        d = idb.ISectionsDatabase(idb.IS(ctx)).delSection(dict(sid=id))
-        return d
-
-util.backwardsCompatImplements(ASections)
-
 class ASectionsContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('admin_sections_content.html'),
                                  ignoreDocType=True)
@@ -71,3 +52,25 @@ class ASectionsContent(main.BaseContent):
     
     def render_form(self, ctx, data):
         return webform.renderForms(bindingNames=["insert"])[ctx.tag]
+
+class ASections(main.MasterPage):
+
+    util.implements(IASections)
+
+    content = ASectionsContent
+
+    def data_head(self, ctx, data):
+        return [{'ttitle':'Admin Sections -- Weever'}]    
+    
+    def edit(self, ctx, id, oldstate):
+        pass
+    def insert(self, ctx, title, description):
+        properties = dict(title=title, description=description)
+        d = idb.ISectionsDatabase(idb.IS(ctx)).addSection(properties)
+        return d
+    def delete(self, ctx, id):
+        d = idb.ISectionsDatabase(idb.IS(ctx)).delSection(dict(sid=id))
+        return d
+
+util.backwardsCompatImplements(ASections)
+

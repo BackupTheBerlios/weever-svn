@@ -30,18 +30,19 @@
                             <a onclick="#" href="#">
                                 <n:attr name="onclick">
                                     <n:slot name="quote" />
-                                </n:attr>Quote &amp; Reply</a>
+                                </n:attr>Quote &amp; Reply</a> &bull;
+                            <!-- /a -->
+                            <a href="#">
+                                <n:attr name="href">
+                                    <n:slot name="edit" />
+                                </n:attr>Edit</a>
+                            <!-- /a -->
                         </n:invisible>
                         <n:invisible n:pattern="False">
                             Please <a href="/login">login</a> or 
-                            <a href="/register">register</a> to reply
+                            <a href="/register">register</a> to reply or edit
                         </n:invisible>
                     </n:invisible>                
-                    <a href="#">
-                        <n:attr name="href">
-                            <n:slot name="edit" />
-                        </n:attr>Edit</a>
-                    <!-- /a -->
                 </div>
                 <!-- dynamic quick reply form -->
                 <div id="reply_123"><n:attr name="id">reply_<n:slot name="id" /></n:attr></div>
@@ -92,19 +93,19 @@
                                 <a href="#" onclick="#">
                                     <n:attr name="onclick">
                                         <n:slot name="quote" />
-                                    </n:attr>Quote &amp; Reply</a> 
+                                    </n:attr>Quote &amp; Reply</a> &bull;
                                 <!-- /a -->
+                                <a href="#">
+                                    <n:attr name="href">
+                                        <n:slot name="edit" />
+                                    </n:attr>Edit</a>                    
+                                <!-- /a -->    
                             </n:invisible>
                             <n:invisible n:pattern="False">
                                 Please <a href="/login">login</a> or 
-                                <a href="/register">register</a> to reply
+                                <a href="/register">register</a> to reply or edit
                             </n:invisible>
                         </n:invisible>  
-                        <a href="#">
-                            <n:attr name="href">
-                                <n:slot name="edit" />
-                            </n:attr>Edit</a>                    
-                        <!-- /a -->    
                     </div>
                     
                     <div class="picture" n:pattern="image">

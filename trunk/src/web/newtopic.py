@@ -45,9 +45,18 @@ class INewTopic(annotate.TypedInterface):
         """ """
     post_topic = annotate.autocallable(post_topic, action="Post Topic")
 
+class NewTopicContent(BaseContent):
+    
+    docFactory = loaders.xmlfile(getTemplate('newtopic_content.html'),
+            ignoreDocType=True)
+
+    def render_form(self, ctx, data):
+        return webform.renderForms()[ctx.tag]
+
 class NewTopic(MasterPage):
     util.implements(INewTopic)
-
+    content = NewTopicContent
+    
     def beforeRender(self, ctx):
         if not iusers.IA(ctx).get('uid'):
             inevow.ISession(ctx).setComponent(iweb.ILastURL, '/newtopic/')
@@ -85,11 +94,4 @@ class NewTopic(MasterPage):
 
 util.backwardsCompatImplements(NewTopic)
 
-class NewTopicContent(BaseContent):
-    
-    docFactory = loaders.xmlfile(getTemplate('newtopic_content.html'),
-            ignoreDocType=True)
-
-    def render_form(self, ctx, data):
-        return webform.renderForms()[ctx.tag]
 

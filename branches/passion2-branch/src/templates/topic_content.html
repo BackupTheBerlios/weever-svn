@@ -6,7 +6,7 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
     <n:invisible n:render="firstTopic">
 
 <!-- /mainTitle -->
-      <div class="entry">
+      <div class="topic">
         <h2>Topic: <n:slot name="title">Topic title goes here.</n:slot></h2>
             
         <n:slot name="body">Topic body goes here.</n:slot>
@@ -66,7 +66,7 @@ Your reply here.
         </form>
     </div>
     
-        <!-- /entry -->
+        <!-- /topic -->
         </div>
     </n:invisible>
 
@@ -94,7 +94,7 @@ Your reply here.
 
     
     <n:invisible n:data="posts" n:render="sequence">
-      <div class="entry reply" n:pattern="item" n:render="reply">
+      <div class="topic reply" n:pattern="item" n:render="reply">
         <h3>
         <n:slot name="ptitle">Reply title goes here.</n:slot>
         </h3>
@@ -140,7 +140,7 @@ Your reply here.
 
 <!-- /item -->
       <hr noshade="noshade" n:pattern="divider" />
-      <div class="entry reply" n:pattern="empty" n:render="empty">
+      <div class="topic reply" n:pattern="empty" n:render="empty">
 
       </div>
       <div class="browser" n:pattern="footer">

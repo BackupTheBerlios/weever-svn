@@ -369,14 +369,14 @@ alert box
 
 #alert {
 
-	border: 18px solid #e5e5e5;
+	border: 15px solid #999;
 
-    background: #FAFAFA;
+    background: #fff url(alert-bg.jpg) top left no-repeat;
 
     padding: 10px; 
 
     width: 400px;
-    height: 80px;
+    min-height: 80px;
 
     position: absolute;
     
@@ -399,7 +399,7 @@ entry / reply
 ------------------------------------------
 */
 
-.entry {
+.topic {
     
     position: relative;
     
@@ -418,14 +418,14 @@ entry / reply
 
 
 
-#content .entry h2 {
+#content .topic h2 {
     font-weight:  bold;    
-	font-size: 100%;
+	font-size: 110%;
 	
     position: absolute;
     
     top: -12px;
-    right: 10px;
+    left: 10px;
     
 	color: #330000;
     margin: 0;
@@ -448,6 +448,7 @@ entry / reply
 
 .reply {
  
+ 
     border: 1px solid #fcc;
 
     border-bottom: 2px solid #CC9999;
@@ -462,7 +463,7 @@ entry / reply
     position: absolute;
     
     top: -12px;
-    right: 10px;
+    left: 10px;
     
 	color: #330000;
     padding: 2px 5px;
@@ -511,7 +512,7 @@ entry / reply
     position: absolute;
     
     top: -15px;
-    right: 10px;
+    left: 10px;
     
 	color: #300;
     margin: 0;
@@ -555,7 +556,7 @@ entry / reply
 #view h2 {
 
     font-weight:  bold;    
-	font-size: 100%;
+	font-size: 110%;
 	
     position: absolute;
     
@@ -593,12 +594,6 @@ table {
     margin: 15px 0;
     
     background: #fff;    
-
-
-    border: 1px solid #ccc;
-
-    border-bottom: 2px solid #999;
-    border-right: 2px solid #999;
 }
 
 tr.alt {
@@ -615,7 +610,8 @@ thead {
     
     font-style: italic;
     
-    background: transparent url('h2-bg.png') top left repeat-y;    
+    /*background: transparent url('h2-bg.png') top left repeat-y;    */
+    background: transparent;
 }
 
 tbody {        
@@ -652,6 +648,7 @@ misc.
 }
 
 /* @@ really needed? */
+/*
 h2 span, h3 span {
  
     display: block;
@@ -668,10 +665,64 @@ h2 span, h3 span {
     letter-spacing: 0;    
 }
 
-
+*/
 /* next... */
 .browser {
     text-align: right;
+}
+
+
+/* 
+==========================================
+
+==========================================
+*/
+
+
+.panel {
+    
+    position: relative;
+    
+    margin: 0;    
+    margin-bottom: 40px;         
+
+    background: #fff;
+
+    padding: 15px 20px;  
+    border: 1px solid #ccc;
+
+    border-bottom: 2px solid #999;
+    border-right: 2px solid #999;
+	
+}
+
+
+
+#content .panel h2 {
+    font-weight:  bold;    
+	font-size: 110%;
+	
+    position: absolute;
+    
+    top: -12px;
+    left: 10px;
+    
+	color: #330000;
+    margin: 0;
+    padding: 2px 5px;
+
+            
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #ccc;        
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+        
 }
 
 

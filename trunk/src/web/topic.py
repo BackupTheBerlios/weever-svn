@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from nevow import loaders, url, tags as t
-from formless import webform, annotate
+from formless import webform, annotate, iformless
 from nevow.compy import newImplements as implements
 from nevow.compy import backwardsCompatImplements as bkwImplements
 
@@ -10,6 +10,7 @@ from main import MasterPage, BaseContent
 from web import getTemplate
 from database.interfaces import IS, ITopicsDatabase
 from users.interfaces import IA
+from web.interfaces import IMainTitle
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -17,7 +18,9 @@ def pptime(date):
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
        ctx=annotate.Context(),
-       title=annotate.String(maxlength="70",
+       title=annotate.String(required=True,
+                             requiredFailMessage="Missing Title",
+                             maxlength="70",
                              size="50"),
        content=annotate.Text(required=True,
                              requiredFailMessage="Missing body",
@@ -28,6 +31,10 @@ class IQuickReply(annotate.TypedInterface):
         """
     quick_reply = annotate.autocallable(quick_reply,
                                         action="Post Reply")
+
+def rememberTitle(result, ctx):
+    ctx.remember(result[0].get('ptitle'), IMainTitle)
+    return result
 
 class Topic(MasterPage):
     implements(IQuickReply)
@@ -42,7 +49,9 @@ class Topic(MasterPage):
         LIMIT = '1'
         OFFSET = '0'
         if len(self.args):
-            return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], LIMIT, OFFSET)
+            return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0],
+                                                        LIMIT, OFFSET
+                      ).addCallback(rememberTitle, ctx)
         return MasterPage.data_head(self, ctx, data)
 
     def childFactory(self, ctx, segment):
@@ -147,5 +156,7 @@ class TopicContent(BaseContent):
         else: return ctx.tag.clear()
 
     def render_form(self, ctx, data):
+        defaults=iformless.IFormDefaults(ctx).getAllDefaults('quick_reply')
+        defaults['title'] = "Re: "+IMainTitle(ctx, '')
         return webform.renderForms()[ctx.tag]
 

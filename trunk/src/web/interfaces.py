@@ -1,3 +1,4 @@
+
 from nevow.compy import Interface
 
 class ITimer(Interface):
@@ -5,3 +6,6 @@ class ITimer(Interface):
 
 class ILastURL(Interface):
     """ Represents the last url visited """
+
+class IMainTitle(Interface):
+    """ Represents the thread title """

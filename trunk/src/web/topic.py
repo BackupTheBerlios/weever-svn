@@ -11,6 +11,8 @@ from users import interfaces as iusers #interfaces import IA
 from web import interfaces as iweb #import IMainTitle
 from web import getTemplate, forms
 
+liveevil.DEBUG = True
+
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
@@ -31,55 +33,50 @@ def fillReply(ctx, d):
     ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
 
 class QuickForm(rend.Fragment):
-    docFactory = loaders.stan(
-        t.div(_class='quick', render=t.directive("form"))[
+    def title(self, ctx, data):
+        title = data.get('ptitle')
+        if title == '':
+            title = data.get('ttitle')
+        title = clean(title)
+        inpt = t.input(type="text", id="title_", name="title",
+                       maxlength="70", size="60", value=title)
+        return inpt
+
+    def body(self, ctx, data):
+        d = data.get('pbody').split('\r\n')
+        text = t.textarea(id="content_", name="content",
+                          cols="70", rows="8", size="70")[
+                '\n'.join(d)
+            ]
+        return text
+
+    def onclick(self, ctx, data):
+        return t.a(href="#", onclick="removeNode('replform_%s');return false;" % (data.get('pid')))[t.img(src="/theme/close.png")]
+
+    def form(self, ctx, data):
+        return t.div(_class="quick", id="replform_%s" % data.get('pid'))[
             t.form(action="./freeform_post!!quick_reply", method="post")[
                 t.h3["Quote & Reply ",
-                     t.a(render=t.directive("onclick"),href="#")[
-                         t.img(src="/theme/close.png")
-                     ]
+                     self.onclick
                 ],
                 t.fieldset[
                     t.label(_for="title_")["Title"],
-                    t.input(type="text", id="title_", name="title",
-                            maxlength="70", size="70",
-                            #id="quick_reply-title",
-                            render=t.directive("title")),
-                    
+                    self.title,
                     t.label(_for="content_")["Message",
                         t.span[" (reST formatting rules are supported)"]
                     ],
-                    t.textarea(id="content_", name="content",
-                               cols="70", rows="8", size="70",
-                               maxlength="70",
-                               #id="quick_reply-content"
-                               )[
-                        t.invisible(render=t.directive("body"))
-                    ]
+                    self.body                    
                 ],
                 t.fieldset[
-                    t.input(type="submit", name="", value="Post Reply")
+                    t.input(type="submit", name="Post Reply", value="Post Reply")
                 ]   
             ]
         ]
+    
+
+    docFactory = loaders.stan(
+         form
     )
-
-    def render_title(self, ctx, data):
-        t = data.get('ptitle')
-        if t == '':
-            t = data.get('ttitle')
-        t = clean(t)
-        return ctx.tag(value=t)
-
-    def render_body(self, ctx, data):
-        return ctx.tag[data.get('pbody')]
-        
-    def render_onclick(self, ctx, data):
-        return ctx.tag(onclick="removeNode('replform_%s'); return \
-                false;" % (data.get('pid')))
-
-    def render_form(self, ctx, data):
-        return ctx.tag(id="replform_%s" % data.get('pid'))
     
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,

@@ -22,12 +22,12 @@ class Topic(MasterPage):
         # results query.
         LIMIT = '1'
         OFFSET = '0'
-        print self.args[0]
-        return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], LIMIT, OFFSET)
+        if len(self.args):
+            return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], LIMIT, OFFSET)
+        return MasterPage.data_head(self, ctx, data)
 
     def childFactory(self, ctx, segment):
         self.args.append(segment)
-        print self.args
         return Topic(self.args, ctnt=TopicContent)
 
 class TopicContent(BaseContent):
@@ -36,45 +36,58 @@ class TopicContent(BaseContent):
 
     def __init__(self, args, data=None):
         BaseContent.__init__(self, args, data)
-        if len(self.args) == 1:
-            self.start = 0
+        if len(self.args) <= 1:
+            self.start = 1
         else:
             if self.args[1] != '':
                 try:
                     self.start = int(self.args[1])
                 except ValueError:
-                    self.start = 0
+                    self.start = 1
             else:
-                self.start = 0
-        if not self.start: self.offset = '1'
+                self.start = 1
+        if self.start == 1: self.offset = '1'
         else: self.offset = str(self.start)
 
         self.LIMIT = '10'
 
     def render_firstTopic(self, ctx, data):
         d = self.data
-        ctx.tag.fillSlots('quote', '/reply.xhtml')
-        ctx.tag.fillSlots('edit', '/edit.xhtml')
-        ctx.tag.fillSlots('permalink', '/permalink.xhtml')
-        ctx.tag.fillSlots('title', d.get('ttitle'))
-        ctx.tag.fillSlots('body', d.get('pbody'))
-        ctx.tag.fillSlots('userpref', d.get('powner')+'.xhtml')
-        ctx.tag.fillSlots('owner', d.get('powner'))
-        ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
-        return ctx.tag
+        if d:
+            ctx.tag.fillSlots('quote', '/reply.xhtml')
+            ctx.tag.fillSlots('edit', '/edit.xhtml')
+            ctx.tag.fillSlots('permalink', '/permalink.xhtml')
+            ctx.tag.fillSlots('title', d.get('ttitle'))
+            ctx.tag.fillSlots('body', d.get('pbody'))
+            ctx.tag.fillSlots('userpref', d.get('powner')+'.xhtml')
+            ctx.tag.fillSlots('owner', d.get('powner'))
+            ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
+            return ctx.tag
+        return ctx.tag.clear()["Sorry, this page is not available yet"]
 
     def data_posts(self, ctx, data):
-        return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], self.LIMIT, self.offset)
+        # remember to remove this ugly stuff once there is a
+        # 'all topics' page
+        for topic_id in self.args:
+            return ITopicsDatabase(IS(ctx)).getAllPosts(topic_id, self.LIMIT, self.offset)
+        return []
 
     def data_numPosts(self, ctx, data):
-        return ITopicsDatabase(IS(ctx)).getPostsNum(self.args[0])
+        for topic_id in self.args:
+            return ITopicsDatabase(IS(ctx)).getPostsNum(topic_id)
+        return []
 
     def render_repliesnum(self, ctx, data):
-        self.posts_num = int(data[0].get('posts_num'))-1
+        self.posts_num = 0
+        for d in data:
+            self.posts_num = int(d.get('posts_num'))-1
+            break
         return ctx.tag.clear()[self.posts_num]
 
+    def render_empty(self, ctx, data):
+        return ctx.tag.clear()
+
     def render_reply(self, ctx, data):
-        self.start = self.start + 1
         ctx.tag.fillSlots('progression', self.start)
         ctx.tag.fillSlots('quote', '/reply.xhtml')
         ctx.tag.fillSlots('edit', '/edit.xhtml')
@@ -84,6 +97,7 @@ class TopicContent(BaseContent):
         ctx.tag.fillSlots('userpref', data.get('powner')+'.xhtml')
         ctx.tag.fillSlots('owner', data.get('powner'))
         ctx.tag.fillSlots('when', pptime(data.get('pmodification')))
+        self.start = self.start + 1
         return ctx.tag
 
     def render_nextPosts(self, ctx, data):

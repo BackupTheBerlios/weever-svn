@@ -31,8 +31,10 @@ myChecker = auth.SimpleChecker(store)
 portal.registerChecker(checkers.AllowAnonymousAccess(), credentials.IAnonymous)
 portal.registerChecker(myChecker)
 
+mainPage = index.Main()
 site = appserver.NevowSite (
             resource = guard.SessionWrapper(portal)
+#            resource = main.RememberWrapper(mainPage, [(IS, store)])
             )
 
 webservice = internet.TCPServer(8080, site, backlog=511)

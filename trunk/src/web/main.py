@@ -9,11 +9,12 @@ from web import interfaces as iweb
 from database.interfaces import IS
 from users.interfaces import IA
 
+FIRST_POST,_ = range(2)
 
 class RememberWrapper:
     __implements__ = inevow.IResource,
 
-    def __init__(self, resource, remember, avatarId):
+    def __init__(self, resource, remember, avatarId=None):
         self.resource = resource
         self.remember = remember
         self.avatarId = avatarId
@@ -64,9 +65,9 @@ class MasterPage(rend.Page):
     def render_title(self, ctx, data):
         for item in data: 
             if not item.get("ttitle").endswith('Weever'):
-                return ctx.tag.clear()[data[0].get("ttitle") + '  --  Weever']
+                return ctx.tag.clear()[item.get("ttitle") + '  --  Weever']
             else:
-                return ctx.tag.clear()[data[0].get("ttitle")]
+                return ctx.tag.clear()[item.get("ttitle")]
             break
         
     def render_startTimer(self, ctx, data):
@@ -78,15 +79,12 @@ class MasterPage(rend.Page):
         return ctx.tag["%.0f" % ((now()-startTime)*1000,)]
 
     def render_content(self, ctx, data):
-        if data != 'Weever':
-            ctx.tag.fillSlots('content', self.content(self.args, data[0]))
-        else:
-            ctx.tag.fillSlots('content', self.content(self.args))
+        ctx.tag.fillSlots('content', self.content(self.args, data[FIRST_POST]))
         return ctx.tag
 
 
 class BaseContent(rend.Fragment):
-    def __init__(self, args, data=None):
+    def __init__(self, args=[], data=None):
         rend.Fragment.__init__(self)
         self.args = args
         self.data = data
@@ -94,9 +92,6 @@ class BaseContent(rend.Fragment):
 class Page404(rend.Page):
     implements(inevow.ICanHandleNotFound,)
     docFactory = loaders.xmlfile('templates/404.html')
-
-    def __init__(self):
-        rend.Page.__init__(self)
 
     def renderHTTP_notFound(self, ctx):
         inevow.IRequest(ctx).setResponseCode(404)
@@ -109,12 +104,6 @@ class Page404(rend.Page):
     def render_stopTimer(self, ctx, data):
         startTime = iweb.ITimer(ctx)
         return ctx.tag["%.0f" % ((now()-startTime)*1000,)]
-
-    def locateChild(self, ctx, segments):
-        for special_dir in 'styles images'.split():
-            if special_dir in segments:
-                segments = segments[list(segments).index(special_dir):]
-        return rend.Page.locateChild(self, ctx, segments)
 
     def render_lastLink(self, ctx, data):
         referer = inevow.IRequest(ctx).getHeader('referer')

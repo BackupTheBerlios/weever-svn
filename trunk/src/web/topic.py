@@ -213,8 +213,9 @@ class TopicContent(BaseContent):
         return ctx.tag
 
     def render_nextPosts(self, ctx, data):
-        print "CHIAMATOOOOO"
-        if self.start < self.posts_num:
+        # self.start is initialized to 1, posts_num
+        # someone MUST fix this -1 +1 jungle.
+        if (self.start-1) < self.posts_num:
             if self.offset == '1': 
                 link = url.here.child(self.start)
             else:

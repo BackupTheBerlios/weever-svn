@@ -130,11 +130,6 @@ class MasterPage(ManualFormMixin, rend.Page):
         #ct = t.cached(key=str(self.__class__), lifetime=30, scope=inevow.ISession)[ct]
         ctx.tag.fillSlots('content', ct)
         return ctx.tag
-    
-    def render_glue(self, ctx, data):
-        ctx.tag.fillSlots('glue', liveevil.glue)
-        return ctx.tag
-
 
 class BaseContent(rend.Fragment):
     def __init__(self, args=[], data=None):

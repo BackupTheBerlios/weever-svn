@@ -127,7 +127,7 @@ class MasterPage(ManualFormMixin, rend.Page):
             ct = self.content(self.args, data[FIRST_POST])
         except IndexError:
             ct = self.content(self.args, data)
-        #ct = t.cached(name=str(self.__class__), lifetime=10)[]
+        ct = t.cached(key=str(self.__class__), lifetime=30, scope=inevow.ISession)[ct]
         ctx.tag.fillSlots('content', ct)
         return ctx.tag
     

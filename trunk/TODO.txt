@@ -1,14 +1,14 @@
 Done Since 0.1:
 - Quote&Reply
-- More pervasive permission system, and more dynamic too. (branch new-db)
-- Optimize and clean here and there (imports, code reuse and such)
-- use more stored procedures/triggers (branch new-db)
-- Thread view (branch new-db)
-- Markdown support (branch new-db)
-- Quoting support (branch new-db)
-- permalinks (branch new-db)
-- handle already existing username (branch new-db)
-- binary field for storing user preferences with a pickled dict (branch new-db)
+- More pervasive permission system, and more dynamic too.
+- Optimize and clean here and there
+- use more stored procedures/triggers
+- Thread view
+- Markdown support
+- Quoting support
+- permalinks
+- handle already existing username
+- binary field for storing user preferences with a pickled dict
 
 Needed for 0.2 (priority order):
 - New header

@@ -4,7 +4,7 @@ from datetime import datetime
 from nevow import loaders, url, tags as t, liveevil, rend
 from formless import webform, annotate, iformless
 
-from utils import util, markdown
+from utils import util, napalm
 from main import MasterPage, BaseContent
 from database import interfaces as idb #import IS, ITopicsDatabase
 from users import interfaces as iusers #interfaces import IA
@@ -237,8 +237,7 @@ class Topic(MasterPage):
     def quick_reply(self, ctx, reply_to, title, content):
         if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
-        text = markdown.Markdown(content).toString()
-        print text
+        text = loaders.stan(napalm.MarkdownParser(content).parse()).load()[0]
         properties = dict(reply_to=reply_to or self.args[0],
                           owner_id=iusers.IA(ctx)['uid'],
                           creation=datetime.now(),

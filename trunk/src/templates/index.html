@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-xmlns:nevow="http://nevow.com/ns/nevow/0.1" nevow:render="startTimer" nevow:data="head">
+xmlns:n="http://nevow.com/ns/nevow/0.1" n:render="startTimer" n:data="head">
   <head>
-    <title nevow:render="title">Weever</title>
+    <title n:render="title">Weever</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -58,9 +58,9 @@ Blah blah blah...
       </div>
 
 <!-- content -->
-      <nevow:invisible nevow:render="content">
-        <nevow:slot name="content" />
-      </nevow:invisible>
+      <n:invisible n:render="content">
+        <n:slot name="content" />
+      </n:invisible>
 
       <div id="footer">
         <p>Copyright © 2004 Blah blah. Written by Valentino "dialtone" Volonghi, theme by Andrea
@@ -79,7 +79,7 @@ Blah blah blah...
         <br />
 
         Page rendered in: 
-        <nevow:invisible nevow:render="stopTimer" />
+        <n:invisible n:render="stopTimer" />
 
         ms</p>
       </div>

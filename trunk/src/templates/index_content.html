@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<nevow:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-xmlns:nevow="http://nevow.com/ns/nevow/0.1">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+xmlns:n="http://nevow.com/ns/nevow/0.1">
   <div id="content">
     <h2>Hot topics</h2>
 
@@ -18,49 +18,49 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
         </tr>
       </thead>
 
-      <tbody nevow:data="HotTopics" nevow:render="sequence">
-        <tr nevow:pattern="item" nevow:render="topicHead">
+      <tbody n:data="HotTopics" n:render="sequence">
+        <tr n:pattern="item" n:render="topicHead">
           <td>
-          	<nevow:slot name="title">
+          	<n:slot name="title">
             	<a href="topic">Donec eu tellus nec risus</a>
-          	</nevow:slot>
+          	</n:slot>
 
-          	(<nevow:slot name="posts_num">3</nevow:slot>)
+          	(<n:slot name="posts_num">3</n:slot>)
           
           </td>
 
           <td>
-            <nevow:slot name="author">rhoncus</nevow:slot>
+            <n:slot name="author">rhoncus</n:slot>
           </td>
 
           <td>
-            <nevow:slot name="section">Vita e tempo libero</nevow:slot>
+            <n:slot name="section">Vita e tempo libero</n:slot>
           </td>
 
           <td>
-            <nevow:slot name="modification">Sep 22, 2004 @ 03:14 PM</nevow:slot>
+            <n:slot name="modification">Sep 22, 2004 @ 03:14 PM</n:slot>
           </td>
         </tr>
 
-        <tr class="alt" nevow:pattern="item" nevow:render="topicHead">
+        <tr class="alt" n:pattern="item" n:render="topicHead">
           <td>
-          	<nevow:slot name="title">
+          	<n:slot name="title">
             	<a href="http://example.org">Ut sagittis urna id nulla</a>
-          	</nevow:slot>
+          	</n:slot>
 
-          	(<nevow:slot name="posts_num">3</nevow:slot>)
+          	(<n:slot name="posts_num">3</n:slot>)
           </td>
 
           <td>
-            <nevow:slot name="author">pharetra</nevow:slot>
+            <n:slot name="author">pharetra</n:slot>
           </td>
 
           <td>
-            <nevow:slot name="section">Vita e tempo libero</nevow:slot>
+            <n:slot name="section">Vita e tempo libero</n:slot>
           </td>
 
           <td>
-            <nevow:slot name="modification">Sep 21, 2004 @ 12:14 PM</nevow:slot>
+            <n:slot name="modification">Sep 21, 2004 @ 12:14 PM</n:slot>
           </td>
         </tr>
 
@@ -135,7 +135,7 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
           <td>Sep 21, 2004 @ 12:14 PM</td>
         </tr>
 
-        <tr nevow:pattern="empty">
+        <tr n:pattern="empty">
           <td>Sorry. No topics in the database</td>
 
           <td>
@@ -161,53 +161,53 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
         </tr>
       </thead>
 
-      <tbody nevow:data="Sections" nevow:render="sequence">
-        <tr nevow:pattern="item" nevow:render="section">
+      <tbody n:data="Sections" n:render="sequence">
+        <tr n:pattern="item" n:render="section">
           <td>
-          <nevow:slot name="title">
+          <n:slot name="title">
             <a href="#">Donec eu tellus nec risus</a>
-          </nevow:slot>
+          </n:slot>
 
-          (<nevow:slot name="thread_num">255</nevow:slot>) 
+          (<n:slot name="thread_num">255</n:slot>) 
  
-          <nevow:slot name="description">
+          <n:slot name="description">
             <p class="desc">Breve descrizione delle sezione...</p>
-          </nevow:slot>
+          </n:slot>
           </td>
 
           <td>
-            <nevow:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</nevow:slot>
+            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
           </td>
         </tr>
 
-        <tr nevow:pattern="empty">
+        <tr n:pattern="empty">
           <td>Sorry, no sections in the database</td>
 
           <td>
           </td>
         </tr>
 
-        <tr class="alt" nevow:pattern="item" nevow:render="section">
+        <tr class="alt" n:pattern="item" n:render="section">
           <td>
-          <nevow:slot name="title">
+          <n:slot name="title">
             <a href="#">Nec risus</a>
-          </nevow:slot>
+          </n:slot>
 
           (
-          <nevow:slot name="thread_num">89</nevow:slot>
+          <n:slot name="thread_num">89</n:slot>
 
           ) 
-          <nevow:slot name="description">
+          <n:slot name="description">
             <p class="desc">Breve descrizione delle sezione...</p>
-          </nevow:slot>
+          </n:slot>
           </td>
 
           <td>
-            <nevow:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</nevow:slot>
+            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-</nevow:invisible>
+</n:invisible>
 

@@ -1,63 +1,63 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<nevow:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-xmlns:nevow="http://nevow.com/ns/nevow/0.1">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+xmlns:n="http://nevow.com/ns/nevow/0.1">
   <div id="content">
-    <nevow:invisible nevow:render="firstTopic">
+    <n:invisible n:render="firstTopic">
       <h2>
         <span>
         <a href="reply.xhtml">
-        <nevow:attr name="href">
-          <nevow:slot name="quote" />
-        </nevow:attr>
+        <n:attr name="href">
+          <n:slot name="quote" />
+        </n:attr>
 
         Quote &amp; Reply</a>
 
         • 
         <a href="edit.xhtml">
-        <nevow:attr name="href">
-          <nevow:slot name="edit" />
-        </nevow:attr>
+        <n:attr name="href">
+          <n:slot name="edit" />
+        </n:attr>
 
         Edit</a>
 
         • 
         <a href="permalink.xhtml">
-        <nevow:attr name="href">
-          <nevow:slot name="permalink" />
-        </nevow:attr>
+        <n:attr name="href">
+          <n:slot name="permalink" />
+        </n:attr>
 
         Permalink</a>
         </span>
 
-        <nevow:slot name="title">Topic: Donec eu tellus nec risus</nevow:slot>
+        <n:slot name="title">Topic: Donec eu tellus nec risus</n:slot>
       </h2>
 
 <!-- /mainTitle -->
       <div class="entry">
 <!-- <h2><a title="Permalink for ''" rel="bookmark" href="#c1">Donec eu tellus nec risus</a></h2> -->
-        <nevow:slot name="body">Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant
+        <n:slot name="body">Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant
         morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse
         platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
         cubilia Curae; Cras mattis placerat magna. Nam tellus erat, dignissim non, nonummy non,
         sodales non, ipsum. Curabitur rutrum, enim a viverra eleifend, est magna viverra nunc, in
         fringilla lacus urna id nisl. Nam erat lacus, aliquam eget, ultrices sit amet, molestie
-        vitae, ipsum. Nunc purus erat, rutrum id, rhoncus ut, auctor vitae, tortor.</nevow:slot>
+        vitae, ipsum. Nunc purus erat, rutrum id, rhoncus ut, auctor vitae, tortor.</n:slot>
 
         <p class="datetime">Posted by 
         <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
-          <nevow:attr name="href">
-            <nevow:slot name="userpref" />
-          </nevow:attr>
+          <n:attr name="href">
+            <n:slot name="userpref" />
+          </n:attr>
 
-          <nevow:slot name="owner">rhoncus</nevow:slot>
+          <n:slot name="owner">rhoncus</n:slot>
         </a>
 
         on 
-        <nevow:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</nevow:slot>
+        <n:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</n:slot>
         </p>
       </div>
-    </nevow:invisible>
+    </n:invisible>
 
       <form style="" method="post" action="">
 <!-- <h3>Comment viewing options</h3>  -->
@@ -82,7 +82,7 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
         <input type="submit" name="" value="Apply" />
         </span>
 
-        <nevow:invisible nevow:data="numPosts" nevow:render="repliesnum">2</nevow:invisible>
+        <n:invisible n:data="numPosts" n:render="repliesnum">2</n:invisible>
 
         replies</h2>
 
@@ -92,41 +92,41 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
 <!-- fix me -->
       <p class="help">
       </p>
-    <nevow:invisible nevow:data="posts" nevow:render="sequence">
-      <div class="entry reply" nevow:pattern="item" nevow:render="reply">
+    <n:invisible n:data="posts" n:render="sequence">
+      <div class="entry reply" n:pattern="item" n:render="reply">
         <h3>
         <span>
         <a href="reply.xhtml">
-        <nevow:attr name="href">
-          <nevow:slot name="quote" />
-        </nevow:attr>
+        <n:attr name="href">
+          <n:slot name="quote" />
+        </n:attr>
 
         Quote &amp; Reply</a>
 
         • 
         <a href="edit.xhtml">
-        <nevow:attr name="href">
-          <nevow:slot name="edit" />
-        </nevow:attr>
+        <n:attr name="href">
+          <n:slot name="edit" />
+        </n:attr>
 
         Edit</a>
 
         • 
         <a href="permalink.xhtml">
-        <nevow:attr name="href">
-          <nevow:slot name="permalink" />
-        </nevow:attr>
+        <n:attr name="href">
+          <n:slot name="permalink" />
+        </n:attr>
 
         Permalink</a>
         </span>
 
-        <nevow:slot name="progression">1</nevow:slot>
+        <n:slot name="progression">1</n:slot>
 
         . 
-        <nevow:slot name="ptitle">A cool hack indeed</nevow:slot>
+        <n:slot name="ptitle">A cool hack indeed</n:slot>
         </h3>
 
-        <nevow:slot name="body">Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant
+        <n:slot name="body">Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant
         morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse
         platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
         cubilia Curae; Cras mattis placerat magna. Nam tellus erat, dignissim non, nonummy non,
@@ -151,22 +151,22 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
         tellus erat, dignissim non, nonummy non, sodales non, ipsum. Curabitur rutrum, enim a
         viverra eleifend, est magna viverra nunc, in fringilla lacus urna id nisl. Nam erat lacus,
         aliquam eget, ultrices sit amet, molestie vitae, ipsum.</p>
-        </nevow:slot>
+        </n:slot>
 
         <p class="datetime">Posted by 
         <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
-          <nevow:attr name="href">
-            <nevow:slot name="userpref" />
-          </nevow:attr>
+          <n:attr name="href">
+            <n:slot name="userpref" />
+          </n:attr>
 
-          <nevow:slot name="owner">rhoncus</nevow:slot>
+          <n:slot name="owner">rhoncus</n:slot>
         </a>
 
         on 
-        <nevow:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</nevow:slot>
+        <n:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</n:slot>
         </p>
 
-        <div class="picture" nevow:pattern="image">
+        <div class="picture" n:pattern="image">
           <h4>Attached Picture</h4>
 
           <img src="images/attached.jpg" width="330" height="405" alt="Attached picture, 17KB" />
@@ -174,15 +174,15 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
       </div>
 
 <!-- /item -->
-      <hr noshade="noshade" nevow:pattern="divider" />
+      <hr noshade="noshade" n:pattern="divider" />
 
-      <div class="browser" nevow:pattern="footer">
+      <div class="browser" n:pattern="footer">
       <a href="#">Blah</a>
 
       • 
       <a href="#">Next 10 Replies »</a>
       </div>
-    </nevow:invisible>
+    </n:invisible>
 
 <!-- /data /sequence-->
     <form action="" method="post">
@@ -210,5 +210,5 @@ xmlns:nevow="http://nevow.com/ns/nevow/0.1">
 
 <!-- /content -->
   </div>
-</nevow:invisible>
+</n:invisible>
 

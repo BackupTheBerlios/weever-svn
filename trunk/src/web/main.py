@@ -17,27 +17,6 @@ FIRST_POST = 0
 SUBMIT = '_submit'
 BUTTON = 'post_btn'
 
-class RememberWrapper:
-    __implements__ = inevow.IResource,
-
-    def __init__(self, resource, remember, avatarId={}):
-        self.resource = resource
-        self.remember = remember
-        if avatarId == ():
-            self.avatarId = {}
-        else: self.avatarId = avatarId
-
-    def locateChild(self, ctx, segments):
-        inevow.ISession(ctx).setComponent(IA, self.avatarId)
-        for interface, adapter in self.remember:
-            ctx.remember(adapter, interface)
-        return self.resource, segments
-
-    def renderHTTP(self, ctx):
-        for interface, adapter in self.remember:
-            ctx.remember(adapter, interface)
-        return self.resource.renderHTTP(ctx)
-    
 class ManualFormMixin(rend.Page):
     def locateChild(self, ctx, segments):
         # Handle the form post
@@ -69,20 +48,22 @@ class MasterPage(ManualFormMixin, rend.Page):
     child_styles = static.File(getStyles())
     child_images = static.File(getImages())
     addSlash = True
+    firstPage = False
 
     def __init__(self, data=[], ctnt=None):
-        rend.Page.__init__(self)
+        super(MasterPage, self).__init__()
         self.content = ctnt
 
         self.args = []
         if data:
             self.args.extend(data)
-
         if not self.content:
             from web.index import IndexContent
             self.content = IndexContent
 
     def beforeRender(self, ctx):
+        if self.firstPage:
+            inevow.ISession(ctx).setComponent(IA, IA(ctx))
         ctx.remember(IA(inevow.ISession(ctx)), IA)
 
     def locateChild(self, ctx, segments):

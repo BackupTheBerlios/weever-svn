@@ -8,7 +8,8 @@ from twisted.cred import error
 from nevow import inevow
 
 from database.interfaces import IUsersDatabase, IS
-from web import index, main
+from users.interfaces import IA
+from web import index
 
 def noLogout():
     return None
@@ -58,11 +59,6 @@ class SimpleRealm:
     """
     __implements__ = portal.IRealm,
 
-    def __init__(self, store):
-        #we need this to ResourceWrapper
-        self.store = store
-
-    #implements IRealm
     def requestAvatar(self, avatarId, mind, *interfaces):
         for iface in interfaces:
             if iface is inevow.IResource:
@@ -71,8 +67,11 @@ class SimpleRealm:
                 # checkers.ANONYMOUS, but I can skip this
                 # time since I already use avatarId stored
                 # in the session to parametrize page rendering
-                mainPage = index.Main()
-                resc = main.RememberWrapper(mainPage, [(IS, self.store)], avatarId)
+                resc = index.Main()
+                if avatarId == ():
+                    avatarId = {}
+                resc.remember(avatarId, IA)
+                #resc = main.RememberWrapper(mainPage, avatarId)
                 resc.realm = self
                 return (inevow.IResource, resc, noLogout)
 

@@ -13,7 +13,8 @@ from interfaces import ILastURL
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
-class Main(main.MasterPage):    
+class Main(main.MasterPage):
+    firstPage = True
     def child_topic(self, ctx, data=None):
         return topic.Topic(data, ctnt=topic.TopicContent)
 

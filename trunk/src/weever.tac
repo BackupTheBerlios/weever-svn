@@ -12,6 +12,7 @@ warnings.filterwarnings('ignore', '',
 
 from nevow import appserver
 from users import auth, guard
+from database import interfaces as idb
 from config import parser as cfgFile
 #
 # Don't touch anything above this line
@@ -40,7 +41,7 @@ application = service.Application('weever')
 store_module = reflect.namedAny('database.'+dbms+'.store')
 store = store_module.Store(adapter, dsn)
 log.msg("Database initialization succeeded")
-realm = auth.SimpleRealm(store)
+realm = auth.SimpleRealm()
 portal = portal.Portal(realm)
 myChecker = auth.SimpleChecker(store)
 portal.registerChecker(checkers.AllowAnonymousAccess(), credentials.IAnonymous)
@@ -49,6 +50,7 @@ log.msg("Auth Layer initialization succeeded")
 site = appserver.NevowSite (
             resource = guard.SessionWrapper(portal)
             )
+site.remember(store, idb.IS)
 log.msg("Site initialization succeeded")
 webservice = strports.service(netString, site)
 webservice.setServiceParent(application)

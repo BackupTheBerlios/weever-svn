@@ -14,6 +14,9 @@ def pptime(date):
 class Main(main.MasterPage):    
     def child_topic(self, ctx, data=None):
         return topic.Topic(data, ctnt=topic.TopicContent)
+
+    def child_newtopic(self, ctx, data=None):
+        return topic.NewTopic(data, ctnt=topic.NewTopicContent)
     
     #def section(self, id):
     #    return Main(id, ctnt=SectionContent)

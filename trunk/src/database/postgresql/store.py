@@ -6,7 +6,8 @@ class Store(object):
     def __init__(self, db_adapter, database, user, password):
         self.__pool = adbapi.ConnectionPool(db_adapter,
                                             database=database,
-                                            user=user, password=password)
+                                            user=user, password=password,
+                                            cp_min=3, cp_max=10)
 
     def runQuery(self, query, *args):
         d = self.__pool.runInteraction(self.mapQuery, query, args)

@@ -14,6 +14,7 @@ class MasterPage(rend.Page):
     child_styles = static.File('styles/')
     child_images = static.File('images/')
     addSlash = True
+    
 
     def __init__(self, data=None, ctnt=None):
         rend.Page.__init__(self)

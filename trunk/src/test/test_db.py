@@ -20,20 +20,20 @@ class DbTestCase(unittest.TestCase):
             for element in r:
                 success, result = element
                 if not success:
-                    print success
-                    print result
-                    raise failure.Failure("Not all deferreds where successful")
+                    raise failure.Failure()
                 
                 else:
                     # We should test for results here
-                    print result
-                    
+                    if type(result) == dict:
+                        continue
+                    else: raise failure.Failure()
+                     
         
         a = interfaces.IUsersDatabase(db_bknd).findAllUsers()
         b = interfaces.IUsersDatabase(db_bknd).findUser('dialtone')
         h = interfaces.IUsersDatabase(db_bknd).getUserWithStats('dialtone')
         d = interfaces.IUsersDatabase(db_bknd).getUsersWithStats()
-        e = interfaces.ITopicsDatabase(db_bknd).getAllPosts(3)
+        e = interfaces.ITopicsDatabase(db_bknd).getAllPosts(3, 10, 1)
         f = interfaces.ISectionsDatabase(db_bknd).getAllSections()
         g = interfaces.ISectionsDatabase(db_bknd).getSection(2)
 

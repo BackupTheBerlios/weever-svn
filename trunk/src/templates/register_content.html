@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
+  <div id="content"> 
+    <h2>Register</h2>
+        
+    <form action="" method="post">
+    
+        <fieldset>
+            <legend>Required information</legend> 
+        
+            <label for="username_">User name <span>(max. 15 characters)</span></label>
+            <input type="text" id="username_" name="username" maxlength="15" size="15" value="" />
+
+            <label for="email_">E-mail address <span>(<strong>must</strong> be valid)</span></label>
+            <input type="text" id="email_" name="email" maxlength="30" size="15" value="" />
+
+            <label for="password_">Password</label>
+            <input type="password" id="password_" name="password" maxlength="15" size="15" value="" />
+
+            <label for="retypePassword_">Retype passsword</label>
+            <input type="password" id="retypePassword_" name="retypePassword" maxlength="15" size="15" value="" />
+
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Optional personal information</legend> 
+        
+            <label for="firstName_">First name</label>
+            <input type="text" id="firstName_" name="firstName" maxlength="15" size="20" value="" />
+
+            <!-- direi proprio di togliere first e last name... -->
+            <!-- uno screenName varchar(50) e via... vedi sotto. -->
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName_" name="lastName" maxlength="15" size="20" value="" />
+            
+            <label for="username_">Screen name (optional)</label>
+            <input type="text" id="username_" name="screenName" maxlength="40" size="20" value="" />
+
+           <label for="homepage_">Home page</label>
+            <input type="text" id="homepage_" name="homepage" maxlength="60" size="20" value="" />
+
+        </fieldset>
+
+
+      <fieldset>
+        <input type="submit" name="" value="Register" />
+      </fieldset>
+    </form>    
+  </div>
+</n:invisible>

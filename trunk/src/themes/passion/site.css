@@ -1,0 +1,555 @@
+@import url("typo.css");
+@import url("form.css");
+
+/* 
+==========================================
+basic settings 
+
+TODO:
+* add IE filters
+* restyle header
+==========================================
+*/
+
+
+
+html {
+	margin: 0;
+	padding: 0;
+    
+    background: #933 url("/images/bg2.png") top left repeat-x;         
+}
+
+body { 
+    color: #333; 
+	
+    margin: 0;
+    padding: 0;      
+    
+    /*background: transparent url("../../images/adriana.jpg") top left no-repeat;  */
+
+}
+
+body, p, li, td, th, dd, dt, h1, h2, h3, h4, h5, h6 /* help browser to not forget */
+{		
+    font-family:  "Trebuchet MS", verdana, geneva, arial, sans-serif;
+    line-height: 150%;
+        
+    font-size: x-small;  	/* IE5 */
+    voice-family: "\"}\""; 
+    voice-family: inherit;
+    font-size: small; 
+}
+
+html>body {
+	font-size: small; 
+}
+
+
+a img {
+    border-style: none;
+}
+
+
+/* 
+==========================================
+main wrapper box 
+==========================================
+*/
+
+#main {	
+
+    /*opacity: 0.95;*/
+
+	border: 18px solid #e5e5e5;
+
+    background: #FAFAFA;
+
+	margin: 50px auto; 
+	padding: 0; 
+
+    width: 730px;  /* 800x600 friendly */
+    
+    /*background: transparent url("../../images/main-bg.png") top left;     */
+  background: #fafafa url("/images/content-bg.jpg") bottom right no-repeat;         
+}
+
+
+/* 
+==========================================
+header
+==========================================
+*/
+
+#header { 
+	/*height: 180px;*/
+    background: #e5e5e5;
+    
+	padding: 0;
+	padding-bottom: 10px;
+    
+    margin: 15px;
+}
+
+
+#header h1 { 
+	margin: 0;
+    padding: 0;
+
+	font: bold italic 34px/100% "Trebuchet MS", verdana, sans-serif;
+	color: #993333;
+    
+    height: 70px;
+    background: #fcc url("/images/logo.png") right top no-repeat;     
+}
+
+
+#header h1 span { 
+	display: none;
+}
+
+
+#header p {
+	margin: 0;
+	
+    padding: 0;
+    padding-left:30px;
+
+	text-transform: lowercase;
+	font: bold 18px/100% verdana, arial, sans-serif;
+			
+	color: #333;
+}
+
+/* 
+==========================================
+content
+==========================================
+*/
+
+#content{
+	padding: 0 35px;
+	margin: 0;
+	
+	/*border: 1px solid red; */ /* debug */	
+	/*margin-right: 245px; */
+
+
+  
+}
+
+#content p {
+	/* border: 1px solid red; */ /* debug */
+/*    text-align: justify;*/
+	line-height: 150%;
+
+	margin: 1em 0;		
+	padding: 0;
+}
+
+#content ul, 
+#content ol, 
+#content dl, 
+#content blockquote {
+	line-height: 150%; 
+}
+
+
+#content dd {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/* 
+------------------------------------------
+top level section title 
+------------------------------------------
+*/
+#content h2 {
+
+	font-size: 120%;
+	
+	color: #333;
+		
+	margin: 10px 0;
+	/*margin-left: -15px; */
+	/*margin-right: 15px; */
+	margin-top: 40px; 
+
+
+    /*color: #fafafa;    */
+    background: transparent  url("/images/tr-alt-bg.png") top left repeat-y;
+    
+    border-bottom: 2px solid #993333;
+    
+    padding: 5px 10px;
+    font-style: italic;
+    
+    letter-spacing: 1px;    
+}
+
+/* 
+------------------------------------------
+secondary level section title
+------------------------------------------
+*/
+#content h3 {
+
+	font-size: 110%;
+	
+	color: #333;
+		
+    /*color: #fafafa;    */
+    background: transparent url("/images/h2-bg.png") top left repeat-y;
+    
+    border-bottom: 2px solid #993333;
+
+    margin: 0;
+
+    padding: 5px 5px;
+    font-style: italic;
+        
+    letter-spacing: 1px;    
+}
+
+#content p.datetime {
+    
+	margin: 0; 	
+    padding: 0;
+	
+    font-size: 85%;
+}
+
+
+#content hr {
+    display: none;
+}
+
+
+/* 
+==========================================
+menu
+==========================================
+*/
+
+#menu{
+	
+/*    border: 1px solid #069;*/
+
+	margin: 0;
+	margin-top: 10px;
+    
+    padding: 0; 
+	
+	width: auto; 
+	voice-family: "\"}\"";   
+	voice-family: inherit;
+	width: auto; 
+}
+
+#main>#menu {
+	width: auto; 
+}
+
+
+#menu ul {
+	list-style: none;
+	
+	margin: 0;	
+	padding: 0;	
+}
+
+#menu ul li {
+
+	margin: 0;	
+	padding: 0 15px; 
+    
+    display: inline;    
+}
+
+#menu ul#nav li {
+
+}
+
+#menu ul#nav li.sep {
+    padding-left: 40px;
+}
+
+
+/* 
+==========================================
+footer
+==========================================
+*/
+
+#footer {
+	margin: 0; 
+	margin-top: 20px; 
+	padding: 15px 0;		
+
+/*	background: #903;*/
+
+	clear: both;	  /* float reset */
+	text-align: center;
+ 	
+    
+/*	border-top: 1px solid #E5E5E5;*/
+
+}
+
+#footer p {
+    font-size: 85%;
+}
+
+
+
+/* 
+==========================================
+link
+==========================================
+*/
+
+a:link, a:visited, a:hover, a:active {
+	color: #993333;
+	
+	
+	text-decoration: none;	
+    border-bottom: 1px solid  #CC6666; /* lighter */
+	
+    font-weight: bold;
+    padding: 0 2px;
+}
+
+a:visited {
+	color: #666;
+	border-bottom: 1px solid #ccc; /* lighter */
+}
+
+a:hover {
+    color: #fafafa;
+    background: #993333;
+    
+    border-bottom: none;      
+}
+
+
+
+/* 
+==========================================
+utility classes
+==========================================
+*/
+
+.cut {clear: both; line-height: 0; height: 0;}
+.hidden {display: none;}
+
+
+/* 
+==========================================
+breadcrumd, TBD
+==========================================
+*/
+
+ul#breadcrumb {
+	list-style: none;
+
+	/* reset both on Mozilla and IE */
+	padding: 0;	
+
+	margin: 0;
+	margin-bottom: 35px;		
+}
+
+ul#breadcrumb li {
+	display: inline;
+	margin-right: 5px;
+	
+	/*text-transform: lowercase;*/
+}
+
+ul#breadcrumb li:last-child {
+	font-weight: bold;
+}
+
+
+
+/* 
+------------------------------------------
+alert box
+------------------------------------------
+*/
+
+#alert {
+
+	border: 18px solid #e5e5e5;
+
+    background: #FAFAFA;
+
+    padding: 10px; 
+
+    width: 400px;
+    height: 80px;
+
+    position: absolute;
+    
+    top: 50%;
+    left: 50%;
+    
+    margin: 0;
+    margin-left: -228px;
+    margin-top: -60px;
+
+    text-align: center;
+}
+
+
+
+
+/* 
+------------------------------------------
+entry / reply
+------------------------------------------
+*/
+
+.entry {
+    
+    margin: 0;
+    margin-bottom: 20px;
+    
+    padding: 0 15px 15px 15px;  
+    border: 2px solid #fafafa;     
+}
+
+.reply {
+
+    padding: 15px;      
+    border: 2px solid #E5E5E5;
+
+    /* background: #fff;  cool but we need to fix gfx */
+}
+
+
+/* 
+==========================================
+generic table styles
+==========================================
+*/
+
+table {
+    border-collapse: collapse;
+    width:95%;
+    
+    margin: 15px 0;
+}
+
+tr.alt {
+    background: transparent url('/images/tr-alt-bg.png') top left repeat-y;    
+}
+
+thead {
+
+    border-bottom: 2px solid #993333;
+    color: #333;
+    
+    margin: 0;
+    
+    font-style: italic;
+    
+    background: transparent url('/images/h2-bg.png') top left repeat-y;    
+}
+
+tbody {        
+
+}
+
+th {    
+    
+    font-size: 110%;
+    
+    padding: 5px;    
+    /*padding-bottom: 10px;*/
+
+    font-weight: bold;
+    text-align: left;
+    
+    letter-spacing: 1px;
+}
+
+td {
+    padding: 10px 5px;
+}
+
+
+/* 
+==========================================
+misc.
+==========================================
+*/
+
+
+.help {
+    font-size: 85%;    
+}
+
+/* @@ really needed? */
+h2 span, h3 span {
+ 
+    display: block;
+    float: right;
+ 
+    padding: 0;
+	
+    font-weight: normal;
+    font-style: normal;
+    
+    font-size: small;   
+    font-size: 75%;   
+    
+    letter-spacing: 0;    
+}
+
+
+/* next... */
+.browser {
+    text-align: right;
+}
+
+
+/* 
+==========================================
+attached picture 
+==========================================
+*/
+
+.picture {
+    margin: 20px 0;    
+    
+    text-align: center;
+}
+
+.picture img {
+    border: 2px solid #E5E5E5;
+
+    margin: 0;
+    margin-top: 20px;
+}
+
+
+.picture h4 {
+    
+    text-align: left;
+
+	font-size: 110%;	
+	color: #333;
+		    
+    border-bottom: 2px solid #993333;
+
+    margin: 0;
+    padding: 5px 5px;
+    
+    font-style: italic;
+        
+    letter-spacing: 1px;    
+
+}
+

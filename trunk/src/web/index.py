@@ -7,7 +7,7 @@ from nevow import tags as t, guard
 from database import interfaces as idata
 from database.interfaces import IS
 
-from web import main, topic, newtopic, getTemplate, register
+from web import main, topic, newtopic, getTemplate, register, section
 from web import interfaces as iw
 
 def pptime(date):
@@ -31,8 +31,9 @@ class Main(main.MasterPage):
         reload(register)
         return register.Register(data, ctnt=register.RegisterContent)
     
-    #def section(self, id):
-    #    return Main(id, ctnt=SectionContent)
+    def child_section(self, ctx, data=None):
+        reload(section)
+        return section.Section(data, ctnt=section.SectionContent)
 
 class IndexContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('index_content.html'), ignoreDocType=True)

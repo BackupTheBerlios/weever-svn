@@ -4,6 +4,13 @@ from database.interfaces import IUsersDatabase, ISectionsDatabase, ITopicsDataba
 
 import queries as q
 
+def _transformResult(result):
+    print '#',result
+    if result:
+        return result[0]
+    else:
+        return None
+
 class UsersDatabase(object):
     
     implements(IUsersDatabase)
@@ -12,16 +19,9 @@ class UsersDatabase(object):
     def __init__(self, db):
         self.store = db
 
-    def _transformResult(self, result):
-        print '#',result
-        if result:
-            return result[0]
-        else:
-            return None
-
     def findUser(self, username):
         d = self.store.runQuery(q.user, username)
-        d.addCallback(self._transformResult)
+        d.addCallback(_transformResult)
         return d
     
     def findAllUsers(self):
@@ -49,6 +49,9 @@ class SectionsDatabase(object):
     
     def simpleGetAllSections(self):
         return self.store.runQuery(q.simple_all_sections)
+    
+    def getSectionInfo(self, sid):
+        return self.store.runQuery(q.simple_section, sid) #.addCallback(_transformResult)
 
     def getSection(self, sid):
         return self.store.runQuery(q.section, sid)

@@ -8,11 +8,9 @@ from formless import webform, annotate, iformless
 from main import MasterPage, BaseContent
 from users.interfaces import IA
 from database import interfaces as idb
-from web import getTemplate
+from web import getTemplate, WebException
 from web import forms
 from web import interfaces as iw
-
-choices = ['cazzi e ammazzi', 'prova1']
 
 def gatherSections(ctx, data):
     return idb.ISectionsDatabase(idb.IS(ctx)).simpleGetAllSections()
@@ -59,6 +57,8 @@ class NewTopic(MasterPage):
         return [{'ttitle':'New Topic -- Weever'}]
 
     def post_topic(self, ctx, title, content, section):
+        if not IA(ctx).get('uid'):
+            raise WebException("You must login first")
         curr = datetime.now()
         properties_topic = dict(title=title,
                                 owner_id=IA(ctx)['uid'],

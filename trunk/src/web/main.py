@@ -103,10 +103,11 @@ class MasterPage(ManualFormMixin, rend.Page):
 
     def render_title(self, ctx, data):
         for item in data: 
-            if not item.get("ttitle").endswith('Weever'):
-                return ctx.tag.clear()[item.get("ttitle") + '  --  Weever']
+            title = item.get("ttitle", None) or item.get("stitle", None)
+            if not title.endswith('Weever'):
+                return ctx.tag.clear()[title + '  --  Weever']
             else:
-                return ctx.tag.clear()[item.get("ttitle")]
+                return ctx.tag.clear()[title]
             break
 
     def render_welcome(self, ctx, data):

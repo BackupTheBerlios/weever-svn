@@ -66,6 +66,8 @@ class Topic(MasterPage):
         return Topic(self.args, ctnt=TopicContent)
     
     def quick_reply(self, ctx, title, content):
+        if not IA(ctx).get('uid'):
+            raise WebException("You must login first")
         properties = dict(thread_id=self.args[0],
                           owner_id=IA(ctx)['uid'],
                           creation=datetime.now(),

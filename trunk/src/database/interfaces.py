@@ -81,6 +81,16 @@ class ISectionsDatabase(Interface):
             }
         """
     
+    def getSectionInfo(self, sid):
+        """
+        returns a dict with these keys:
+            
+            {'sid':sid,
+             'stitle':stitle,
+             'sdesc':sdesc
+            }
+        """
+    
     def getSection(self, sid):
         """ Returns the topics in the section number sid in a sequence
         of dicts, ordered by modification date:

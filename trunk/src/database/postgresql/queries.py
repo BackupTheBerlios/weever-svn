@@ -32,13 +32,15 @@ FROM all_sections
 
 simple_all_sections = """ SELECT id AS sid, title AS stitle, description AS sdescription FROM sections """
 
+simple_section = """ SELECT id as sid, title as stitle, description as sdescription FROM sections WHERE id = %s """
+
 top_threads = """ SELECT sid, stitle, sdescription, tid, ttitle,
 towner, tnoise, tcreation, tmodification, posts_num
 FROM all_threads LIMIT %s
 """
 
 section = """ SELECT sid, stitle, sdescription, tid, ttitle,
-towner, tnoise, tcreation, posts_num
+towner, tnoise, tcreation, tmodification, posts_num
 FROM all_threads WHERE sid=%s """
 
 topic = """ SELECT ttitle, tcreation, pmodification, pid, ptid,

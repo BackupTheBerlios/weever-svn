@@ -3,7 +3,7 @@
 <n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
     <div id="content">
         <div class="panel">
-            <h2>***Section title***</h2>
+            <h2 n:render="stitle">***Section title***</h2>
             <table class="">
                 <thead>
                     <tr>
@@ -12,8 +12,8 @@
                         <th>Last changed</th>
                     </tr>
                 </thead>
-                <tbody n:data="HotTopics" n:render="sequence">
-                    <tr n:pattern="item" n:render="topicHead">
+                <tbody n:data="topics" n:render="sequence">
+                    <tr n:pattern="item" n:render="topic">
                         <td>
                         <n:slot name="title">Topic title 1</n:slot>(
                         <n:slot name="posts_num">XX</n:slot>)</td>
@@ -24,7 +24,7 @@
                             <n:slot name="modification">Sep 22, 2004 @ 03:14 PM</n:slot>
                         </td>
                     </tr>
-                    <tr class="alt" n:pattern="item" n:render="topicHead">
+                    <tr class="alt" n:pattern="item" n:render="topic">
                         <td>
                         <n:slot name="title">Topic title 2</n:slot>(
                         <n:slot name="posts_num">YYY</n:slot>)</td>

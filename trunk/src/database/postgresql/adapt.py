@@ -31,6 +31,8 @@ class UsersDatabase(object):
     def getUsersWithStats(self):
         return self.store.runQuery(q.all_users_stats)
 
+    def addUser(self, properties):
+        return self.store.runOperation(q.add_user, properties)
 
 class SectionsDatabase(object):
 
@@ -60,3 +62,9 @@ class TopicsDatabase(object):
 
     def getTopTopics(self, num):
         return self.store.runQuery(q.top_threads, num)
+
+    def addTopic(self, properties):        
+        return self.store.runOperation(q.add_topic, properties)
+
+    def addPost(self, properties):
+        return self.store.runOperation(q.add_post, properties)

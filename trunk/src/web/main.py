@@ -8,7 +8,7 @@ from nevow import inevow, tags as t
 from formless import iformless
 
 from web import interfaces as iweb, getTemplate
-from web import getStyles, getImages, WebException
+from web import getTheme, WebException
 from database.interfaces import IS
 from users.interfaces import IA
 from users import guard
@@ -45,8 +45,7 @@ class ManualFormMixin(rend.Page):
 
 class MasterPage(ManualFormMixin, rend.Page):
     docFactory = loaders.xmlfile(getTemplate('index.html'))
-    child_styles = static.File(getStyles())
-    child_images = static.File(getImages())
+    child_theme = static.File(getTheme())
     addSlash = True
     firstPage = False
 

@@ -12,11 +12,10 @@ CREATE TABLE groups (
 
 CREATE TABLE users (
     id serial NOT NULL PRIMARY KEY,
-    name varchar(15) NOT NULL,
-    surname varchar(15) NOT NULL,
+    name_surname varchar(30) NOT NULL,
     login varchar(15) NOT NULL UNIQUE,
     password varchar(15) NOT NULL UNIQUE,
-    group_id int NOT NULL default 1,
+    group_id int NOT NULL default 2,
     email varchar(30) NOT NULL UNIQUE,
     homepage varchar(60) default '',
     
@@ -74,14 +73,14 @@ CREATE VIEW posts_in_thread AS
     SELECT t.id AS tid, COUNT(*) AS posts_num FROM posts p JOIN thread t ON (p.thread_id = t.id) GROUP BY tid;
 
 CREATE VIEW users_permissions_posts AS
-    SELECT u.id AS uid, u.name AS uname, u.surname AS usurname, u.login AS ulogin, 
+    SELECT u.id AS uid, u.name_surname AS uname_surname, u.login AS ulogin, 
             u.password AS upassword, u.group_id AS ugroup_id, u.email AS uemail, 
             u.homepage AS uhomepage, g.description AS gdescription, 
             g.permissionlevel AS gpermissionlevel, up.posts_num
     FROM groups g JOIN users u ON (u.group_id = g.id) JOIN user_posts up ON (u.id = up.uid);
 
 CREATE VIEW users_permissions AS
-    SELECT u.id AS uid, u.name AS uname, u.surname AS usurname, u.login AS ulogin, 
+    SELECT u.id AS uid, u.name_surname AS uname_surname, u.login AS ulogin, 
             u.password AS upassword, u.group_id AS ugroup_id, u.email AS uemail, 
             u.homepage AS uhomepage, g.description AS gdescription, 
             g.permissionlevel AS gpermissionlevel
@@ -113,12 +112,12 @@ INSERT INTO groups(description, permissionlevel) VALUES ('Admin', 1);
 INSERT INTO groups(description, permissionlevel) VALUES ('User', 2);
 
 
-INSERT INTO users(name, surname, login, password, group_id, email, homepage) 
-                  VALUES('Valentino', 'Volonghi', 'dialtone', 'fooo1', 1, 'dialtone@gmail.com', 'http://vvolonghi.blogspot.com');
-INSERT INTO users(name, surname, login, password, group_id, email) 
-                  VALUES('Fuffo', 'Tone', 'admin', 'passw', 2, 'fuffo.tone@provider.com');
-INSERT INTO users(name, surname, login, password, group_id, email) 
-                  VALUES('Mario', 'Rossi', 'mr', 'rossi0', 3, 'mario.rossi@provider.com');
+INSERT INTO users(name_surname, login, password, group_id, email, homepage) 
+                  VALUES('Valentino Volonghi', 'dialtone', 'fooo1', 1, 'dialtone@gmail.com', 'http://vvolonghi.blogspot.com');
+INSERT INTO users(name_surname, login, password, group_id, email) 
+                  VALUES('Fuffo Tone', 'admin', 'passw', 2, 'fuffo.tone@provider.com');
+INSERT INTO users(name_surname, login, password, group_id, email) 
+                  VALUES('Mario Rossi', 'mr', 'rossi0', 3, 'mario.rossi@provider.com');
 
 INSERT INTO sections (title, description) VALUES ('Test', 'Qua si fanno tante belle prove prove');
 INSERT INTO sections (title, description) VALUES ('Intro', 'Qui ci vanno gli iniziati');

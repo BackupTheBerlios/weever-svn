@@ -8,16 +8,14 @@ try: __file__
 except NameError: __file__ = sys.executable
 
 template_path = util.sibpath(__file__,'templates')
-images_path = util.sibpath(__file__,'images')
-styles_path = util.sibpath(__file__,'styles')
+## FIXME: make passion dynamic from weever.ini
+theme_path = util.sibpath(__file__, 'themes/passion')
 
 def getTemplate(name):
     return op.join(template_path, name)
 
-def getImages():
-    return images_path
-
-def getStyles():
-    return styles_path
+def getTheme():
+    print theme_path
+    return theme_path
 
 class WebException(Exception): pass

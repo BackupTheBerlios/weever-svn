@@ -43,7 +43,7 @@ class SectionContent(BaseContent):
     
     def render_stitle(self, ctx, data):
         title = iw.IMainTitle(ctx)
-        return ctx.tag.clear()[title]
+        return ctx.tag.clear()['Section: '+title]
     
     def data_topics(self, ctx, data):
         for sid in self.args:

@@ -114,10 +114,12 @@ class MasterPage(ManualFormMixin, rend.Page):
         user = IA(ctx).get('ulogin', None)
         if user:
             ctx.tag.fillSlots('status', 'Logout (%s)' % (user,))
-            ctx.tag.fillSlots('link', url.root.child(guard.LOGOUT_AVATAR))
+            #ctx.tag.fillSlots('link', url.root.child(guard.LOGOUT_AVATAR))
+            ctx.tag.fillSlots('link', '/'+guard.LOGOUT_AVATAR)
         else:
             ctx.tag.fillSlots('status', 'Login')
-            ctx.tag.fillSlots('link', url.root.child('login'))
+            #ctx.tag.fillSlots('link', url.root.child('login'))
+            ctx.tag.fillSlots('link', '/login')
         return ctx.tag
         
     def render_startTimer(self, ctx, data):

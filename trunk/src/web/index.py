@@ -42,7 +42,8 @@ class IndexContent(main.BaseContent):
         return idata.ITopicsDatabase(IS(ctx)).getTopTopics(15)
 
     def render_topicHead(self, ctx, data):
-        link = url.root.child('topic').child(data['tid'])
+        #link = url.root.child('topic').child(data['tid'])
+        link = '/topic/%s/' % data['tid']
         ctx.tag.fillSlots('title', t.a(href=link)[data['ttitle']])
         ctx.tag.fillSlots('posts_num', int(data['posts_num'])-1)
         ctx.tag.fillSlots('author', data['towner'])
@@ -54,7 +55,8 @@ class IndexContent(main.BaseContent):
         return idata.ISectionsDatabase(IS(ctx)).getAllSections()
 
     def render_section(self, ctx, data):
-        link = url.root.child('section').child(data['sid'])
+        #link = url.root.child('section').child(data['sid'])
+        link = '/section/%s/' % data['sid']
         ctx.tag.fillSlots('title', t.a(href=link)[data['stitle']])
         ctx.tag.fillSlots('thread_num', data['thread_num'])
         ctx.tag.fillSlots('description', t.p(_class="desc")[data['sdescription']])

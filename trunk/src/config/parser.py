@@ -31,6 +31,11 @@ def getRemoteShParameters(filename):
     enabled = int(cfg.get('RemoteShell', 'enabled'))
     return enabled, port
 
+def getApplicationParameters(filename):
+    cfg = _parse(filename)
+    theme = cfg.get('Application', 'theme')
+    return theme
+
 def _parse(filename):
     parser = cp.ConfigParser()
     path = util.sibpath(__file__, 'files')

@@ -69,13 +69,14 @@ class NewTopic(MasterPage):
         if not iusers.IA(ctx).get('uid'):
             raise WebException("You must login first")
         curr = datetime.now()
+        parsed = loaders.stan(napalm.MarkdownParser(content).parse()).load()[0]
         properties = dict(title=title,
                           owner_id=iusers.IA(ctx)['uid'],
                           creation=curr,
                           modification=curr,
                           section_id=section,
                           body=content,
-                          parsed_body=loaders.stan(napalm.MarkdownParser(content).parse()).load()[0]
+                          parsed_body=unicode(parsed)
                           )
         def redirectTo(result):
             req = inevow.IRequest(ctx)

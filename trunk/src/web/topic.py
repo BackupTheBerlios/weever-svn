@@ -244,7 +244,7 @@ class Topic(MasterPage):
                           modification=datetime.now(),
                           title=title,
                           body=content,
-                          parsed_body=text
+                          parsed_body=unicode(text)
                          )
         d = idb.ITopicsDatabase(idb.IS(ctx)).addPost(properties)
         return d

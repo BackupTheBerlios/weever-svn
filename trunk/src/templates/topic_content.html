@@ -16,10 +16,20 @@
                     <n:slot name="owner">Owner</n:slot></a>
                 on 
                 <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
-                <a href="reply.xhtml">
-                <n:attr name="href">
-                    <n:slot name="quote" />
-                </n:attr>Quote &amp; Reply</a> &bull; 
+                
+                <n:invisible n:render="isLogged">
+                    <n:invisible n:pattern="True">
+                        <a href="reply.xhtml">
+                            <n:attr name="href">
+                                <n:slot name="quote" />
+                            </n:attr>Quote &amp; Reply</a> 
+                    </n:invisible>
+                    <n:invisible n:pattern="False">
+                        Please <a href="/login">login</a> or 
+                        <a href="/register">register</a> to reply
+                    </n:invisible>
+                </n:invisible>
+                &bull; 
                 <a href="edit.xhtml">
                 <n:attr name="href">
                     <n:slot name="edit" />
@@ -29,6 +39,7 @@
                     <n:slot name="permalink" />
                 </n:attr>Permalink</a></p>
                 <!-- sample form -->
+                <!--
                 <div class="quick" id="reply123">
                     <form action="" method="post">
                         <h3>Quote &amp; Reply 
@@ -47,6 +58,7 @@
                         </fieldset>
                     </form>
                 </div>
+                -->
                 <!-- /topic -->
             </div>
         </n:invisible>
@@ -81,10 +93,19 @@
                         <n:slot name="owner">Owner</n:slot>
                     </a>on 
                     <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
-                    <a href="reply.xhtml">
-                    <n:attr name="href">
-                        <n:slot name="quote" />
-                    </n:attr>Quote &amp; Reply</a> &bull; 
+                    <n:invisible n:render="isLogged">
+                        <n:invisible n:pattern="True">
+                            <a href="reply.xhtml">
+                                <n:attr name="href">
+                                    <n:slot name="quote" />
+                                </n:attr>Quote &amp; Reply</a> 
+                        </n:invisible>
+                        <n:invisible n:pattern="False">
+                            Please <a href="/login">login</a> or 
+                            <a href="/register">register</a> to reply
+                        </n:invisible>
+                    </n:invisible>  
+                    &bull; 
                     <a href="edit.xhtml">
                     <n:attr name="href">
                         <n:slot name="edit" />
@@ -105,7 +126,7 @@
                 </div>             
                 <div class="browser" n:pattern="footer">
                     <!--<a href="#">Blah</a>-->
-                    <n:invisible n:render="nextPosts">&bull; 
+                    <n:invisible n:render="nextPosts">
                     <a href="#">
                     <n:attr name="href">
                         <n:slot name="href" />
@@ -114,6 +135,8 @@
                 </div>
             </n:invisible>
             <!-- /data /sequence-->
+    <n:invisible n:render="isLogged">
+        <n:invisible n:pattern="True">
             <n:invisible n:render="form">
                 <form n:pattern="freeform-form" method="post">
                     <!-- @@ remove me -->
@@ -152,6 +175,12 @@
                     </fieldset>
                 </form>
             </n:invisible>
+        </n:invisible>
+        <n:invisible n:pattern="False">
+            <!--<p>Please <a href="/login">login</a> or
+            <a href="/register">register</a> to reply.</p>-->
+        </n:invisible>
+    </n:invisible>        
         </div>
         <!-- /content -->
     </div>

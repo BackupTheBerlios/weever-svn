@@ -42,8 +42,8 @@ class IndexContent(main.BaseContent):
         return idata.ITopicsDatabase(IS(ctx)).getTopTopics(15)
 
     def render_topicHead(self, ctx, data):
-        #link = url.root.child('topic').child(data['tid'])
-        link = '/topic/%s/' % data['tid']
+        link = url.root.clear().child('topic').child(data['tid'])
+        #link = '/topic/%s/' % data['tid']
         ctx.tag.fillSlots('title', t.a(href=link)[data['ttitle']])
         ctx.tag.fillSlots('posts_num', int(data['posts_num'])-1)
         ctx.tag.fillSlots('author', data['towner'])
@@ -55,8 +55,8 @@ class IndexContent(main.BaseContent):
         return idata.ISectionsDatabase(IS(ctx)).getAllSections()
 
     def render_section(self, ctx, data):
-        #link = url.root.child('section').child(data['sid'])
-        link = '/section/%s/' % data['sid']
+        link = url.root.clear().child('section').child(data['sid'])
+        #link = '/section/%s/' % data['sid']
         ctx.tag.fillSlots('title', t.a(href=link)[data['stitle']])
         ctx.tag.fillSlots('thread_num', data['thread_num'])
         ctx.tag.fillSlots('description', t.p(_class="desc")[data['sdescription']])
@@ -71,6 +71,16 @@ class LoginContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('login_content.html'), ignoreDocType=True)
 
     def render_login(self, ctx, data):
-        uri = '/' + guard.LOGIN_AVATAR + iw.ILastURL(inevow.ISession(ctx), '')
-        ctx.tag.fillSlots('action', uri)
+        referer = iw.ILastURL(inevow.ISession(ctx), None)
+        if referer:
+            inevow.ISession(ctx).unsetComponent(iw.ILastURL)
+            referer = "/%s%s" % (guard.LOGIN_AVATAR, referer)
+        else:
+            last_url = inevow.IRequest(ctx).getHeader('referer')
+            if last_url:
+                referer = url.URL.fromString(last_url)
+                referer.pathList(copy=False).insert(0, guard.LOGIN_AVATAR)
+            else: 
+                referer = url.root.clear().child(guard.LOGIN_AVATAR)
+        ctx.tag.fillSlots('action', referer)
         return ctx.tag

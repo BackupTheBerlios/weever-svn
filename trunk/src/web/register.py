@@ -3,7 +3,7 @@ from formless import annotate, webform, iformless
 from nevow.compy import newImplements as implements
 
 from main import MasterPage, BaseContent
-from web import getTemplate
+from web import getTemplate, interfaces as iw
 import index
 from database.interfaces import IS, ITopicsDatabase, IUsersDatabase
 from users.interfaces import IA
@@ -37,6 +37,11 @@ class Register(MasterPage):
     ## TODO: Remove this stuff
     __implements__ = MasterPage.__implements__, IRegister
 
+    def beforeRender(self, ctx):
+        session = inevow.ISession(ctx)
+        request = inevow.IRequest(ctx)
+        session.setComponent(iw.ILastURL, request.getHeader('referer') or '')
+
     def data_head(self, ctx, data):
         return [{'ttitle':'Register -- Weever'}]
 
@@ -64,7 +69,10 @@ class Register(MasterPage):
             res.remember(avatar, IA)
             s.setResourceForPortal(res, s.guard.resource.portal, res.logout)
             #
-        inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,'/')
+        uri = iw.ILastURL(inevow.ISession(ctx), None)
+        if uri:
+            inevow.ISession(ctx).unsetComponent(iw.ILastURL)
+        inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,uri or '')
         d = IUsersDatabase(IS(ctx)).addUser(properties)
         d.addCallback(success, ctx, username)        
         return d

@@ -16,6 +16,12 @@ FIRST_POST = 0
 SUBMIT = '_submit'
 BUTTON = 'post_btn'
 
+def render_isLogged(self, ctx, data):
+    true_pattern = inevow.IQ(ctx).onePattern('True')
+    false_pattern = inevow.IQ(ctx).onePattern('False')
+    if IA(ctx).get('uid'): return true_pattern or ctx.tag().clear()
+    else: return false_pattern or ctx.tag().clear()
+
 class ManualFormMixin(rend.Page):
     def locateChild(self, ctx, segments):
         # Handle the form post
@@ -61,6 +67,8 @@ class MasterPage(ManualFormMixin, rend.Page):
 
     def logout(self):
         return None
+
+    render_isLogged = render_isLogged
     
     def locateChild(self, ctx, segments):
         ctx.remember(Page404(), inevow.ICanHandleNotFound)
@@ -69,13 +77,7 @@ class MasterPage(ManualFormMixin, rend.Page):
             session.setComponent(IA, IA(ctx))
         ctx.remember(IA(session), IA)
         return super(MasterPage, self).locateChild(ctx, segments)
-    
-    def render_isLogged(self, ctx, data):
-        true_pattern = inevow.IQ(ctx).onePattern('True')
-        false_pattern = inevow.IQ(ctx).onePattern('False')
-        if IA(ctx).get('uid'): return true_pattern or ctx.tag().clear()
-        else: return false_pattern or ctx.tag().clear()
-    
+
     def onManualPost(self, ctx, method, bindingName, kwargs):
         # This is copied from rend.Page.onWebFormPost
         def redirectAfterPost(aspects):
@@ -112,14 +114,16 @@ class MasterPage(ManualFormMixin, rend.Page):
 
     def render_welcome(self, ctx, data):
         user = IA(ctx).get('ulogin', None)
-        if user:
+        if user:         
+            uri = url.URL.fromContext(ctx)
+            uri.pathList(copy=False).insert(0, guard.LOGOUT_AVATAR)
             ctx.tag.fillSlots('status', 'Logout (%s)' % (user,))
-            #ctx.tag.fillSlots('link', url.root.child(guard.LOGOUT_AVATAR))
-            ctx.tag.fillSlots('link', '/'+guard.LOGOUT_AVATAR)
+            ctx.tag.fillSlots('link', uri)
+            #ctx.tag.fillSlots('link', '/'+guard.LOGOUT_AVATAR)
         else:
             ctx.tag.fillSlots('status', 'Login')
-            #ctx.tag.fillSlots('link', url.root.child('login'))
-            ctx.tag.fillSlots('link', '/login')
+            ctx.tag.fillSlots('link', url.root.clear().child('login'))
+            #ctx.tag.fillSlots('link', '/login')
         return ctx.tag
         
     def render_startTimer(self, ctx, data):
@@ -141,6 +145,8 @@ class BaseContent(rend.Fragment):
         rend.Fragment.__init__(self)
         self.args = args
         self.data = data
+    
+    render_isLogged = render_isLogged
 
 class Page404(rend.Page):
     implements(inevow.ICanHandleNotFound)

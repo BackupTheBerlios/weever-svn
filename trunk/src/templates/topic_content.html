@@ -51,18 +51,19 @@
             </div>
         </n:invisible>
         <div id="view">
-            <form style="" method="POST" action="">
+            <form style="" method="post" action="">
             <h2>
-            <n:invisible n:data="numPosts" n:render="repliesnum">2</n:invisible>replies</h2>Sort by 
+            <n:invisible n:data="numPosts" n:render="repliesnum">YY</n:invisible>replies</h2>
+            Sort by 
             <select name="order">
                 <option value="1" selected="selected">Date - newest first</option>
                 <option value="2">Date - oldest first</option>
-            </select>with 
+            </select> with 
             <select name="comments_per_page">
                 <option value="10">10 comments</option>
                 <option value="30">30 comments</option>
                 <option value="50" selected="selected">50 comments</option>
-            </select>per page 
+            </select> per page 
             <input type="submit" name="" value="Apply" />
             <!-- <p class="help"><strong>Note</strong>: Select your preferred way to display the comments and click <i>Apply</i> to activate your changes.</p>  --></form>
             <n:invisible n:data="posts" n:render="sequence">
@@ -71,7 +72,7 @@
                         <n:slot name="ptitle">Reply title goes here.</n:slot>
                     </h3>
                     <n:slot name="body">Reply body goes here.</n:slot>
-                    <p class="datetime">Reply #<n:slot name="progression">1</n:slot> by 
+                    <p class="datetime">Reply #<n:slot name="progression">ZZ</n:slot> by 
                     <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
                         <n:attr name="href">
                             <n:slot name="userpref" />
@@ -114,9 +115,10 @@
             <!-- /data /sequence-->
             <n:invisible n:render="form">
                 <form n:pattern="freeform-form" method="post">
-                    <h2>
+                    <!-- @@ remove me -->
+                    <!-- <h2> -->
                         <n:slot name="form-description" />
-                    </h2>
+                    <!-- </h2> -->
                     <n:attr name="action">
                         <n:slot name="form-action" />
                     </n:attr>

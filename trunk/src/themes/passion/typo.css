@@ -52,10 +52,11 @@ check: http://diveintomark.org/archives/2002/05/04/the_q_tag.html
 ---------------------*/
 
 blockquote {
-   border-left: 4px double #ccc; 
    
-   padding: 0;
-   padding-left: 10px; 
+   border-top: 1px dashed #ccc; 
+   border-bottom: 1px dashed #ccc; 
+   
+   padding: 0;   
    
    margin: 0.5em 5%;
    font-style: italic;
@@ -96,7 +97,6 @@ pre, code {
 #content>pre {
 	width: auto; /* reset value for moz, opera */
 }
-
 
 
 /* mostly used to indicate markup/language keywords*/

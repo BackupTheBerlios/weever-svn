@@ -32,11 +32,13 @@ select {
     padding: 0 2px;
 }
 
+
+/*    opacity: 0.8; */
 input, textarea, select {
     font: normal small/100% "Trebuchet MS", Verdana, sans-serif;
     color: #444;
     
-    opacity: 0.8;
+
 }
 
 input[type='text'], input[type='password'], textarea {
@@ -53,12 +55,16 @@ textarea {
 
 
 input[type='text'], input[type='password'], textarea {
-    border: 2px solid #e5e5e5;    
+    border: 1px solid #ccc;    
     background: #fff;        
+    
+    background: #fff url(text-bg.gif) top left repeat-x;    
 }
 
 input[type='text']:focus, input[type='password']:focus, textarea:focus {
     border-color: #993333;
+    
+    background: #fff;        
 }
 
 input[type='button'], input[type='submit'], input[type='password'] {
@@ -71,14 +77,8 @@ input[type='button']:hover, input[type='submit']:hover {
 }
 
 
-/*
-===========================================
-Form Errors
-===========================================
-*/
-.error {
-    color:#993333;
-}
+
+
 
 
 

@@ -1,86 +1,64 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-xmlns:n="http://nevow.com/ns/nevow/0.1" n:render="startTimer" n:data="head">
-   <head>
-    <title n:render="title">Weever</title>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="Weever demo" />
-    <link rel="icon" href="/theme/favicon.png" type="image/png" />
-    <link rel="stylesheet" type="text/css" href="/theme/site.css" title="Theme" />
-  </head>
-
-  <body>
-    <a class="hidden" href="#content">Skip to content</a>
-
-    <div id="main">
-      <div id="header">
-        <h1><span>Weever</span></h1>
-        <!--<p>The forum of your internet</p> -->
-
-<!-- menu -->
-      <div id="menu">
-        <ul id="nav">
-          <li>
-            <a title="" href="/newtopic">New Topic</a>
-          </li>
-
-          <li class="sep">
-            <a title="" href="/">Home</a>
-          </li>
-          <n:invisible n:render="welcome">
-            <li>
-              <a href="#">
-                <n:attr name="href">
-                  <n:slot name="link" />
-                </n:attr>
-              <n:slot name="status" /></a>
-            </li>
-          </n:invisible>
-          <li>
-            <a title="" href="/register">Register</a>
-          </li>
-
-          <li>
-            <a title="" href="#">Search</a>
-          </li>
-        </ul>
-
-<!-- /menu -->
-      </div>
-
-<!-- /header -->
-      </div>
-
-<!-- content -->
-      <n:invisible n:render="content">
-        <n:slot name="content" />
-      </n:invisible>
-
-      <div id="footer">
-        <p>Copyright © 2004 Valentino "dialtone" Volonghi and Andrea "deelan" Peltrin
-        <br />
-
-        <a href="http://twistedmatrix.com/">Twisted</a>
-
-        | 
-        <a href="http://nevow.org/">Nevow</a>
-
-        | 
-        <a href="http://validator.w3.org/check/referer">XHTML</a>
-
-        | CSS3 
-        <br />
-
-        Page served in: 
-        <n:invisible n:render="stopTimer" />
-
-        ms</p>
-      </div>
-    </div>
-  </body>
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1" n:render="startTimer" n:data="head">
+    <head>
+        <title n:render="title">Weever</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="Weever demo" />
+        <link rel="icon" href="/theme/favicon.png" type="image/png" />
+        <link rel="stylesheet" type="text/css" href="/theme/site.css" title="Theme" />
+    </head>
+    <body>
+        <a class="hidden" href="#content">Skip to content</a>
+        <div id="main">
+            <div id="header">
+                <h1>
+                    <span>Weever</span>
+                </h1>
+                <!--<p>The forum of your internet</p> -->
+                <!-- menu -->
+                <div id="menu">
+                    <ul id="nav">
+                        <li>
+                            <a title="" href="/newtopic">New Topic</a>
+                        </li>
+                        <li class="sep">
+                            <a title="" href="/">Home</a>
+                        </li>
+                        <n:invisible n:render="welcome">
+                            <li>
+                                <a href="#">
+                                    <n:attr name="href">
+                                        <n:slot name="link" />
+                                    </n:attr>
+                                    <n:slot name="status" />
+                                </a>
+                            </li>
+                        </n:invisible>
+                        <li>
+                            <a title="" href="/register">Register</a>
+                        </li>
+                        <li>
+                            <a title="" href="#">Search</a>
+                        </li>
+                    </ul>
+                    <!-- /menu -->
+                </div>
+                <!-- /header -->
+            </div>
+            <!-- content -->
+            <n:invisible n:render="content">
+                <n:slot name="content" />
+            </n:invisible>
+            <div id="footer">
+                <p>Copyright © 2004 Valentino "dialtone" Volonghi and Andrea "deelan" Peltrin 
+                <br />
+                <a href="http://twistedmatrix.com/">Twisted</a>| 
+                <a href="http://nevow.org/">Nevow</a>| 
+                <a href="http://validator.w3.org/check/referer">XHTML</a>| CSS3 
+                <br />Page served in: 
+                <n:invisible n:render="stopTimer" />ms</p>
+            </div>
+        </div>
+    </body>
 </html>
-
-
-

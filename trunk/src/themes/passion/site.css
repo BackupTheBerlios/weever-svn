@@ -17,7 +17,8 @@ html {
 	margin: 0;
 	padding: 0;
     
-    background: #933 url("bg.jpg") top left repeat-x;         
+    background: #eee url("bg2.jpg") bottom right no-repeat;         
+    
 }
 
 body { 
@@ -28,12 +29,15 @@ body {
     
     /*background: transparent url("/theme/adriana.jpg") top left no-repeat;  */
 
+    border-top: 10px solid #933;
 }
 
 body, p, li, td, th, dd, dt, h1, h2, h3, h4, h5, h6 /* help browser to not forget */
 {		
     font-family:  "Trebuchet MS", verdana, geneva, arial, sans-serif;
+    font-weight:  normal;
     line-height: 150%;
+
         
     font-size: x-small;  	/* IE5 */
     voice-family: "\"}\""; 
@@ -46,10 +50,6 @@ html>body {
 }
 
 
-a img {
-    border-style: none;
-}
-
 
 /* 
 ==========================================
@@ -61,17 +61,17 @@ main wrapper box
 
     /*opacity: 0.95;*/
 
-	border: 18px solid #e5e5e5;
+	/*border: 18px solid #e5e5e5;*/
 
-    background: #FAFAFA;
+/*    background: #fff;*/
 
-	margin: 50px auto; 
+	margin: 30px auto; 
 	padding: 0; 
 
     width: 730px;  /* 800x600 friendly */
     
     /*background: transparent url("/theme/main-bg.png") top left;     */
-  background: #fafafa url("content-bg.jpg") bottom right no-repeat;         
+  /*background: #fafafa url("content-bg.jpg") bottom right no-repeat;         */
 }
 
 
@@ -167,25 +167,20 @@ top level section title
 */
 #content h2 {
 
-	font-size: 120%;
+	font-size: 150%;
 	
 	color: #333;
 		
-	margin: 10px 0;
-	/*margin-left: -15px; */
-	/*margin-right: 15px; */
-	margin-top: 40px; 
-
-
-    /*color: #fafafa;    */
-    background: transparent  url("tr-alt-bg.png") top left repeat-y;
+	margin: 0;    
+/*    border: 1px solid #ddd;*/
     
-    border-bottom: 2px solid #993333;
+    border-style: none;
+    border-bottom: 2px solid #333;
     
-    padding: 5px 10px;
-    font-style: italic;
+    padding: 5px;
+    font-style: italic;    
     
-    letter-spacing: 0;    
+    letter-spacing: 0.2em;
 }
 
 /* 
@@ -193,24 +188,9 @@ top level section title
 secondary level section title
 ------------------------------------------
 */
-#content h3 {
 
-	font-size: 110%;
-	
-	color: #333;
-		
-    /*color: #fafafa;    */
-    background: transparent url("h2-bg.png") top left repeat-y;
-    
-    border-bottom: 2px solid #993333;
+/* ... */
 
-    margin: 0;
-
-    padding: 5px 5px;
-    font-style: italic;
-        
-    letter-spacing: 0;    
-}
 
 #content p.datetime {
     
@@ -332,7 +312,15 @@ a:hover {
     border-bottom: none;      
 }
 
+a img {
+    border-style: none;  
+    vertical-align: middle;
+}
 
+h3 a:link, h3 a:visited, h3 a:hover, h3 a:active {
+    border-style: none;
+    background: transparent;
+}
 
 /* 
 ==========================================
@@ -381,14 +369,14 @@ alert box
 
 #alert {
 
-	border: 18px solid #e5e5e5;
+	border: 15px solid #999;
 
-    background: #FAFAFA;
+    background: #fff url(alert-bg.jpg) top left no-repeat;
 
     padding: 10px; 
 
     width: 400px;
-    height: 80px;
+    min-height: 80px;
 
     position: absolute;
     
@@ -411,23 +399,189 @@ entry / reply
 ------------------------------------------
 */
 
-.entry {
+.topic {
     
-    margin: 0;
-    margin-bottom: 20px;
+    position: relative;
     
-    padding: 0 15px 15px 15px;  
-    border: 2px solid #fafafa;     
+    margin: 0;    
+    margin-bottom: 40px;         
+
+    background: #fff;
+
+    padding: 15px 20px;  
+    border: 1px solid #ccc;
+
+    border-bottom: 2px solid #999;
+    border-right: 2px solid #999;
+	
 }
+
+
+
+#content .topic h2 {
+    font-weight:  bold;    
+	font-size: 110%;
+	
+    position: absolute;
+    
+    top: -12px;
+    left: 10px;
+    
+	color: #330000;
+    margin: 0;
+    padding: 2px 5px;
+
+            
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #ccc;        
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+        
+}
+
 
 .reply {
 
-    padding: 15px;      
-    border: 2px solid #E5E5E5;
+    /* @@ remove dependency with .topic */
+    margin-top: 30px;         
 
-    /* background: #fff;  cool but we need to fix gfx */
+    border: 1px solid #fcc;
+
+    border-bottom: 2px solid #CC9999;
+    border-right: 2px solid #CC9999;
+
 }
 
+#content .reply h3 {
+    font-weight:  bold;        
+	font-size: 100%;
+	
+    position: absolute;
+    
+    top: -12px;
+    left: 10px;
+    
+	color: #330000;
+    padding: 2px 5px;
+    margin: 0;
+
+            
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #fcc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #fcc;
+    
+    border-top: 1px solid #fcc;
+    border-bottom: 1px solid #c99;
+    border-right: 1px solid #c99;
+
+}
+
+/* quick reply sub-form */
+
+.quick {
+
+    margin: 20px 2em;
+    margin-top: 40px;
+    
+    padding: 10px 20px;            
+    position: relative;    
+    
+    border: 1px solid #999;
+        
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+
+    background: #eee url(bg2.gif) top left;
+    
+}
+
+
+.quick h3 {
+
+    font-weight:  bold;    
+	font-size: 100%;
+	
+    position: absolute;
+    
+    top: -15px;
+    left: 10px;
+    
+	color: #300;
+    margin: 0;
+    padding: 2px 5px;
+        
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #ccc;        
+    
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+
+
+}
+
+/* view options block */
+#view {
+
+    position: relative;
+
+    margin: 0;    
+    margin-bottom: 20px;
+    
+    padding: 15px 20px;  
+    
+    border: 1px solid #ccc;
+
+    border-bottom: 2px solid #999;
+    border-right: 2px solid #999;
+
+    background: #FFF2F2;
+
+
+}
+
+#view h2 {
+
+    font-weight:  bold;    
+	font-size: 110%;
+	
+    position: absolute;
+    
+    top: -12px;
+    right: 10px;
+    
+	color: #330000;
+    margin: 0;
+    padding: 2px 5px;
+
+            
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #ccc;
+
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999; 
+
+}
 
 /* 
 ==========================================
@@ -437,13 +591,16 @@ generic table styles
 
 table {
     border-collapse: collapse;
-    width:95%;
+    width:100%;
     
     margin: 15px 0;
+    
+    background: #fff;    
 }
 
 tr.alt {
-    background: transparent url('tr-alt-bg.png') top left repeat-y;    
+    /*background: transparent url('tr-alt-bg.png') top left repeat-y;    */
+    background: #eee;    
 }
 
 thead {
@@ -455,7 +612,8 @@ thead {
     
     font-style: italic;
     
-    background: transparent url('h2-bg.png') top left repeat-y;    
+    /*background: transparent url('h2-bg.png') top left repeat-y;    */
+    background: transparent;
 }
 
 tbody {        
@@ -464,7 +622,7 @@ tbody {
 
 th {    
     
-    font-size: 110%;
+    font-size: 100%;
     
     padding: 5px;    
     /*padding-bottom: 10px;*/
@@ -492,6 +650,7 @@ misc.
 }
 
 /* @@ really needed? */
+/*
 h2 span, h3 span {
  
     display: block;
@@ -508,10 +667,64 @@ h2 span, h3 span {
     letter-spacing: 0;    
 }
 
-
+*/
 /* next... */
 .browser {
     text-align: right;
+}
+
+
+/* 
+==========================================
+
+==========================================
+*/
+
+
+.panel {
+    
+    position: relative;
+    
+    margin: 0;    
+    margin-bottom: 40px;         
+
+    background: #fff;
+
+    padding: 15px 20px;  
+    border: 1px solid #ccc;
+
+    border-bottom: 2px solid #999;
+    border-right: 2px solid #999;
+	
+}
+
+
+
+#content .panel h2 {
+    font-weight:  bold;    
+	font-size: 110%;
+	
+    position: absolute;
+    
+    top: -12px;
+    left: 10px;
+    
+	color: #330000;
+    margin: 0;
+    padding: 2px 5px;
+
+            
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #ccc;        
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+        
 }
 
 
@@ -522,34 +735,60 @@ attached picture
 */
 
 .picture {
-    margin: 20px 0;    
+    margin: 20px 2em;    
+    margin-top: 40px;
+    
+    padding: 20px 0;    
     
     text-align: center;
+    
+    position: relative;    
+    
+    border: 1px solid #999;
+        
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+
+/*    background: #eee url("attached-bg.gif") top left no-repeat;    */
+    
+    background: #eee url(bg2.gif) top left;    
 }
 
 .picture img {
-    border: 2px solid #E5E5E5;
+    border: 10px solid #fff;
 
     margin: 0;
-    margin-top: 20px;
+    padding: 0;
+
 }
 
 
 .picture h4 {
+
+    font-weight:  bold;    
+	font-size: 100%;
+	
+    position: absolute;
     
-    text-align: left;
-
-	font-size: 110%;	
-	color: #333;
-		    
-    border-bottom: 2px solid #993333;
-
+    top: -15px;
+    right: 10px;
+    
+	color: #300;
     margin: 0;
-    padding: 5px 5px;
-    
-    font-style: italic;
+    padding: 2px 5px;
         
-    letter-spacing: 0;    
+    font-style: italic;
+    
+    letter-spacing: 0;    /* reset */
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+    
+    border: 1px solid #ccc;        
+    
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+
 
 }
 

@@ -39,37 +39,23 @@ class MasterPage(rend.Page):
     addSlash = True
     
 
-    def __init__(self, data=None, ctnt=None):
+    def __init__(self, data=[], ctnt=None):
         rend.Page.__init__(self)
         self.content = ctnt
 
-        self.args = data
+        self.args = []
+        if data:
+            self.args.extend(data)
 
         if not self.content:
             from web.index import IndexContent
             self.content = IndexContent
 
-    def locateChild(self, ctx, segments):        
+    def beforeRender(self, ctx): 
         ctx.remember(IS(ctx), IS)
-        
-        ctx.remember(notFound, inevow.ICanHandleNotFound)
-        #ctx.remember(Page500, inevow.ICanHandleException)
 
-        # This is a redirect to root for style and design stuff
-        # This must be kept as the first thing in locateChild
-        # to avoid errors while rendering links with final slashes
-        for special_dir in 'styles images'.split():
-            if special_dir in segments:
-                segments = segments[list(segments).index(special_dir):]
-
-        if len(segments) >= 2:
-            pag = segments[0]
-            pivot = segments[1]
-            if pivot.isdigit():
-                page = getattr(self, "child_"+pag, None)
-                if page:
-                    return page(ctx, segments[1:]), ()
-
+    def locateChild(self, ctx, segments):
+        ctx.remember(Page404(), inevow.ICanHandleNotFound)
         return rend.Page.locateChild(self, ctx, segments)
 
     def data_head(self, ctx, data):
@@ -136,5 +122,3 @@ class Page404(rend.Page):
             return ctx.tag[t.a(href=referer)['Back']]
         else:
             return ctx.tag[t.a(href=url.root)['To Main Page']]
-
-notFound = Page404()

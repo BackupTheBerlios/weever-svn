@@ -22,7 +22,13 @@ class Topic(MasterPage):
         # results query.
         LIMIT = '1'
         OFFSET = '0'
+        print self.args[0]
         return ITopicsDatabase(IS(ctx)).getAllPosts(self.args[0], LIMIT, OFFSET)
+
+    def childFactory(self, ctx, segment):
+        self.args.append(segment)
+        print self.args
+        return Topic(self.args, ctnt=TopicContent)
 
 class TopicContent(BaseContent):
     docFactory = loaders.xmlfile('templates/topic_content.html',

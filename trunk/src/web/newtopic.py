@@ -10,6 +10,7 @@ from users.interfaces import IA
 from database import interfaces as idb
 from web import getTemplate
 from web import forms
+from web import interfaces as iw
 
 choices = ['cazzi e ammazzi', 'prova1']
 
@@ -48,6 +49,11 @@ class NewTopic(MasterPage):
 
     ## TODO: remove this stuff 
     __implements__ = MasterPage.__implements__, INewTopic
+
+    def beforeRender(self, ctx):
+        if not IA(ctx).get('uid'):
+            inevow.ISession(ctx).setComponent(iw.ILastURL, '/newtopic')
+            return inevow.IRequest(ctx).redirect('/login')
 
     def data_head(self, ctx, data):
         return [{'ttitle':'New Topic -- Weever'}]

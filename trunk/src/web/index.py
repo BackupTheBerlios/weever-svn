@@ -2,18 +2,20 @@
 from twisted.python import util
 
 from nevow import rend, loaders, url, inevow
-from nevow import tags as t
+from nevow import tags as t, guard
 
 from database import interfaces as idata
 from database.interfaces import IS
 
 from web import main, topic, newtopic, getTemplate, register
+from web import interfaces as iw
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
 
 class Main(main.MasterPage):
     firstPage = True
+    
     def child_topic(self, ctx, data=None):
         reload(topic)
         return topic.Topic(data, ctnt=topic.TopicContent)
@@ -64,5 +66,8 @@ class Login(main.MasterPage):
 
 class LoginContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('login_content.html'), ignoreDocType=True)
-    
-    
+
+    def render_login(self, ctx, data):
+        uri = '/' + guard.LOGIN_AVATAR + iw.ILastURL(inevow.ISession(ctx), '')
+        ctx.tag.fillSlots('action', uri)
+        return ctx.tag

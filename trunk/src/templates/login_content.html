@@ -6,10 +6,11 @@
     
 
         <div class="panel">
+
     
-        <h2>Log In Required</h2>
-        <p>Please enter your username and password to log in.</p>
-        <form action="/__login__" method="post">
+        <h2>Please enter your username and password to log in</h2>
+        <form action="/__login__" method="post" n:render="login">
+            <n:attr name="action"> <n:slot name="action" /> </n:attr>
             <fieldset>
                 <!-- <legend>Auth requires</legend>  -->
                 <label for="username_">Username</label>

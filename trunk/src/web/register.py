@@ -55,10 +55,15 @@ class Register(MasterPage):
             d.addCallback(login, ctx)
             return d
         def login(avatar, ctx):
+            # if using new guard
+            # s = inevow.ISession(ctx)
+            # creds = credentials.UsernamePassword(avatar['ulogin'], avatar['upassword'])
+            # s.setComponent(creds, ignoreClass=True)
             s = inevow.ISession(ctx)
             res = index.Main()
             res.remember(avatar, IA)
             s.setResourceForPortal(res, s.guard.resource.portal, res.logout)
+            #
         inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,'/')
         d = IUsersDatabase(IS(ctx)).addUser(properties)
         d.addCallback(success, ctx, username)        

@@ -70,6 +70,12 @@ class MasterPage(ManualFormMixin, rend.Page):
         ctx.remember(IA(session), IA)
         return super(MasterPage, self).locateChild(ctx, segments)
     
+    def render_isLogged(self, ctx, data):
+        true_pattern = inevow.IQ(ctx).onePattern('True')
+        false_pattern = inevow.IQ(ctx).onePattern('False')
+        if IA(ctx).get('uid'): return true_pattern or ctx.tag().clear()
+        else: return false_pattern or ctx.tag().clear()
+    
     def onManualPost(self, ctx, method, bindingName, kwargs):
         # This is copied from rend.Page.onWebFormPost
         def redirectAfterPost(aspects):
@@ -107,7 +113,7 @@ class MasterPage(ManualFormMixin, rend.Page):
         user = IA(ctx).get('ulogin', None)
         if user:
             ctx.tag.fillSlots('status', 'Logout (%s)' % (user,))
-            ctx.tag.fillSlots('link', url.here.child(guard.LOGOUT_AVATAR))
+            ctx.tag.fillSlots('link', url.root.child(guard.LOGOUT_AVATAR))
         else:
             ctx.tag.fillSlots('status', 'Login')
             ctx.tag.fillSlots('link', url.root.child('login'))

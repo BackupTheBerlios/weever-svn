@@ -13,6 +13,7 @@ def pptime(date):
 
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
+       ctx=annotate.Context(),
        title=annotate.String(maxlength="70",
                              size="50"),
        content=annotate.Text(required=True,
@@ -134,6 +135,6 @@ class TopicContent(BaseContent):
     def render_form(self, ctx, data):
         return webform.renderForms('content')[ctx.tag]
 
-    def quick_reply(self, title, content):
+    def quick_reply(self, ctx, title, content):
         print title, content
 

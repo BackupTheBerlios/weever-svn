@@ -12,6 +12,7 @@ noPwd = "Password Mismatch or missing password"
 
 class IRegister(annotate.TypedInterface):
     def register(self,
+                 ctx=annotate.Context(),
                  username=annotate.String(required=True,
                                           requiredFailMessage=noUsername
                                           ),
@@ -44,7 +45,7 @@ class RegisterContent(BaseContent):
     docFactory = loaders.xmlfile(getTemplate('register_content.html'),
                                  ignoreDocType=True)
 
-    def register(self, username, email, password, screename,homepage):
+    def register(self, ctx, username, email, password, screename,homepage):
         print username, email, password, screename, homepage
 
     def render_form(self, ctx, data):

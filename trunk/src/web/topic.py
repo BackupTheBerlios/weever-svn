@@ -7,7 +7,7 @@ from nevow.compy import newImplements as implements
 from nevow.compy import backwardsCompatImplements as bkwImplements
 
 from main import MasterPage, BaseContent
-from web import getTemplate
+from web import getTemplate, forms
 from database.interfaces import IS, ITopicsDatabase
 from users.interfaces import IA
 from web.interfaces import IMainTitle
@@ -18,7 +18,7 @@ def pptime(date):
 class IQuickReply(annotate.TypedInterface):
     def quick_reply(self,
        ctx=annotate.Context(),
-       title=annotate.String(required=True,
+       title=forms.StyleString(required=True,
                              requiredFailMessage="Missing Title",
                              maxlength="70",
                              size="70"),

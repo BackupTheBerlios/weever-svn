@@ -16,6 +16,7 @@ Needed for 0.2:
 - add pgasync support
 - handle already existing username/password
 - use more stored procedures/triggers
+- make new topic link, aware of the section from which the click came from
 
 Future:
 - Thread view

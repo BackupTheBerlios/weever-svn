@@ -52,8 +52,8 @@ portal.registerChecker(myChecker)
 log.msg("Auth Layer initialization succeeded in %.2f" % (now()-t))
 t = now()
 site = appserver.NevowSite (
-            resource = guard.SessionWrapper(portal)
-            )
+            resource = guard.SessionWrapper(portal), 
+            logPath='web.log')
 site.remember(store, idb.IS)
 log.msg("Site initialization succeeded in %.2f" % (now()-t))
 t = now()

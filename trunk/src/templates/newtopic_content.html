@@ -17,23 +17,19 @@
                     </n:attr>
                     <n:invisible n:pattern="argument!!title">
                         <!-- <legend>Topic</legend>  -->
-                        <label for="title_">Title</label>
-                        <span class="error">
-                            <n:slot name="error" />
-                        </span><br />
+                        <label for="title_">Title <span class="error"><n:slot name="error" /></span></label>
                         <n:slot name="input" />
                     </n:invisible>
                     <n:invisible n:pattern="argument!!content">
-                        <label for="content_">Message 
-                        <span>(Markdown formatting rules are supported)</span></label>
-                        <span class="error">
-                            <n:slot name="error" />
-                        </span><br />
+                        <label for="content_">Message text <span class="error"><n:slot name="error" /></span></label>
                         <n:slot name="input" />
+                        <p class="help"><a href="http://daringfireball.net/projects/markdown/basics">Markdown</a> formatting rules are supported.</p>
                     </n:invisible>
+                    
                     <fieldset n:pattern="argument!!section">Topic will be be created in 
                     <n:slot name="error" />
                     <n:slot name="input" /></fieldset>
+                    
                     <!-- <n:slot name="form-arguments"/> -->
                     <fieldset>
                         <n:slot name="argument!!title" />

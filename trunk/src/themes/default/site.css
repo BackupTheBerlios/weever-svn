@@ -2,8 +2,6 @@
 @import url("form.css");
 
 
-
-
 /* 
 ==========================================
 basic settings 
@@ -693,9 +691,27 @@ misc.
 */
 
 
-.help {
+/* help text form labels */
+#content p.help {
     font-size: 85%;    
+
+    
+    margin: 0;
+    padding: 0;
+    
+    color: #999;
 }
+
+#content .error {
+
+    color: #fff;
+    background: #993333;
+    
+    padding: 0;
+    
+    font-weight: bold;
+}
+
 
 /* @@ really needed? */
 /*
@@ -839,4 +855,5 @@ attached picture
 
 
 }
+
 

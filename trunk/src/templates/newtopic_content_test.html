@@ -5,7 +5,7 @@
         <title>***Titolo thread*** -- Weever</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="Weever demo" />
-        <link rel="stylesheet" type="text/css" href="/themes/passion/site.css" title="" />
+        <link rel="stylesheet" type="text/css" href="/themes/default/site.css" title="" />
     </head>
     <body>
         <a class="hidden" href="#content">Skip to content</a>
@@ -64,25 +64,19 @@ CONTENT STARTS HERE
                             </n:attr>
                             <n:invisible n:pattern="argument!!title">
                                 <!-- <legend>Topic</legend>  -->
-                                <label for="title_">Title</label>
-                                <span class="error">
-                                    <n:slot name="error" />
-                                </span>
-                                <n:slot name="input" />
+                                <label for="title_">Title <span class="error"><n:slot name="error" />Error message here</span></label>
                                 <input type="text" />
                             </n:invisible>
                             <n:invisible n:pattern="argument!!content">
-                                <label for="content_">Message 
-                                <span>(reST formatting rules are supported)</span></label>
-                                <span class="error">
-                                    <n:slot name="error" />
-                                </span>
-                                <n:slot name="input" />
-                                <textarea></textarea>
+                                <label for="content_">Message text <span class="error"><n:slot name="error" />Error message here</span></label>
+                                <textarea cols="50" rows="10"></textarea>
+                                <p class="help"><a href="http://daringfireball.net/projects/markdown/basics">Markdown</a> formatting rules are supported.</p>
                             </n:invisible>
+                            
                             <fieldset n:pattern="argument!!section">Topic will be be created in 
                             <n:slot name="error" />
                             <n:slot name="input" /></fieldset>
+                            
                             <!-- <n:slot name="form-arguments"/> -->
                             <fieldset>
                                 <n:slot name="argument!!title" />

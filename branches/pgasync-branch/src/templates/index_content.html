@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+xmlns:n="http://nevow.com/ns/nevow/0.1">
+  <div id="content">
+    <h2>Hot topics</h2>
+
+    <table class="">
+      <thead>
+        <tr>
+          <th>Topic</th>
+
+          <th>Author</th>
+
+          <th>Section</th>
+
+          <th>Last changed</th>
+        </tr>
+      </thead>
+
+      <tbody n:data="HotTopics" n:render="sequence">
+        <tr n:pattern="item" n:render="topicHead">
+          <td>
+          	<n:slot name="title">
+            	<a href="topic">Donec eu tellus nec risus</a>
+          	</n:slot>
+
+          	(<n:slot name="posts_num">3</n:slot>)
+          
+          </td>
+
+          <td>
+            <n:slot name="author">rhoncus</n:slot>
+          </td>
+
+          <td>
+            <n:slot name="section">Vita e tempo libero</n:slot>
+          </td>
+
+          <td>
+            <n:slot name="modification">Sep 22, 2004 @ 03:14 PM</n:slot>
+          </td>
+        </tr>
+
+        <tr class="alt" n:pattern="item" n:render="topicHead">
+          <td>
+          	<n:slot name="title">
+            	<a href="http://example.org">Ut sagittis urna id nulla</a>
+          	</n:slot>
+
+          	(<n:slot name="posts_num">3</n:slot>)
+          </td>
+
+          <td>
+            <n:slot name="author">pharetra</n:slot>
+          </td>
+
+          <td>
+            <n:slot name="section">Vita e tempo libero</n:slot>
+          </td>
+
+          <td>
+            <n:slot name="modification">Sep 21, 2004 @ 12:14 PM</n:slot>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+          <a href="http://example.com">Vivamus rhoncus pharetra massa.</a>
+
+          (16)</td>
+
+          <td>risus</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 19, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr class="alt">
+          <td>Ut sagittis urna id nulla</td>
+
+          <td>pharetra</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 21, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr>
+          <td>
+          <a href="http://example.com">Vivamus rhoncus pharetra massa.</a>
+
+          (16)</td>
+
+          <td>risus</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 19, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr class="alt">
+          <td>Ut sagittis urna id nulla</td>
+
+          <td>pharetra</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 21, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr>
+          <td>
+          <a href="topic">Donec eu tellus nec risus</a>
+
+          (3)</td>
+
+          <td>rhoncus</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 22, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr class="alt">
+          <td>
+            <a href="http://example.org">Ut sagittis urna id nulla</a>
+          </td>
+
+          <td>pharetra</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 21, 2004 @ 12:14 PM</td>
+        </tr>
+
+        <tr n:pattern="empty">
+          <td>Sorry. No topics in the database</td>
+
+          <td>
+          </td>
+
+          <td>
+          </td>
+
+          <td>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Sections</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+
+          <th>Last changed</th>
+        </tr>
+      </thead>
+
+      <tbody n:data="Sections" n:render="sequence">
+        <tr n:pattern="item" n:render="section">
+          <td>
+          <n:slot name="title">
+            <a href="#">Donec eu tellus nec risus</a>
+          </n:slot>
+
+          (<n:slot name="thread_num">255</n:slot>) 
+ 
+          <n:slot name="description">
+            <p class="desc">Breve descrizione delle sezione...</p>
+          </n:slot>
+          </td>
+
+          <td>
+            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
+          </td>
+        </tr>
+
+        <tr n:pattern="empty">
+          <td>Sorry, no sections in the database</td>
+
+          <td>
+          </td>
+        </tr>
+
+        <tr class="alt" n:pattern="item" n:render="section">
+          <td>
+          <n:slot name="title">
+            <a href="#">Nec risus</a>
+          </n:slot>
+
+          (<n:slot name="thread_num">89</n:slot>) 
+          <n:slot name="description">
+            <p class="desc">Breve descrizione delle sezione...</p>
+          </n:slot>
+          </td>
+
+          <td>
+            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</n:invisible>
+

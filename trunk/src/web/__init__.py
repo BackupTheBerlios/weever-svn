@@ -1,7 +1,8 @@
 import os.path as op
 import sys
 
-from twisted.python import util
+from utils import util
+
 
 try: __file__
 except NameError: __file__ = sys.executable

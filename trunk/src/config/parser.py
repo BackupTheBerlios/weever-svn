@@ -4,6 +4,8 @@ import os.path as op
 
 from twisted.python import log, util
 
+from utils import util
+
 try: __file__
 except NameError: __file__ = sys.executable
 
@@ -31,11 +33,7 @@ def getRemoteShParameters(filename):
 
 def _parse(filename):
     parser = cp.ConfigParser()
-    parent = op.split(op.split(__file__)[0])[0]
-    if op.isfile(parent):
-        path = util.sibpath(parent, 'files')
-    else:
-        path = op.join(parent, 'files')
+    util.sibpath(__file__, 'files')
     config_file = op.join(path, filename)
     log.msg(config_file)
     log.msg(sys.executable)

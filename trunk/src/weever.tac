@@ -10,8 +10,8 @@ import twisted.python.components
 warnings.filterwarnings('ignore', '',
                         twisted.python.components.ComponentsDeprecationWarning)
 
-from nevow import appserver
-from users import auth, guard
+from nevow import appserver, guard
+from users import auth
 from database import interfaces as idb
 from config import parser as cfgFile
 #

@@ -1,10 +1,12 @@
-from nevow import loaders, url, tags as t
-from formless import annotate, webform
+from nevow import loaders, url, tags as t, inevow
+from formless import annotate, webform, iformless
 from nevow.compy import newImplements as implements
 
 from main import MasterPage, BaseContent
 from web import getTemplate
+import index
 from database.interfaces import IS, ITopicsDatabase, IUsersDatabase
+from users.interfaces import IA
 
 noUsername = "Missing username"
 noEmail = "Missing email"
@@ -46,8 +48,20 @@ class Register(MasterPage):
                           group_id=3,
                           email=email,
                           homepage=homepage
-                          )                                                  
+                          ) 
+            
+        def success(result, ctx, username):
+            d = IUsersDatabase(IS(ctx)).findUser(username)
+            d.addCallback(login, ctx)
+            return d
+        def login(avatar, ctx):
+            s = inevow.ISession(ctx)
+            res = index.Main()
+            res.remember(avatar, IA)
+            s.setResourceForPortal(res, s.guard.resource.portal, res.logout)
+        inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,'/')
         d = IUsersDatabase(IS(ctx)).addUser(properties)
+        d.addCallback(success, ctx, username)        
         return d
 
 

@@ -11,8 +11,7 @@ from database.interfaces import IUsersDatabase, IS
 from users.interfaces import IA
 from web import index
 
-def noLogout():
-    return None
+
 
 class SimpleChecker:
     """
@@ -73,6 +72,6 @@ class SimpleRealm:
                 resc.remember(avatarId, IA)
                 #resc = main.RememberWrapper(mainPage, avatarId)
                 resc.realm = self
-                return (inevow.IResource, resc, noLogout)
+                return (inevow.IResource, resc, resc.logout)
 
         raise NotImplementedError("Can't support that interface.")

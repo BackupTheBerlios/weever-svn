@@ -8,16 +8,15 @@ class IUsersDatabase(Interface):
         """ Returns all users in the database with a sequence of
         dicts.
         
-        return = {'id':id,
-                  'name':name,
-                  'surname':surname,
-                  'login':login,
-                  'password':password,
-                  'gid':gid,
-                  'email':email,
-                  'homepage':homepage,
-                  'gdesc':gdesc,
-                  'gpermissions':gpermissions
+        return = {'uid':id,
+                  'uscreename':screename,
+                  'ulogin':login,
+                  'upassword':password,
+                  'ugroup_id':gid,
+                  'uemail':email,
+                  'uhomepage':homepage,
+                  'gdescription':gdesc,
+                  'gpermissionlevel':gpermissions
                  }
         """
         

@@ -14,7 +14,7 @@ CREATE TABLE users (
     id serial NOT NULL PRIMARY KEY,
     screename varchar(30) NOT NULL,
     login varchar(15) NOT NULL UNIQUE,
-    password varchar(15) NOT NULL UNIQUE,
+    password varchar(15) NOT NULL,
     group_id int NOT NULL default 2,
     email varchar(30) NOT NULL UNIQUE,
     homepage varchar(60) default '',
@@ -50,6 +50,7 @@ CREATE TABLE posts (
     noise smallint NOT NULL default 0,
     title VARCHAR(100) default '',
     body TEXT,
+    parsed_body TEXT,
     
     FOREIGN KEY(owner_id) REFERENCES users(id),
     FOREIGN KEY(thread_id) REFERENCES thread(id)
@@ -105,7 +106,8 @@ CREATE VIEW all_sections AS
 CREATE VIEW discussion AS
     SELECT t.title AS ttitle, t.creation AS tcreation, p.modification AS pmodification, p.id AS pid, 
             p.thread_id AS ptid, p.creation AS pcreation, p.noise AS pnoise, 
-            p.title AS ptitle, p.body AS pbody, u.screename AS powner
+            p.title AS ptitle, p.body AS pbody, p.parsed_body as pparsed_body, 
+            u.screename AS powner
     FROM thread t JOIN posts p ON (t.id = p.thread_id) JOIN users u ON (p.owner_id = u.id) 
         ORDER BY p.id;
 

@@ -58,7 +58,10 @@ class MasterPage(ManualFormMixin, rend.Page):
         if not self.content:
             from web.index import IndexContent
             self.content = IndexContent
-            
+
+    def logout(self):
+        return None
+    
     def locateChild(self, ctx, segments):
         ctx.remember(Page404(), inevow.ICanHandleNotFound)
         session = inevow.ISession(ctx)
@@ -119,8 +122,8 @@ class MasterPage(ManualFormMixin, rend.Page):
         return ctx.tag["%.0f" % ((now()-startTime)*1000,)]
 
     def render_content(self, ctx, data):
-        self.content = self.content(self.args, data[FIRST_POST])
-        ctx.tag.fillSlots('content', self.content)
+        #self.content = self.content(self.args, data[FIRST_POST])
+        ctx.tag.fillSlots('content', self.content(self.args, data[FIRST_POST]))
         return ctx.tag
 
 

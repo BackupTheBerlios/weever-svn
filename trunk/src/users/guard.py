@@ -255,11 +255,8 @@ class SessionWrapper:
             return self.logout(ctx, segments, session)
 
         # Login attempt
-        if LOGIN_AVATAR in segments:
-            ### XXX
-            segs = list(segments)
-            idx = segs.index(LOGIN_AVATAR)
-            return self.login(ctx, tuple(segs[idx+1:]))
+        if segments[0] == LOGIN_AVATAR:
+            return self.login(ctx, segments[1:])
 
         # There is no session
         if not session:

@@ -4,7 +4,7 @@ from datetime import datetime
 from nevow import loaders, inevow, url
 from formless import webform, annotate, iformless
 
-from utils import util
+from utils import util, markdown
 from main import MasterPage, BaseContent
 from users import interfaces as iusers #import IA
 from database import interfaces as idb
@@ -75,7 +75,7 @@ class NewTopic(MasterPage):
                           modification=curr,
                           section_id=section,
                           body=content,
-                          parsed_body=content
+                          parsed_body=markdown.Markdown(content).toString()
                           )
         def redirectTo(result):
             req = inevow.IRequest(ctx)

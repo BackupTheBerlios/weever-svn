@@ -162,7 +162,6 @@ class TopicsDatabase(object):
 
     def getPost(self, id):
         d = self.store.runQuery(q.get_post, id)
-        d.addCallback(_transformResult)
         return d
     
     def _addTopic(self, curs, query, args):

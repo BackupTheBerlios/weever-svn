@@ -8,7 +8,7 @@ INSERT INTO users(name, login, password, group_id, email, homepage)
 VALUES(%(name)s, %(login)s, %(password)s, %(group_id)s, %(email)s, %(homepage)s);
 """
 
-user = """ SELECT uid, uname, ulogin, upassword,
+user = """ SELECT uid, uname, ulogin, upassword, upreferences,
 ugroup_id, uemail, uhomepage, gdescription, gpermission_level
 FROM users_permissions WHERE ulogin=%s
 """
@@ -69,5 +69,7 @@ DELETE FROM sections WHERE id = %(sid)s
 
 posts_num = """ SELECT posts_num FROM posts_in_thread() WHERE tid=%s """
 
-get_post = """ SELECT id, thread_id, owner_id, creation, modification, references_
-noise, title, body, parsed_body FROM posts WHERE id = %s """
+get_post = """ SELECT p.id AS pid, u.name AS powner, p.modification AS pmodification,
+p.references_ AS preferences_, p.noise AS pnoise, p.title AS ptitle, p.body AS pbody,
+p.parsed_body AS pparsed_body, p.title AS ttitle
+FROM posts p, users u WHERE p.id = %s AND u.id = p.owner_id"""

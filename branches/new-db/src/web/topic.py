@@ -23,10 +23,10 @@ def clean(title):
 def fillReply(ctx, d):
     ctx.tag.fillSlots('id', d.get('pid'))
     ctx.tag.fillSlots('edit', '/edit.xhtml')
-    ctx.tag.fillSlots('permalink', '/permalink.xhtml')
+    ctx.tag.fillSlots('permalink', url.root.child('post').child(d.get('pid')))
     ctx.tag.fillSlots('title', d.get('ttitle'))
     ctx.tag.fillSlots('body', t.xml(d.get('pparsed_body')))
-    ctx.tag.fillSlots('userpref', d.get('powner')+'.xhtml')
+    ctx.tag.fillSlots('userpref', url.root.child('user').child(str(d.get('pid'))))
     ctx.tag.fillSlots('owner', d.get('powner'))
     ctx.tag.fillSlots('when', pptime(d.get('pmodification')))
 
@@ -100,10 +100,17 @@ class IQuickReply(annotate.TypedInterface):
                                         action="Post Reply")
 
 def rememberTitle(result, ctx):
-    t = result[0].get('ptitle')
-    if t == '':
-        t = result[0].get('ttitle')
-    ctx.remember(t, iweb.IMainTitle)
+    try:
+        t = result[0]
+    except (IndexError, KeyError):
+        try:
+            t = result
+        except AttributeError:
+            return result
+    title = t.get('ptitle')
+    if title == '':
+        title = t.get('ttitle')
+    ctx.remember(title, iweb.IMainTitle)
     return result
 
 class TopicContent(BaseContent):

@@ -6,7 +6,8 @@ from twisted.python import util
 from nevow import rend, loaders, url, inevow
 from nevow import tags as t, guard
 
-from web import main, topic, newtopic, getTemplate, register, section, admin
+from web import main, topic, newtopic, post
+from web import getTemplate, register, section, admin
 from web import WebException
 
 from web import interfaces as iweb
@@ -71,6 +72,10 @@ class Main(main.MasterPage):
     def child_section(self, ctx, data=None):
         reload(section)
         return section.Section(data)
+
+    def child_post(self, ctx, data=None):
+        reload(post)
+        return post.Post(data)
     
     def child_admin(self, ctx, data=None):
         reload(admin)

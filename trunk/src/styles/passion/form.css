@@ -35,6 +35,8 @@ select {
 input, textarea, select {
     font: normal small/100% "Trebuchet MS", Verdana, sans-serif;
     color: #444;
+    
+    opacity: 0.8;
 }
 
 input[type='text'], input[type='password'], textarea {

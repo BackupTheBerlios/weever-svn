@@ -31,7 +31,15 @@ xmlns:n="http://nevow.com/ns/nevow/0.1" n:render="startTimer" n:data="head">
           <li class="sep">
             <a title="" href="/">Home</a>
           </li>
-
+          <n:invisible n:render="welcome">
+            <li>
+              <a href="#">
+                <n:attr name="href">
+                  <n:slot name="link" />
+                </n:attr>
+              <n:slot name="status" /></a>
+            </li>
+          </n:invisible>
           <li>
             <a title="" href="#">Register</a>
           </li>

@@ -243,12 +243,14 @@ class SessionWrapper:
         session = self.getSession(ctx)
         
         # Logout attempt
-        if segments[0] == LOGOUT_AVATAR:
+        if segments[-1] == LOGOUT_AVATAR:
             return self.logout(ctx, segments, session)
 
         # Login attempt
-        if segments[0] == LOGIN_AVATAR:
-            return self.login(ctx, segments)
+        if LOGIN_AVATAR in segments:
+            segs = list(segments)
+            idx = segs.index(LOGIN_AVATAR)
+            return self.login(ctx, tuple(segs[idx+1:]))
 
         # There is no session
         if not session:
@@ -291,7 +293,7 @@ class SessionWrapper:
         """Handle a login request.
         """
 
-        def success(avatar, ctx, segment, creds):
+        def success(avatar, ctx, segments, creds):
 
             iface, resource, logout = avatar
 
@@ -300,16 +302,23 @@ class SessionWrapper:
             session.addComponent(creds, ignoreClass=True)
             IPortalRecorder(session).portals[self.portal] = logout
             session.notifyOnExpire(lambda: self.logoutPortal(session))
+            referrer = inevow.IRequest(ctx).getHeader('referer')
 
+            print segments
             
-            return util.Redirect(inevow.IRequest(ctx).getHeader('referer') or '/'), ()
+            if segments != () and segments != ('',): to = '/'.join(segments)
+            elif segments == ('',) or segments == (): to = '/'
+            elif referrer: to = referrer
+            else: to = '/'
+            print "@@@@", to
+            return util.Redirect(to), ()
 
         def failure(error, ctx, segment):
             error.trap(UnauthorizedLogin)
             error.printTraceback()
             return util.Redirect(inevow.IRequest(ctx).getHeader('referer') or '/'), ()
             
-        
+        request = inevow.IRequest(ctx)
         username = request.args.get('username', [''])[0]
         password = request.args.get('password', [''])[0]
         creds = credentials.UsernamePassword(username, password)

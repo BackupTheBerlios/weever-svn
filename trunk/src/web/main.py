@@ -10,21 +10,22 @@ from web import interfaces as iweb, template_path as tp
 from web import images_path as ip, styles_path as sp
 from database.interfaces import IS
 from users.interfaces import IA
+from users import guard
 
 FIRST_POST,_ = range(2)
 
 class RememberWrapper:
     __implements__ = inevow.IResource,
 
-    def __init__(self, resource, remember, avatarId=None):
+    def __init__(self, resource, remember, avatarId={}):
         self.resource = resource
         self.remember = remember
-        self.avatarId = avatarId
-
-    def beforeRender(self, ctx):
-        inevow.ISession(ctx).setComponent(IA, self.avatarId)
+        if avatarId == ():
+            self.avatarId = {}
+        else: self.avatarId = avatarId
 
     def locateChild(self, ctx, segments):
+        inevow.ISession(ctx).setComponent(IA, self.avatarId)
         for interface, adapter in self.remember:
             ctx.remember(adapter, interface)
         return self.resource, segments
@@ -54,8 +55,9 @@ class MasterPage(rend.Page):
             from web.index import IndexContent
             self.content = IndexContent
 
-    def beforeRender(self, ctx): 
-        ctx.remember(IS(ctx), IS)
+    def beforeRender(self, ctx):
+        #ctx.remember(IS(ctx), IS)
+        ctx.remember(IA(inevow.ISession(ctx)), IA)
 
     def locateChild(self, ctx, segments):
         ctx.remember(Page404(), inevow.ICanHandleNotFound)
@@ -71,6 +73,16 @@ class MasterPage(rend.Page):
             else:
                 return ctx.tag.clear()[item.get("ttitle")]
             break
+
+    def render_welcome(self, ctx, data):
+        user = IA(ctx).get('ulogin', None)
+        if user:
+            ctx.tag.fillSlots('status', 'Logout (%s)' % (user,))
+            ctx.tag.fillSlots('link', url.here.child(guard.LOGOUT_AVATAR))
+        else:
+            ctx.tag.fillSlots('status', 'Login')
+            ctx.tag.fillSlots('link', url.root.child('login'))
+        return ctx.tag
         
     def render_startTimer(self, ctx, data):
         ctx.remember(now(), iweb.ITimer)

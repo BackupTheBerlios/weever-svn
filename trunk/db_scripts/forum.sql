@@ -12,7 +12,7 @@ CREATE TABLE groups (
 
 CREATE TABLE users (
     id serial NOT NULL PRIMARY KEY,
-	name varchar(15) NOT NULL,
+    name varchar(15) NOT NULL,
     surname varchar(15) NOT NULL,
     login varchar(15) NOT NULL UNIQUE,
     password varchar(15) NOT NULL UNIQUE,

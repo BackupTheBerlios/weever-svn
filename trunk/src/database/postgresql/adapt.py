@@ -10,8 +10,17 @@ class UsersDatabase(object):
     def __init__(self, db):
         self.store = db
 
+    def _transformResult(self, result):
+        print '#',result
+        if result:
+            return result[0]
+        else:
+            return None
+
     def findUser(self, username):
-        return self.store.runQuery(q.user, username)
+        d = self.store.runQuery(q.user, username)
+        d.addCallback(self._transformResult)
+        return d
     
     def findAllUsers(self):
         return self.store.runQuery(q.all_users)

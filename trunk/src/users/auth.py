@@ -39,7 +39,7 @@ class SimpleChecker:
     def verify(self, user, creds):
         if user is not None:
             return defer.maybeDeferred(
-                creds.checkPassword, user['password']).addCallback(
+                creds.checkPassword, user['upassword']).addCallback(
                 self._cbPasswordMatch, user)
         else:
             print "No user named: ",creds.username
@@ -49,7 +49,7 @@ class SimpleChecker:
         if matched:
             return user
         else:
-            print "password didn't match: ",user['login']
+            print "password didn't match: ",user['ulogin']
             return failure.Failure(error.UnauthorizedLogin())
 
 class SimpleRealm:

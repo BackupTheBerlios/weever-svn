@@ -3,13 +3,14 @@ import os.path as op
 
 from twisted.python import util
 
-from nevow import rend, loaders, url
+from nevow import rend, loaders, url, inevow
 from nevow import tags as t
 
 from database import interfaces as idata
 from database.interfaces import IS
 
 from web import main, topic, template_path as tp
+from interfaces import ILastURL
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -20,6 +21,9 @@ class Main(main.MasterPage):
 
     def child_newtopic(self, ctx, data=None):
         return topic.NewTopic(data, ctnt=topic.NewTopicContent)
+
+    def child_login(self, ctx, data=None):
+        return Login(data, ctnt=LoginContent)
     
     #def section(self, id):
     #    return Main(id, ctnt=SectionContent)
@@ -50,3 +54,11 @@ class IndexContent(main.BaseContent):
         ctx.tag.fillSlots('lastMod', pptime(data['lastmod']))
         return ctx.tag
 
+class Login(main.MasterPage):
+    def data_head(slf, ctx, data):
+        return [dict(ttitle='Login -- Weever')]        
+
+class LoginContent(main.BaseContent):
+    docFactory = loaders.xmlfile(op.join(tp, 'login_content.html'), ignoreDocType=True)
+    
+    

@@ -1,5 +1,6 @@
 import ConfigParser as cp
 import sys
+import os.path as op
 
 from twisted.python import log, util
 
@@ -30,7 +31,12 @@ def getRemoteShParameters(filename):
 
 def _parse(filename):
     parser = cp.ConfigParser()
-    config_file = util.sibpath(__file__,filename)
+    parent = op.split(op.split(__file__)[0])[0]
+    if op.isfile(parent):
+        path = util.sibpath(parent, 'files')
+    else:
+        path = op.join(parent, 'files')
+    config_file = op.join(path, filename)
     log.msg(config_file)
     log.msg(sys.executable)
     log.msg(__file__)

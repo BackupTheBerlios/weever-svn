@@ -84,9 +84,12 @@ header
 
 #header { 
 	/*height: 180px;*/
-/*    background: transparent url("../../images/fish2.jpg") center top no-repeat; */*/
-
-	padding: 0 35px;
+    background: #e5e5e5;
+    
+	padding: 0;
+	padding-bottom: 10px;
+    
+    margin: 15px;
 }
 
 
@@ -96,7 +99,16 @@ header
 
 	font: bold italic 34px/100% "Trebuchet MS", verdana, sans-serif;
 	color: #993333;
+    
+    height: 70px;
+    background: #fcc url("../../images/logo.png") right top no-repeat;     
 }
+
+
+#header h1 span { 
+	display: none;
+}
+
 
 #header p {
 	margin: 0;
@@ -159,8 +171,8 @@ top level section title
 	color: #333;
 		
 	margin: 10px 0;
-	margin-left: -15px; 
-	margin-right: 15px; 
+	/*margin-left: -15px; */
+	/*margin-right: 15px; */
 	margin-top: 40px; 
 
 
@@ -221,10 +233,11 @@ menu
 
 #sidebar{
 	
-
 /*    border: 1px solid #069;*/
 
 	margin: 0;
+	margin-top: 10px;
+    
     padding: 0; 
 	
 	width: auto; 

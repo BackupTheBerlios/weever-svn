@@ -53,7 +53,7 @@ class MasterPage(rend.Page):
 
     def render_title(self, ctx, data):
         for item in data: 
-            if item.get("ttitle").endswith('Weever'):
+            if not item.get("ttitle").endswith('Weever'):
                 return ctx.tag.clear()[data[0].get("ttitle") + '  --  Weever']
             else:
                 return ctx.tag.clear()[data[0].get("ttitle")]

@@ -103,7 +103,7 @@ CREATE VIEW discussion AS
 CREATE VIEW all_threads AS
     SELECT s.id AS sid, s.title AS stitle, s.description AS sdescription, t.id AS tid, t.title AS ttitle, 
             u.login AS towner, t.noise AS tnoise, t.creation AS tcreation, t.modification AS tmodification, 
-            (SELECT COUNT(*) FROM posts p WHERE p.thread_id = t.id) AS posts_num 
+            pt.posts_num AS posts_num 
     FROM sections s JOIN thread t ON (s.id = t.section_id) JOIN users u ON (t.owner_id = u.id)
                     JOIN posts_in_thread pt ON (pt.tid = t.id)
         ORDER BY t.modification;

@@ -19,7 +19,7 @@
   <!-- sample form -->
   <div class="quick" id="reply123"> 
     <form action="" method="post">
-      <h3>Quote &amp; Reply <a onclick="document.getElementById('reply123').style.display='none'; return false;" href="#"><img src="/themes/passion/close.png" /></a></h3>
+      <h3>Quote &amp; Reply <a onclick="document.getElementById('reply123').style.display='none'; return false;" href="#"><img src="/theme/close.png" /></a></h3>
       <fieldset>
       <label for="title_">Title</label>
       <input type="text" id="title_" name="title" maxlength="70" size="50" value="Re:  Donec eu tellus nec risus" />
@@ -57,7 +57,7 @@ Your reply here.
     </select>
     per page 
     <input type="submit" name="" value="Apply"  />
-    <!--    <p><b>Note</b>: Select your preferred way to display the comments and click <i>Change view</i> to activate your changes.</p>  -->
+    <!-- <p class="help"><strong>Note</strong>: Select your preferred way to display the comments and click <i>Apply</i> to activate your changes.</p>  -->
   </form>
   <n:invisible n:data="posts" n:render="sequence"> 
   <div class="topic reply" n:pattern="item" n:render="reply"> 

@@ -12,7 +12,6 @@ from web import WebException
 
 from web import interfaces as iweb
 from users import interfaces as iusers
-from database import interfaces as idb
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -21,7 +20,7 @@ class IndexContent(main.BaseContent):
     docFactory = loaders.xmlfile(getTemplate('index_content.html'), ignoreDocType=True)
 
     def data_HotTopics(self, ctx, data):
-        return idb.ITopicsDatabase(idb.IS(ctx)).getTopTopics(15)
+        return iusers.IA(ctx).topics.getTopTopics(15)
 
     def render_topicHead(self, ctx, data):
         link = url.root.clear().child('topic').child(data['tid']).child('')
@@ -38,7 +37,7 @@ class IndexContent(main.BaseContent):
         return ctx.tag
 
     def data_Sections(self, ctx, data):
-        return idb.ISectionsDatabase(idb.IS(ctx)).getAllSections()
+        return iusers.IA(ctx).sections.getAllSections()
 
     def render_section(self, ctx, data):
         link = url.root.clear().child('section').child(data['sid']).child('')
@@ -80,7 +79,7 @@ class Main(main.MasterPage):
     def child_admin(self, ctx, data=None):
         reload(admin)
         # Need to make 2 dynamic
-        if iusers.IA(ctx).get('gpermission_level', sys.maxint) > 1:
+        if iusers.IA(ctx).creds.get('gpermission_level', sys.maxint) > 1:
             raise WebException("Not Enough Permissions to enter this section")
         else:
             return admin.Admin(data)

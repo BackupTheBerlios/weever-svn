@@ -14,7 +14,6 @@ from nevow import appserver, guard, liveevil
 liveevil.debug = True
 
 from users import auth
-from database import interfaces as idb
 from config import parser as cfgFile
 #
 # Don't touch anything above this line
@@ -46,7 +45,7 @@ store_module = reflect.namedAny('database.'+dbms+'.store')
 store = store_module.Store(adapter, dsn_params)
 log.msg("Database initialization succeeded in %.2f" % (now()-t0))
 t = now()
-realm = auth.SimpleRealm()
+realm = auth.SimpleRealm(store)
 portal = portal.Portal(realm)
 myChecker = auth.SimpleChecker(store)
 portal.registerChecker(checkers.AllowAnonymousAccess(), credentials.IAnonymous)
@@ -56,7 +55,6 @@ t = now()
 site = appserver.NevowSite (
         resource = guard.SessionWrapper(portal, mindFactory=liveevil.LiveEvil)
             )
-site.remember(store, idb.IS)
 log.msg("Site initialization succeeded in %.2f" % (now()-t))
 t = now()
 webservice = strports.service(netString, site)

@@ -4,7 +4,6 @@ from formless import annotate, webform, iformless
 from utils import util
 from main import MasterPage, BaseContent
 from web import getTemplate, interfaces as iweb
-from database import interfaces as idb #import IS, ITopicsDatabase, IUsersDatabase
 from users import interfaces as iusers #import IA
 
 import index
@@ -65,28 +64,31 @@ class Register(MasterPage):
                           ) 
             
         def success(result, ctx, username):
-            d = idb.IUsersDatabase(idb.IS(ctx)).findUser(username)
+            d = iusers.IA(ctx).users.findUser(username)
             d.addCallback(login, ctx)
             return d
         def errback(failure, ctx, username):
             error = 'Username: %s already existing' % username
             raise annotate.ValidateError({ 'username' : error }, 'Error: ' + error)  
 
-        def login(avatar, ctx):
+        def login(creds, ctx):
+            avatar = iusers.IA(ctx)
             # if using new guard
             # s = inevow.ISession(ctx)
             # creds = credentials.UsernamePassword(avatar['ulogin'], avatar['upassword'])
             # s.setComponent(creds, ignoreClass=True)
-            s = inevow.ISession(ctx)
-            res = index.Main()
-            res.remember(avatar, iusers.IA)
-            s.setResourceForPortal(res, s.guard.resource.portal, res.logout)
+
+            #s = inevow.ISession(ctx)
+            #res = index.Main()
+            avatar.creds = creds
+            #res.remember(avatar, iusers.IA)
+            #s.setResourceForPortal(res, s.guard.resource.portal, res.logout)
             #
         uri = iweb.ILastURL(inevow.ISession(ctx), None)
         if uri:
             inevow.ISession(ctx).unsetComponent(iweb.ILastURL)
         inevow.IRequest(ctx).setComponent(iformless.IRedirectAfterPost,uri or '')
-        d = idb.IUsersDatabase(idb.IS(ctx)).addUser(properties)
+        d = iusers.IA(ctx).users.addUser(properties)
         d.addErrback(errback, ctx, username)
         d.addCallback(success, ctx, username)
         return d

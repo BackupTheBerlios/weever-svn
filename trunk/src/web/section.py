@@ -6,10 +6,9 @@ from formless import webform, annotate, iformless
 
 from utils import util
 from main import MasterPage, BaseContent
-from database import interfaces as idb
 from web import getTemplate, WebException, forms
 from web import interfaces as iw
-
+from users import interfaces as iusers
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
@@ -28,7 +27,7 @@ class SectionContent(BaseContent):
     
     def data_topics(self, ctx, data):
         for sid in self.args:
-            return idb.ISectionsDatabase(idb.IS(ctx)).getSection(sid)
+            return iusers.IA(ctx).sections.getSection(sid)
     
     def render_topic(self, ctx, data):
         link = url.root.child('topic').child(data['tid'])
@@ -42,7 +41,7 @@ class Section(MasterPage):
     content = SectionContent
     def data_head(self, ctx, data):
         if len(self.args) >= 1:
-            return idb.ISectionsDatabase(idb.IS(ctx)).getSectionInfo(self.args[0]).addCallback(rememberTitle, ctx)
+            return iusers.IA(ctx).sections.getSectionInfo(self.args[0]).addCallback(rememberTitle, ctx)
         return [{'ttitle':'Section -- Weever'}]
 
     

@@ -1,11 +1,13 @@
 from time import time as now
+import os.path as op
 
 from zope.interface import implements
 
 from nevow import rend, loaders, static, url
 from nevow import inevow, tags as t
 
-from web import interfaces as iweb
+from web import interfaces as iweb, template_path as tp
+from web import images_path as ip, styles_path as sp
 from database.interfaces import IS
 from users.interfaces import IA
 
@@ -34,9 +36,9 @@ class RememberWrapper:
     
 
 class MasterPage(rend.Page):
-    docFactory = loaders.xmlfile('templates/index.html')
-    child_styles = static.File('styles/')
-    child_images = static.File('images/')
+    docFactory = loaders.xmlfile(op.join(tp, 'index.html'))
+    child_styles = static.File(sp)
+    child_images = static.File(ip)
     addSlash = True
     
 
@@ -91,7 +93,7 @@ class BaseContent(rend.Fragment):
 
 class Page404(rend.Page):
     implements(inevow.ICanHandleNotFound,)
-    docFactory = loaders.xmlfile('templates/404.html')
+    docFactory = loaders.xmlfile(op.join(tp, '404.html'))
 
     def renderHTTP_notFound(self, ctx):
         inevow.IRequest(ctx).setResponseCode(404)

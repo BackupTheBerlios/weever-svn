@@ -66,7 +66,7 @@ class ASectionsContent(main.BaseContent):
     def render_foot(self, ctx, data):
         return ctx.tag
     
-    def render_emtpy(self, ctx, data):
+    def render_empty(self, ctx, data):
         return ctx.tag
     
     def render_form(self, ctx, data):

@@ -4,7 +4,6 @@ from database import interfaces as idb
 import queries as q
 
 def _transformResult(result):
-    print '#',result
     if result:
         return result[0]
     else:

@@ -28,7 +28,7 @@ def load(S):
 load(database_adapters)
 
 parser = cp.ConfigParser()
-config_file = os.path.join(util.sibpath(os.path.split(__file__)[0],'config'),'general.ini')
+config_file = os.path.join(util.sibpath(os.path.split(__file__)[0],'config'),'weever.ini')
 log.msg(config_file)
 parser.read(config_file)
 dbms = parser.get('Database', 'dbms')

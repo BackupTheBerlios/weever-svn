@@ -21,3 +21,10 @@ Needed for 0.2:
 Future:
 - Thread view
 - More database backends
+- Distributed clients
+- Remote Forum cloning (to create a local webserver for local browsing)
+- Blog Mod (each user has a blog [current sections], each blog post is a new 
+            topic) [Needs a bit of work on permissions, 
+- Mailing List like interface
+- NNTP interface
+- XML-RPC, SOAP interfaces

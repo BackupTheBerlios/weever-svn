@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from nevow import loaders, url, tags as t
+from formless import webform, annotate
 
 from main import MasterPage, BaseContent
 from web import getTemplate
@@ -7,6 +8,21 @@ from database.interfaces import IS, ITopicsDatabase
 
 def pptime(date):
     return date.strftime('%b %d, %Y @ %I:%M %p')
+
+class IQuickReply(annotate.TypedInterface):
+    def quick_reply(self,
+       title=annotate.String(maxlength="70",
+                             size="50"),
+       content=annotate.Text(required=True,
+                             requiredFailMessage="Missing body",
+                             cols="80",
+                             rows="8")
+    ):
+        """Quick Reply
+        """
+    quick_reply = annotate.autocallable(quick_reply,
+                                        action="Post Reply",
+                                        label="Quick Reply")
 
 class Topic(MasterPage):
     def data_head(self, ctx, data):
@@ -19,36 +35,33 @@ class Topic(MasterPage):
         return MasterPage.data_head(self, ctx, data)
 
     def childFactory(self, ctx, segment):
-        self.args.append(segment)
+        if segment != '':
+            try:
+                start = int(segment)
+            except ValueError:
+                return super(Topic, self).childFactory(ctx, segment)
+        else:
+            start = 1
+        self.args.append(start)
         return Topic(self.args, ctnt=TopicContent)
     
-    def form_quickreply_post(self, title, content):
-        print "Title:", title
-        print "Content:", content
-        
-    def form_quickreply_preview(self, title, content):
-        print "Title:", title
-        print "Content:", content
+    def configurable_content(self, ctx):
+        return self.content
 
 class TopicContent(BaseContent):
+    __implements__ = BaseContent.__implements__, IQuickReply
+    
     docFactory = loaders.xmlfile(getTemplate('topic_content.html'),
             ignoreDocType=True)
 
     def __init__(self, args, data=None):
         BaseContent.__init__(self, args, data)
         if len(self.args) <= 1:
+            self.offset = '1'
             self.start = 1
         else:
-            if self.args[1] != '':
-                try:
-                    self.start = int(self.args[1])
-                except ValueError:
-                    self.start = 1
-            else:
-                self.start = 1
-        if self.start == 1: self.offset = '1'
-        else: self.offset = str(self.start)
-
+            self.offset = str(args[1])
+            self.start = args[1]
         self.LIMIT = '10'
 
     def render_firstTopic(self, ctx, data):
@@ -113,3 +126,9 @@ class TopicContent(BaseContent):
             ctx.tag.fillSlots('href', link)
             return ctx.tag
         else: return ctx.tag.clear()
+
+    def render_form(self, ctx, data):
+        return webform.renderForms('content')[ctx.tag]
+
+    def quick_reply(self, title, content):
+        print title, content

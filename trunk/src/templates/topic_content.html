@@ -148,28 +148,39 @@ xmlns:n="http://nevow.com/ns/nevow/0.1">
     </n:invisible>
 
 <!-- /data /sequence-->
-    <form action="_submit!!quickreply" method="post">
-      <h2>Quick reply</h2>
 
-      <fieldset>
-        <label for="title_">Title</label>
+    <n:invisible n:render="form">
+        <form n:pattern="freeform-form">
+            <h2> <n:slot name="form-description" /> </h2>
+            <n:attr name="action"><n:slot name="form-action"/></n:attr>
+            <n:attr name="id"><n:slot name="form-id"/></n:attr>
+            <n:attr name="name"><n:slot name="form-name"/></n:attr>
 
-        <input type="text" id="title_" name="title" maxlength="70" size="50"
-        value="Re: Donec eu tellus nec risus" />
+            <n:invisible n:pattern="argument!!title">
+                <!-- <legend>Topic</legend>  -->    
+                <label for="title_">Title</label>
+                <n:slot name="input" />
+            </n:invisible>
 
-        <label for="content_">Message 
-        <span>(Textile formatting rules are supported)</span>
-        </label>
+            <n:invisible n:pattern="argument!!content">
+                <label for="content_">Message 
+                <span>(reST formatting rules are supported)</span></label>
+                <span class="error"><n:slot name="error" /></span>
+                <n:slot name="input" />
+            </n:invisible>
 
-        <textarea id="content_" name="content" cols="80" rows="8">Your reply here.</textarea>
-      </fieldset>
-
-      <fieldset>
-        <input type="submit" name="post_btn" value="Post Reply" />
-        <input type="submit" name="post_btn" value="Preview" />
-      </fieldset>
-    </form>
-
+            <!-- <n:slot name="form-arguments"/> -->
+            <fieldset>                        
+                <n:slot name="argument!!title" />
+                <n:slot name="argument!!content" />
+            </fieldset>
+            
+            <fieldset>
+                <n:slot name="form-button" />
+            </fieldset>
+        </form>
+    </n:invisible>
+    
 <!-- /content -->
   </div>
 </n:invisible>

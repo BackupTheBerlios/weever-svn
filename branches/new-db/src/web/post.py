@@ -1,4 +1,4 @@
-from nevow import loaders
+from nevow import loaders, url, liveevil
 
 from web import topic, getTemplate
 from database import interfaces as idb
@@ -6,6 +6,24 @@ from database import interfaces as idb
 class PostContent(topic.TopicContent):
     docFactory = loaders.xmlfile(getTemplate('post_content.html'),
             ignoreDocType=True)
+
+    def render_firstTopic(self, ctx, data):
+        d = self.data
+        def sendReplyForm(client):
+            current = d.get('pid')
+            client.append('reply_%s' % current, topic.QuickForm(d))
+            
+        if d:
+            ctx.tag.fillSlots('quote', liveevil.handler(sendReplyForm))
+            ctx.tag.fillSlots('permalink', url.root.child('post').child(d.get('pid')))
+            rp = d.get('preferences_').split('.')[0]
+            
+            ctx.tag.fillSlots('thread', url.root.child('topic').child(rp))
+            ##
+            topic.fillReply(ctx, d)
+            ##
+            return ctx.tag
+        return ctx.tag.clear()["Sorry, this page is not available yet"]
 
 
 class Post(topic.Topic):

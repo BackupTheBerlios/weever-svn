@@ -20,6 +20,7 @@ CREATE TABLE users (
     group_id int NOT NULL default 2,
     email varchar(30) NOT NULL UNIQUE,
     homepage varchar(60) default '',
+    preferences bytea default NULL,
     
     FOREIGN KEY(group_id) REFERENCES groups(id)
 );
@@ -223,8 +224,8 @@ CREATE VIEW user_posts AS
 CREATE VIEW threads AS
     SELECT id, section_id, owner_id, references_, 
            creation, noise, title
-    FROM posts
-   WHERE references_ = ''::ltree || id;
+      FROM posts
+     WHERE references_ = ''::ltree || id;
 
 -- OK
 CREATE VIEW last_modified AS
@@ -242,7 +243,7 @@ CREATE VIEW threads_in_section AS
 CREATE VIEW users_permissions_posts AS
     SELECT u.id AS uid, u.name AS name, u.login AS ulogin, 
            u.password AS upassword, u.group_id AS ugroup_id, u.email AS uemail, 
-           u.homepage AS uhomepage, g.description AS gdescription, 
+           u.homepage AS uhomepage, g.description AS gdescription, u.preferences AS upreferences,
            g.permission_level AS gpermission_level, up.posts_num AS uposts_num
       FROM groups g 
       JOIN users u ON (u.group_id = g.id) 
@@ -250,7 +251,7 @@ CREATE VIEW users_permissions_posts AS
 
 -- OK
 CREATE VIEW users_permissions AS
-    SELECT u.id AS uid, u.name AS uname, u.login AS ulogin, 
+    SELECT u.id AS uid, u.name AS uname, u.login AS ulogin, u.preferences AS upreferences,
            u.password AS upassword, u.group_id AS ugroup_id, u.email AS uemail, 
            u.homepage AS uhomepage, g.description AS gdescription, 
            g.permission_level AS gpermission_level

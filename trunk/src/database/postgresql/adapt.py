@@ -64,8 +64,24 @@ class TopicsDatabase(object):
     def getTopTopics(self, num):
         return self.store.runQuery(q.top_threads, num)
 
-    def addTopic(self, properties):        
-        return self.store.runOperation(q.add_topic, properties)
+    def addTopic(self, args1, args2):        
+        return self.store.runInteraction(self._addTopic, \
+                                         queries=(q.add_topic,q.add_post),
+                                         args=(args1, args2)
+                                         )
 
     def addPost(self, properties):
         return self.store.runOperation(q.add_post, properties)
+
+    def _addTopic(self, curs, queries, args):
+        add_topic = queries[0]
+        add_post = queries[1]
+        topic_args = args[0]
+        post_args = args[1]
+        curs.execute(add_topic, topic_args)
+        curs.execute("SELECT MAX(t.id) FROM thread t")
+        lid = curs.fetchone()
+        post_args['thread_id'] = lid[0]
+        curs.execute(add_post, post_args)
+        
+                 

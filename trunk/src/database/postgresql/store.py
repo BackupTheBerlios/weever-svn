@@ -1,3 +1,5 @@
+from itertools import izip
+
 from twisted.enterprise import adbapi
 from twisted.python import components
 
@@ -21,3 +23,9 @@ class Store(object):
     def runOperation(self, query, *args):
         d = self.__pool.runOperation(query, args[0])
         return d
+
+    def runInteraction(self, fun, queries=(), args=()):
+        d = self.__pool.runInteraction(fun, queries, args)
+        return d
+
+        

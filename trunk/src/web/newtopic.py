@@ -1,10 +1,13 @@
 from time import time as now
+from datetime import datetime
 
 from nevow import loaders, inevow, url
 from nevow.compy import newImplements as implements
 from formless import webform, annotate
 
 from main import MasterPage, BaseContent
+from users.interfaces import IA
+from database import interfaces as idb
 from web import getTemplate
 
 choices = ['cazzi e ammazzi', 'prova1']
@@ -24,24 +27,37 @@ class INewTopic(annotate.TypedInterface):
     post_topic = annotate.autocallable(post_topic, action="Post Topic")
 
 class NewTopic(MasterPage):
-    def data_head(self, ctx, data):
-        return [{'ttitle':'New Topic -- Weever'}]
-
-    def configurable_content(self, ctx):
-        return self.content
-
-class NewTopicContent(BaseContent):
     implements(INewTopic)
 
     ## TODO: remove this stuff 
-    __implements__ = BaseContent.__implements__, INewTopic
+    __implements__ = MasterPage.__implements__, INewTopic
+
+    def data_head(self, ctx, data):
+        return [{'ttitle':'New Topic -- Weever'}]
+
+    def post_topic(self, ctx, title, content, section):
+        curr = datetime.now()
+        properties_topic = dict(title=title,
+                                owner_id=IA(ctx)['uid'],
+                                creation=curr,
+                                section_id=3,
+                                noise=0,
+                               )
+        properties_post = dict(thread_id='',
+                               owner_id=IA(ctx)['uid'],
+                               creation=curr,
+                               modification=curr,
+                               title=title,
+                               body=content
+                              )
+        d = idb.ITopicsDatabase(idb.IS(ctx)).addTopic(properties_topic, properties_post)
+        return d
+
+class NewTopicContent(BaseContent):
     
     docFactory = loaders.xmlfile(getTemplate('newtopic_content.html'),
             ignoreDocType=True)
 
     def render_form(self, ctx, data):
-        return webform.renderForms('content')[ctx.tag]
+        return webform.renderForms()[ctx.tag]
 
-    def post_topic(self, ctx, title, content, section):
-        print 'foo'
-        #idb.ITopicsDatabase(ctx).addTopic()

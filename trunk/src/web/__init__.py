@@ -1,5 +1,10 @@
 import os.path as op
+import sys
+
 from twisted.python import util
+
+try: __file__
+except NameError: __file__ = sys.executable
 
 template_path = op.join(util.sibpath(op.split(__file__)[0],'templates'))
 images_path = op.join(util.sibpath(op.split(__file__)[0],'images'))

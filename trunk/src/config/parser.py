@@ -1,6 +1,10 @@
 import ConfigParser as cp
+import sys
 
 from twisted.python import log, util
+
+try: __file__
+except NameError: __file__ = sys.executable
 
 def getNetworkParameters(filename):
     cfg = _parse(filename)
@@ -27,6 +31,7 @@ def getRemoteShParameters(filename):
 def _parse(filename):
     parser = cp.ConfigParser()
     config_file = util.sibpath(__file__,filename)
+    log.msg(config_file)
     parser.read(config_file)
     return parser
 

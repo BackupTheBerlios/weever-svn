@@ -248,6 +248,7 @@ class SessionWrapper:
 
         # Login attempt
         if LOGIN_AVATAR in segments:
+            ### XXX
             segs = list(segments)
             idx = segs.index(LOGIN_AVATAR)
             return self.login(ctx, tuple(segs[idx+1:]))
@@ -304,6 +305,9 @@ class SessionWrapper:
             session.notifyOnExpire(lambda: self.logoutPortal(session))
             referrer = inevow.IRequest(ctx).getHeader('referer')
 
+            ##
+            ## FIX THIS STUFF
+            ##
             print segments
             
             if segments != () and segments != ('',): to = '/'.join(segments)

@@ -200,7 +200,7 @@ secondary level section title
 	color: #333;
 		
     /*color: #fafafa;    */
-    background: transparent  url("/images/h2-bg3.png") top left repeat-y;
+    background: transparent url("/images/h2-bg.png") top left repeat-y;
     
     border-bottom: 2px solid #993333;
 
@@ -443,7 +443,7 @@ table {
 }
 
 tr.alt {
-    background: #E5E5E5 url('/images/tr-alt-bg.png') top right repeat-y;    
+    background: transparent url('/images/tr-alt-bg.png') top left repeat-y;    
 }
 
 thead {
@@ -455,7 +455,7 @@ thead {
     
     font-style: italic;
     
-    background: #fcc url('/images/h2-bg3.png') top right repeat-y;    
+    background: transparent url('/images/h2-bg.png') top left repeat-y;    
 }
 
 tbody {        

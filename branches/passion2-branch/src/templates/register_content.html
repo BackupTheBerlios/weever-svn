@@ -1,56 +1,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
-  <div id="content"> 
-    <h2>Register</h2>
-
-    <n:invisible n:render="form">
-        <form n:pattern="freeform-form" method="post">
-            <n:attr name="action"><n:slot name="form-action"/></n:attr>
-            <n:attr name="id"><n:slot name="form-id"/></n:attr>
-            <n:attr name="name"><n:slot name="form-name"/></n:attr>
-
-            <n:invisible n:pattern="argument!!username">
-                <label for="username_">Username <span>(max. 15 characters)</span></label>
-                <span class="error"><n:slot name="error" /></span>
-                <n:slot name="input" />
-            </n:invisible>
-
-            <n:invisible n:pattern="argument!!email">
-                <label for="email_">E-mail address <span>(<strong>must</strong> be valid)</span></label>
-                <span class="error"><n:slot name="error" /></span>
-                <n:slot name="input" />
-            </n:invisible>
-
-            <n:invisible n:pattern="argument!!password">
-                <label for="password_">Password</label>
-                <n:slot name="input" /> <span class="error"><n:slot name="error" /></span>
-            </n:invisible>
-            
-            <n:invisible n:pattern="argument!!screename">
-                <label for="screename_">Screen name (optional)</label>
-                <n:slot name="input" />
-            </n:invisible>            
-            <n:invisible n:pattern="argument!!homepage">
-                <label for="homepage_">Home page</label>
-                <n:slot name="input" />            
-            </n:invisible>            
-
-            <fieldset>
-                <legend>Required information</legend>     
-                <n:slot name="argument!!username" />
-                <n:slot name="argument!!email" />
-                <n:slot name="argument!!password" />                
-            </fieldset>
-            <fieldset>
-                <legend>Optional personal information</legend> 
-                <n:slot name="argument!!screename" />
-                <n:slot name="argument!!homepage" />
-            </fieldset>
-            <fieldset>
-                <n:slot name="form-button" />
-            </fieldset>
-        </form>
-    </n:invisible>
-  </div>
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
+    <div id="content">
+        <h2>Register</h2>
+        <n:invisible n:render="form">
+            <form n:pattern="freeform-form" method="post">
+                <n:attr name="action">
+                    <n:slot name="form-action" />
+                </n:attr>
+                <n:attr name="id">
+                    <n:slot name="form-id" />
+                </n:attr>
+                <n:attr name="name">
+                    <n:slot name="form-name" />
+                </n:attr>
+                <n:invisible n:pattern="argument!!username">
+                    <label for="username_">Username 
+                    <span>(max. 15 characters)</span></label>
+                    <span class="error">
+                        <n:slot name="error" />
+                    </span>
+                    <n:slot name="input" />
+                </n:invisible>
+                <n:invisible n:pattern="argument!!email">
+                    <label for="email_">E-mail address 
+                    <span>(
+                    <strong>must</strong>be valid)</span></label>
+                    <span class="error">
+                        <n:slot name="error" />
+                    </span>
+                    <n:slot name="input" />
+                </n:invisible>
+                <n:invisible n:pattern="argument!!password">
+                    <label for="password_">Password</label>
+                    <n:slot name="input" />
+                    <span class="error">
+                        <n:slot name="error" />
+                    </span>
+                </n:invisible>
+                <n:invisible n:pattern="argument!!screename">
+                    <label for="screename_">Screen name (optional)</label>
+                    <n:slot name="input" />
+                </n:invisible>
+                <n:invisible n:pattern="argument!!homepage">
+                    <label for="homepage_">Home page</label>
+                    <n:slot name="input" />
+                </n:invisible>
+                <fieldset>
+                    <legend>Required information</legend>
+                    <n:slot name="argument!!username" />
+                    <n:slot name="argument!!email" />
+                    <n:slot name="argument!!password" />
+                </fieldset>
+                <fieldset>
+                    <legend>Optional personal information</legend>
+                    <n:slot name="argument!!screename" />
+                    <n:slot name="argument!!homepage" />
+                </fieldset>
+                <fieldset>
+                    <n:slot name="form-button" />
+                </fieldset>
+            </form>
+        </n:invisible>
+    </div>
 </n:invisible>

@@ -1,153 +1,101 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<n:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-xmlns:n="http://nevow.com/ns/nevow/0.1">
-  <div id="content">
-  
-      <div class="panel">
-  
-    <h2>Hot topics</h2>
-
-    <table class="">
-      <thead>
-        <tr>
-          <th>Topic</th>
-
-          <th>Author</th>
-
-          <th>Section</th>
-
-          <th>Last changed</th>
-        </tr>
-      </thead>
-
-      <tbody n:data="HotTopics" n:render="sequence">
-        <tr n:pattern="item" n:render="topicHead">
-          <td>
-          	<n:slot name="title">
-            	Topic title
-          	</n:slot>
-
-          	(<n:slot name="posts_num">XX</n:slot>)
-          
-          </td>
-
-          <td>
-            <n:slot name="author">Author name</n:slot>
-          </td>
-
-          <td>
-            <n:slot name="section">Section title</n:slot>
-          </td>
-
-          <td>
-            <n:slot name="modification">Sep 22, 2004 @ 03:14 PM</n:slot>
-          </td>
-        </tr>
-
-        <tr class="alt" n:pattern="item" n:render="topicHead">
-          <td>
-          	<n:slot name="title">
-            	Topic title 2
-          	</n:slot>
-
-          	(<n:slot name="posts_num">YYY</n:slot>)
-          </td>
-
-          <td>
-            <n:slot name="author">Author name</n:slot>
-          </td>
-
-          <td>
-            <n:slot name="section">Section name</n:slot>
-          </td>
-
-          <td>
-            <n:slot name="modification">Sep 21, 2004 @ 12:14 PM</n:slot>
-          </td>
-        </tr>
-       
-        <tr n:pattern="empty">
-          <!-- @@ colspan="" -->
-          <td>Sorry, no topics here.</td>
-
-          <td>
-          </td>
-
-          <td>
-          </td>
-
-          <td>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <!-- /panel -->
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<n:invisible xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:n="http://nevow.com/ns/nevow/0.1">
+    <div id="content">
+        <div class="panel">
+            <h2>Hot topics</h2>
+            <table class="">
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Author</th>
+                        <th>Section</th>
+                        <th>Last changed</th>
+                    </tr>
+                </thead>
+                <tbody n:data="HotTopics" n:render="sequence">
+                    <tr n:pattern="item" n:render="topicHead">
+                        <td>
+                        <n:slot name="title">Topic title</n:slot>(
+                        <n:slot name="posts_num">XX</n:slot>)</td>
+                        <td>
+                            <n:slot name="author">Author name</n:slot>
+                        </td>
+                        <td>
+                            <n:slot name="section">Section title</n:slot>
+                        </td>
+                        <td>
+                            <n:slot name="modification">Sep 22, 2004 @ 03:14 PM</n:slot>
+                        </td>
+                    </tr>
+                    <tr class="alt" n:pattern="item" n:render="topicHead">
+                        <td>
+                        <n:slot name="title">Topic title 2</n:slot>(
+                        <n:slot name="posts_num">YYY</n:slot>)</td>
+                        <td>
+                            <n:slot name="author">Author name</n:slot>
+                        </td>
+                        <td>
+                            <n:slot name="section">Section name</n:slot>
+                        </td>
+                        <td>
+                            <n:slot name="modification">Sep 21, 2004 @ 12:14 PM</n:slot>
+                        </td>
+                    </tr>
+                    <tr n:pattern="empty">
+                        <!-- @@ colspan="" -->
+                        <td>Sorry, no topics here.</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /panel -->
+        </div>
+        <div class="panel">
+            <h2>Sections</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Last changed</th>
+                    </tr>
+                </thead>
+                <tbody n:data="Sections" n:render="sequence">
+                    <tr n:pattern="item" n:render="section">
+                        <td>
+                        <n:slot name="title">
+                            <a href="#">Section title</a>
+                        </n:slot>(
+                        <n:slot name="thread_num">YY</n:slot>) 
+                        <n:slot name="description">
+                            <p class="desc">Section description.</p>
+                        </n:slot></td>
+                        <td>
+                            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
+                        </td>
+                    </tr>
+                    <tr n:pattern="empty">
+                        <td>Sorry, no sections here.</td>
+                        <td></td>
+                    </tr>
+                    <tr class="alt" n:pattern="item" n:render="section">
+                        <td>
+                        <n:slot name="title">
+                            <a href="#">Section title</a>
+                        </n:slot>(
+                        <n:slot name="thread_num">XX</n:slot>) 
+                        <n:slot name="description">
+                            <p class="desc">Section description.</p>
+                        </n:slot></td>
+                        <td>
+                            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /panel -->
+        </div>
     </div>
-
-    <div class="panel">
-
-    <h2>Sections</h2>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-
-          <th>Last changed</th>
-        </tr>
-      </thead>
-
-      <tbody n:data="Sections" n:render="sequence">
-        <tr n:pattern="item" n:render="section">
-          <td>
-          <n:slot name="title">
-            <a href="#">Section title</a>
-          </n:slot>
-
-          (<n:slot name="thread_num">YY</n:slot>) 
- 
-          <n:slot name="description">
-            <p class="desc">Section description.</p>
-          </n:slot>
-          </td>
-
-          <td>
-            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
-          </td>
-        </tr>
-
-        <tr n:pattern="empty">
-          <td>Sorry, no sections here.</td>
-
-          <td>
-          </td>
-        </tr>
-
-        <tr class="alt" n:pattern="item" n:render="section">
-          <td>
-          <n:slot name="title">
-            <a href="#">Section title</a>
-          </n:slot>
-
-          (<n:slot name="thread_num">XX</n:slot>) 
-          <n:slot name="description">
-            <p class="desc">Section description.</p>
-          </n:slot>
-          </td>
-
-          <td>
-            <n:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</n:slot>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <!-- /panel -->
-    </div>
-
-  </div>
 </n:invisible>
-

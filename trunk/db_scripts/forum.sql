@@ -57,13 +57,28 @@ CREATE TABLE posts (
     FOREIGN KEY(thread_id) REFERENCES thread(id)
 );
 
+CREATE VIEW user_posts AS
+    SELECT u.id AS uid, COUNT(*) AS posts_num
+    FROM users u JOIN posts p ON (u.id = p.owner_id)
+        GROUP BY uid;
+
+CREATE VIEW last_modified AS
+    SELECT s.id AS sid, MAX(t.modification) AS lastmod FROM thread t JOIN sections s ON (t.section_id = s.id)
+        GROUP BY sid;
+
+CREATE VIEW threads_in_section AS
+    SELECT s.id AS sid, COUNT(*) AS thread_num FROM thread t JOIN sections s ON (t.section_id = s.id)
+        GROUP BY sid;
+
+CREATE VIEW posts_in_thread AS
+    SELECT t.id AS tid, COUNT(*) AS posts_num FROM posts p JOIN thread t ON (p.thread_id = t.id) GROUP BY tid;
+
 CREATE VIEW users_permissions_posts AS
     SELECT u.id AS uid, u.name AS uname, u.surname AS usurname, u.login AS ulogin, 
             u.password AS upassword, u.group_id AS ugroup_id, u.email AS uemail, 
             u.homepage AS uhomepage, g.description AS gdescription, 
-            g.permissionlevel AS gpermissionlevel,
-            (SELECT COUNT(*) FROM posts p WHERE p.owner_id = u.id) AS total_posts
-    FROM groups g INNER JOIN users u ON (u.group_id = g.id);
+            g.permissionlevel AS gpermissionlevel, up.posts_num
+    FROM groups g JOIN users u ON (u.group_id = g.id) JOIN user_posts up ON (u.id = up.uid);
 
 CREATE VIEW users_permissions AS
     SELECT u.id AS uid, u.name AS uname, u.surname AS usurname, u.login AS ulogin, 
@@ -74,9 +89,9 @@ CREATE VIEW users_permissions AS
 
 CREATE VIEW all_sections AS
     SELECT s.id AS sid, s.title AS stitle, s.description AS sdescription, 
-            (SELECT COUNT(*) FROM thread t WHERE t.section_id = s.id) AS thread_num,
-            (SELECT MAX(t.modification) FROM thread t WHERE t.section_id = s.id) AS lastmod
-    FROM sections s;
+            ts.thread_num AS thread_num, lm.lastmod AS lastmod
+    FROM sections s JOIN last_modified lm ON (lm.sid = s.id) 
+                    JOIN threads_in_section ts ON (ts.sid = s.id);
     
 CREATE VIEW discussion AS
     SELECT t.title AS ttitle, t.creation AS tcreation, t.modification AS tmodification, p.id AS pid, 
@@ -90,6 +105,7 @@ CREATE VIEW all_threads AS
             u.login AS towner, t.noise AS tnoise, t.creation AS tcreation, t.modification AS tmodification, 
             (SELECT COUNT(*) FROM posts p WHERE p.thread_id = t.id) AS posts_num 
     FROM sections s JOIN thread t ON (s.id = t.section_id) JOIN users u ON (t.owner_id = u.id)
+                    JOIN posts_in_thread pt ON (pt.tid = t.id)
         ORDER BY t.modification;
 
 INSERT INTO groups(description, permissionlevel) VALUES ('Owner', 0);

@@ -168,7 +168,10 @@ class TopicContent(BaseContent):
         fillReply(ctx, data)
         ##
         self.start = self.start + 1
-        return ctx.tag
+        #  margin-left:10px  margin-left:20px  margin-left:30px con un
+        #  max(x, 40)
+        indent_level = data.get('indent_level')
+        return t.div(style="margin-left: %spx" % min(indent_level*10, 40))[ctx.tag]
 
     def render_divider(self, ctx, data):
         return ctx.tag

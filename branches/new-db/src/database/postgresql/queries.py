@@ -43,7 +43,7 @@ section = """ SELECT sid, stitle, sdescription, tid, ttitle,
 towner, tnoise, tcreation, tmodification, posts_num, spermission_required
 FROM all_threads WHERE sid=%s """
 
-topic = """ SELECT ttitle, tcreation, pmodification, pid, tid,
+topic = """ SELECT preferences_, ttitle, tcreation, pmodification, pid, tid,
 pcreation, pnoise, ptitle, pbody, powner, pparsed_body
 
 FROM discussion WHERE tid=%s LIMIT %s OFFSET %s"""

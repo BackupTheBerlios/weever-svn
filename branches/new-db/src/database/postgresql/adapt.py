@@ -23,6 +23,36 @@ def cleanCache(*fn):
         return _1
     return _
 
+def reorderThread(thread):
+    r = [[x.get('preferences_') or '{}', x] for x in thread]
+    #t = [x[1] for x in r]
+    # Get a list of ints from a string
+    for el in r:
+        tmp = []
+        for x in el[0][1:-1].split(','):
+            if x:
+                tmp.append(int(x))
+        el[0] = tmp
+
+    tree = []
+    r.sort()
+    base = len(r[0][0])
+    for idx, node in enumerate(r):
+        if not idx:
+            tree.append(node)
+            node[1]['indent_level'] = 0
+        else:
+            if len(node[0]) == base:
+                tree.append(node)
+                node[1]['indent_level'] = 0
+            else:
+                for i, t in enumerate(tree):
+                    if t[0] == node[0][:-1]:
+                        if t[1].get('pid') == node[0][-1]:
+                            tree.insert(i+1, node)
+                            node[1]['indent_level'] = i+1
+                            break
+    return [x[1] for x in tree]
 
 class UsersDatabase(object):
     
@@ -89,7 +119,8 @@ class TopicsDatabase(object):
         self.store = db
 
     def getAllPosts(self, tid, num, offset):
-        return self.store.runQuery(q.topic, tid, num, offset)
+        return self.store.runQuery(q.topic, tid, num, offset
+                                   ).addCallback(reorderThread)
 
     def getPostsNum(self, tid):
         return self.store.runQuery(q.posts_num, tid)

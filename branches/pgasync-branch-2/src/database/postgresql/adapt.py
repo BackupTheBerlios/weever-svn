@@ -1,5 +1,6 @@
 from utils import util
 
+from nevow import util as u
 from database import interfaces as idb
 import queries as q
 
@@ -93,10 +94,16 @@ class TopicsDatabase(object):
         topic_args = args[0]
         post_args = args[1]
         curs.execute(add_topic, topic_args)
-        curs.execute("SELECT MAX(t.id) FROM thread t")
-        lid = curs.fetchone()
-        post_args['thread_id'] = lid[0]
-        curs.execute(add_post, post_args)
-        return lid[0]
+        d = u.maybeDeferred(curs.execute, "SELECT MAX(t.id) FROM thread t")
+        d.addCallback(lambda _: curs.fetchone())
+        def insTopic(result):
+            post_args['thread_id'] = result[0]
+            curs.execute(add_post, post_args)
+            return result[0]
+        def _error(error):
+            print error
+        d.addCallback(insTopic)
+        d.addErrback(_error)
+        return d    
         
 util.backwardsCompatImplements(TopicsDatabase)                 

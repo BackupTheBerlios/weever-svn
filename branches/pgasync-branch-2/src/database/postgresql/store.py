@@ -1,19 +1,26 @@
 from itertools import izip
 
-from twisted.enterprise import adbapi
-
 from database import interfaces as idb
 from utils import util
+
+from nevow import util as u
 
 class Store(object):
 
     util.implements(idb.IS)
 
     def __init__(self, db_adapter, db_params):
-        database_dsn = "dbname=%(dbname)s user=%(user)s password=%(password)s" % (db_params)
-        if db_params.has_key('host'):
-            host_dsn = " host=%(host)s port=%(port)s" % (db_params)
-        database_dsn = database_dsn + host_dsn
+        if db_adapter == 'pgasync':
+            import pg_adbapi as adbapi
+            database_dsn = db_params
+            
+        else:    
+            from twisted.enterprise import adbapi
+
+            database_dsn = "dbname=%(dbname)s user=%(user)s password=%(password)s" % (db_params)
+            if db_params.has_key('host'):
+                host_dsn = " host=%(host)s port=%(port)s" % (db_params)
+            database_dsn = database_dsn + host_dsn
         self.__pool = adbapi.ConnectionPool(db_adapter,
                                             dsn=database_dsn,
                                             cp_min=3, cp_max=10)
@@ -23,10 +30,22 @@ class Store(object):
         return d
 
     def _mapQuery(self, curs, query, *args):
+        print "1"
         curs.execute(query, *args)
-        result = curs.fetchall()
-        columns = [d[0] for d in curs.description]
-        return [dict(zip(columns, r)) for r in result]
+        print "2"
+        dx = u.maybeDeferred(curs.fetchall)
+        print "3"
+        def mapper(result):
+            print "4"
+            columns = [d[0] for d in curs.description]
+            print "5"
+            return [dict(zip(columns, r)) for r in result]  
+        def _error(error):
+            print "6"
+            print error      
+        dx.addCallback(mapper)
+        dx.addErrback(_error)
+        return dx
 
     def runOperation(self, query, *args):
         d = self.__pool.runOperation(query, args[0])

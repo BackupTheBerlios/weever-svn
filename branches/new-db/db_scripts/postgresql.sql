@@ -157,7 +157,7 @@ DECLARE
 BEGIN
    query := ''SELECT MAX(modification) AS pmodification
                 FROM posts
-               WHERE references_ @> '''''';
+               WHERE references_ <@ '''''';
    FOR row IN SELECT id FROM threads LOOP
        FOR maxtime IN EXECUTE query || row.id || '''''''' LOOP
            r.tid := row.id;

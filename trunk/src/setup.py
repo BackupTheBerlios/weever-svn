@@ -8,11 +8,11 @@ data_files = [
     ('styles/passion', glob.glob('styles/passion/*.css')),
     ('images', glob.glob('images/*')),
     ('templates', glob.glob('templates/*.html')),
+    ('files', ['files/weever.ini'])
     ]
 
-setup(appconfig = 'main.tac',
-      data_files = data_files,
+setup(data_files = data_files,
       options = {'twistedservice':
-            {'packages': ['database.postgresql','psycopg'],
+            {'packages': ['database.postgresql','psycopg','encodings'],
             }},
       )

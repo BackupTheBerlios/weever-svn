@@ -1,0 +1,27 @@
+/* mccgrid.css */
+
+/* debug scaffolding */
+body.debug { background:#fff }
+.debug h1 { background:#c8c8c8 }
+.debug h2 { background:#d0d0d0 }
+/*
+.debug h3 { background:#d8d8d8 }
+.debug h4 { background:#e0e0e0 }
+.debug h5 { background:#e8e8e8 }
+.debug h6 { background:#f0f0f0 }
+*/
+
+/* 
+.debug li { border:1px dotted #999 }
+.debug ul,.debug ol { border:1px solid #666 }
+*/
+
+.debug #posts { background:#efe }
+.debug #intraroll { background:#dfd }
+.debug #extraroll { background:#cfc }
+
+.dnote { display:none }
+.debug .dnote { display:block; margin:0; padding:1em 5%; background:#ffc }
+.debug .dnote p { margin:0 }
+.debug .dnote h2 { background:none }
+

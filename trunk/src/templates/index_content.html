@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<nevow:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+xmlns:nevow="http://nevow.com/ns/nevow/0.1">
+  <div id="content">
+    <h2>Hot topics</h2>
+
+    <table class="">
+      <thead>
+        <tr>
+          <th>Topic</th>
+
+          <th>Author</th>
+
+          <th>Section</th>
+
+          <th>Last changed</th>
+        </tr>
+      </thead>
+
+      <tbody nevow:data="HotTopics" nevow:render="sequence">
+        <tr nevow:pattern="item" nevow:render="topicHead">
+          <td>
+          	<nevow:slot name="title">
+            	<a href="topic">Donec eu tellus nec risus</a>
+          	</nevow:slot>
+
+          	(<nevow:slot name="posts_num">3</nevow:slot>)
+          
+          </td>
+
+          <td>
+            <nevow:slot name="author">rhoncus</nevow:slot>
+          </td>
+
+          <td>
+            <nevow:slot name="section">Vita e tempo libero</nevow:slot>
+          </td>
+
+          <td>
+            <nevow:slot name="modification">Sep 22, 2004 @ 03:14 PM</nevow:slot>
+          </td>
+        </tr>
+
+        <tr class="alt" nevow:pattern="item" nevow:render="topicHead">
+          <td>
+          	<nevow:slot name="title">
+            	<a href="http://example.org">Ut sagittis urna id nulla</a>
+          	</nevow:slot>
+
+          	(<nevow:slot name="posts_num">3</nevow:slot>)
+          </td>
+
+          <td>
+            <nevow:slot name="author">pharetra</nevow:slot>
+          </td>
+
+          <td>
+            <nevow:slot name="section">Vita e tempo libero</nevow:slot>
+          </td>
+
+          <td>
+            <nevow:slot name="modification">Sep 21, 2004 @ 12:14 PM</nevow:slot>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+          <a href="http://example.com">Vivamus rhoncus pharetra massa.</a>
+
+          (16)</td>
+
+          <td>risus</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 19, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr class="alt">
+          <td>Ut sagittis urna id nulla</td>
+
+          <td>pharetra</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 21, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr>
+          <td>
+          <a href="http://example.com">Vivamus rhoncus pharetra massa.</a>
+
+          (16)</td>
+
+          <td>risus</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 19, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr class="alt">
+          <td>Ut sagittis urna id nulla</td>
+
+          <td>pharetra</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 21, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr>
+          <td>
+          <a href="topic">Donec eu tellus nec risus</a>
+
+          (3)</td>
+
+          <td>rhoncus</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 22, 2004 @ 03:14 PM</td>
+        </tr>
+
+        <tr class="alt">
+          <td>
+            <a href="http://example.org">Ut sagittis urna id nulla</a>
+          </td>
+
+          <td>pharetra</td>
+
+          <td>Pizza</td>
+
+          <td>Sep 21, 2004 @ 12:14 PM</td>
+        </tr>
+
+        <tr nevow:pattern="empty">
+          <td>Sorry. No topics in the database</td>
+
+          <td>
+          </td>
+
+          <td>
+          </td>
+
+          <td>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Sections</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+
+          <th>Last changed</th>
+        </tr>
+      </thead>
+
+      <tbody nevow:data="Sections" nevow:render="sequence">
+        <tr nevow:pattern="item" nevow:render="section">
+          <td>
+          <nevow:slot name="title">
+            <a href="#">Donec eu tellus nec risus</a>
+          </nevow:slot>
+
+          (<nevow:slot name="thread_num">255</nevow:slot>) 
+ 
+          <nevow:slot name="description">
+            <p class="desc">Breve descrizione delle sezione...</p>
+          </nevow:slot>
+          </td>
+
+          <td>
+            <nevow:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</nevow:slot>
+          </td>
+        </tr>
+
+        <tr nevow:pattern="empty">
+          <td>Sorry, no sections in the database</td>
+
+          <td>
+          </td>
+        </tr>
+
+        <tr class="alt" nevow:pattern="item" nevow:render="section">
+          <td>
+          <nevow:slot name="title">
+            <a href="#">Nec risus</a>
+          </nevow:slot>
+
+          (
+          <nevow:slot name="thread_num">89</nevow:slot>
+
+          ) 
+          <nevow:slot name="description">
+            <p class="desc">Breve descrizione delle sezione...</p>
+          </nevow:slot>
+          </td>
+
+          <td>
+            <nevow:slot name="lastMod">Sep 22, 2004 @ 03:14 PM</nevow:slot>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</nevow:invisible>
+

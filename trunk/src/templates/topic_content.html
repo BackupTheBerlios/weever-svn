@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<nevow:invisible xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+xmlns:nevow="http://nevow.com/ns/nevow/0.1">
+  <div id="content">
+    <nevow:invisible nevow:render="firstTopic">
+      <h2>
+        <span>
+        <a href="reply.xhtml">
+        <nevow:attr name="href">
+          <nevow:slot name="quote" />
+        </nevow:attr>
+
+        Quote &amp; Reply</a>
+
+        • 
+        <a href="edit.xhtml">
+        <nevow:attr name="href">
+          <nevow:slot name="edit" />
+        </nevow:attr>
+
+        Edit</a>
+
+        • 
+        <a href="permalink.xhtml">
+        <nevow:attr name="href">
+          <nevow:slot name="permalink" />
+        </nevow:attr>
+
+        Permalink</a>
+        </span>
+
+        <nevow:slot name="title">Topic: Donec eu tellus nec risus</nevow:slot>
+      </h2>
+
+<!-- /mainTitle -->
+      <div class="entry">
+<!-- <h2><a title="Permalink for ''" rel="bookmark" href="#c1">Donec eu tellus nec risus</a></h2> -->
+        <nevow:slot name="body">Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant
+        morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse
+        platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+        cubilia Curae; Cras mattis placerat magna. Nam tellus erat, dignissim non, nonummy non,
+        sodales non, ipsum. Curabitur rutrum, enim a viverra eleifend, est magna viverra nunc, in
+        fringilla lacus urna id nisl. Nam erat lacus, aliquam eget, ultrices sit amet, molestie
+        vitae, ipsum. Nunc purus erat, rutrum id, rhoncus ut, auctor vitae, tortor.</nevow:slot>
+
+        <p class="datetime">Posted by 
+        <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
+          <nevow:attr name="href">
+            <nevow:slot name="userpref" />
+          </nevow:attr>
+
+          <nevow:slot name="owner">rhoncus</nevow:slot>
+        </a>
+
+        on 
+        <nevow:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</nevow:slot>
+        </p>
+      </div>
+    </nevow:invisible>
+
+      <form style="" method="post" action="">
+<!-- <h3>Comment viewing options</h3>  -->
+        <h2 id='replies'>
+        <span>Sort by 
+        <select name="order">
+          <option value="1" selected="selected">Date - newest first</option>
+
+          <option value="2">Date - oldest first</option>
+        </select>
+
+        with 
+        <select name="comments_per_page">
+          <option value="10">10 comments</option>
+
+          <option value="30">30 comments</option>
+
+          <option value="50" selected="selected">50 comments</option>
+        </select>
+
+        per page 
+        <input type="submit" name="" value="Apply" />
+        </span>
+
+        <nevow:invisible nevow:data="numPosts" nevow:render="repliesnum">2</nevow:invisible>
+
+        replies</h2>
+
+<!--    <p class="help"><b>Note</b>: Select your preferred way to display the comments and click <i>Change view</i> to activate your changes.</p>  -->
+      </form>
+
+<!-- fix me -->
+      <p class="help">
+      </p>
+    <nevow:invisible nevow:data="posts" nevow:render="sequence">
+      <div class="entry reply" nevow:pattern="item" nevow:render="reply">
+        <h3>
+        <span>
+        <a href="reply.xhtml">
+        <nevow:attr name="href">
+          <nevow:slot name="quote" />
+        </nevow:attr>
+
+        Quote &amp; Reply</a>
+
+        • 
+        <a href="edit.xhtml">
+        <nevow:attr name="href">
+          <nevow:slot name="edit" />
+        </nevow:attr>
+
+        Edit</a>
+
+        • 
+        <a href="permalink.xhtml">
+        <nevow:attr name="href">
+          <nevow:slot name="permalink" />
+        </nevow:attr>
+
+        Permalink</a>
+        </span>
+
+        <nevow:slot name="progression">1</nevow:slot>
+
+        . 
+        <nevow:slot name="ptitle">A cool hack indeed</nevow:slot>
+        </h3>
+
+        <nevow:slot name="body">Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant
+        morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse
+        platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+        cubilia Curae; Cras mattis placerat magna. Nam tellus erat, dignissim non, nonummy non,
+        sodales non, ipsum. Curabitur rutrum, enim a viverra eleifend, est magna viverra nunc, in
+        fringilla lacus urna id nisl. Nam erat lacus, aliquam eget, ultrices sit amet, molestie
+        vitae, ipsum. Nunc purus erat, rutrum id, rhoncus ut, auctor vitae, tortor. 
+        <blockquote>
+          <p>Sed ut enim. Duis vehicula ultrices urna. Pellentesque habitant morbi tristique
+          senectus et netus et malesuada fames ac turpis egestas. In hac habitasse platea dictumst.
+          Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+          Cras mattis placerat magna. Nam tellus erat, dignissim non, nonummy non, sodales non,
+          ipsum. Curabitur rutrum, enim a viverra eleifend, est magna viverra nunc, in fringilla
+          lacus urna id nisl. Nam erat lacus, aliquam eget, ultrices sit amet, molestie vitae,
+          ipsum. Nunc purus erat, rutrum id, rhoncus ut, auctor vitae, tortor.</p>
+        </blockquote>
+
+        <p>Pellentesque habitant morbi tristique senectus et 
+        <a href="#">netus et malesuada</a>
+
+        fames ac turpis egestas. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in
+        faucibus orci luctus et ultrices posuere cubilia Curae; Cras mattis placerat magna. Nam
+        tellus erat, dignissim non, nonummy non, sodales non, ipsum. Curabitur rutrum, enim a
+        viverra eleifend, est magna viverra nunc, in fringilla lacus urna id nisl. Nam erat lacus,
+        aliquam eget, ultrices sit amet, molestie vitae, ipsum.</p>
+        </nevow:slot>
+
+        <p class="datetime">Posted by 
+        <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
+          <nevow:attr name="href">
+            <nevow:slot name="userpref" />
+          </nevow:attr>
+
+          <nevow:slot name="owner">rhoncus</nevow:slot>
+        </a>
+
+        on 
+        <nevow:slot name="when">Thu, Sep 23 2004 @ 09:12 AM</nevow:slot>
+        </p>
+
+        <div class="picture" nevow:pattern="image">
+          <h4>Attached Picture</h4>
+
+          <img src="images/attached.jpg" width="330" height="405" alt="Attached picture, 17KB" />
+        </div>
+      </div>
+
+<!-- /item -->
+      <hr noshade="noshade" nevow:pattern="divider" />
+
+      <div class="browser" nevow:pattern="footer">
+      <a href="#">Blah</a>
+
+      • 
+      <a href="#">Next 10 Replies »</a>
+      </div>
+    </nevow:invisible>
+
+<!-- /data /sequence-->
+    <form action="" method="post">
+      <h2>Quick reply</h2>
+
+      <fieldset>
+        <label for="title_">Title</label>
+
+        <input type="text" id="title_" name="title" maxlength="70" size="50"
+        value="Re: Donec eu tellus nec risus" />
+
+        <label for="content_">Message 
+        <span>(Textile formatting rules are supported)</span>
+        </label>
+
+        <textarea id="content_" name="content" cols="80" rows="8">Your reply here.</textarea>
+      </fieldset>
+
+      <fieldset>
+        <input type="submit" name="" value="Post Reply" />
+
+        <input type="submit" name="" value="Preview" />
+      </fieldset>
+    </form>
+
+<!-- /content -->
+  </div>
+</nevow:invisible>
+

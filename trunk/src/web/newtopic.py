@@ -18,7 +18,11 @@ def stringify(x):
     return x['stitle']
 
 def valueToKey(x):
-    return str(x['sid'])
+    # When the error renders only the key is passed and not the complete dict.
+    try:
+        return str(x['sid'])
+    except TypeError:
+        return str(x)
 
 def keyToValue(x):
     return int(x)

@@ -4,7 +4,7 @@ import ntsvc # this import will probably be something like
 import glob
 
 data_files = [
-    ('themes/passion', glob.glob('themes/passion/*'))
+    ('themes/default', glob.glob('themes/default/*'))
     ('templates', glob.glob('templates/*.html')),
     ('files', ['files/weever.ini'])
     ]

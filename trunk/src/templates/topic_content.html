@@ -7,8 +7,13 @@
             <div class="topic">
                 <h2>Topic: 
                 <n:slot name="title">Topic title goes here.</n:slot></h2>
-                
-                <p class="datetime">Posted by 
+               
+                <p class="datetime">
+				<!-- *** MOVE TO PYTHON *** 
+					just replaces with a placeholder:
+				    Posted by John Doe on Thu, MMM DD YYYY @ HH:MM &bull; Permalink
+				-->				
+				Posted by 
                 <a onclick="alert('Soon...'); return false;" href="">
                     <n:attr name="href">
                         <n:slot name="userpref" />
@@ -20,11 +25,19 @@
                 <a href="#">
                 <n:attr name="href">
                     <n:slot name="permalink" />
-                </n:attr>Permalink</a></p>
+                </n:attr>Permalink</a>
+
+				<!-- *** END OF MOVE TO PYTHON *** -->			
+				</p>
+
 
                 <n:slot name="body">Topic body goes here.</n:slot>
                 
                 <div class="actions">                    
+				<!-- *** MOVE TO PYTHON *** 
+					just replaces with a placeholder:
+				    Quiite &amp; Reply * Edit 
+				-->				
                     <n:invisible n:render="isLogged">
                         <n:invisible n:pattern="True">
                             <a onclick="#" href="#">
@@ -42,7 +55,9 @@
                             Please <a href="/login">login</a> or 
                             <a href="/register">register</a> to reply or edit
                         </n:invisible>
-                    </n:invisible>                
+                    </n:invisible>    
+					
+					<!-- *** END OF MOVE TO PYTHON *** -->            
                 </div>
                 <!-- dynamic quick reply form -->
                 <div id="reply_123"><n:attr name="id">reply_<n:slot name="id" /></n:attr></div>
@@ -50,7 +65,7 @@
             </div>
         </n:invisible>
         <div id="view">
-            <form style="" method="post" action="">            
+            <form method="post" action="">            
                 <h2><n:invisible n:data="numPosts" n:render="repliesnum">YY</n:invisible> replies</h2>
                 Sort by 
                 <select name="order">
@@ -70,7 +85,12 @@
                 <div class="topic reply" n:pattern="item" n:render="reply">
                     <h3><n:slot name="ptitle">Reply title goes here.</n:slot></h3>
                     
-                    <p class="datetime">Reply #<n:slot name="progression">ZZ</n:slot> by 
+                    <p class="datetime">
+					<!-- *** MOVE TO PYTHON *** 
+						just replaces with a placeholder:
+						Reply #99 by John Doe on Thu, MMM DD YYYY @ HH:MM &bull; Permalink
+					-->					
+					Reply #<n:slot name="progression">ZZ</n:slot> by 
                         <a onclick="alert('User profile page'); return false;" href="">
                             <n:attr name="href">
                                 <n:slot name="userpref" />
@@ -83,11 +103,17 @@
                                 <n:slot name="permalink" />
                             </n:attr>Permalink</a>
                         <!-- /a -->
+				
+					<!-- *** END OF MOVE TO PYTHON *** -->     						
                     </p>
                                         
                     <n:slot name="body">Reply body goes here.</n:slot>
                     
                     <div class="actions">
+					<!-- *** MOVE TO PYTHON *** 
+						just replaces with a placeholder:
+						Quiite &amp; Reply * Edit 
+					-->					
                         <n:invisible n:render="isLogged">
                             <n:invisible n:pattern="True">
                                 <a href="#" onclick="#">
@@ -106,6 +132,7 @@
                                 <a href="/register">register</a> to reply or edit
                             </n:invisible>
                         </n:invisible>  
+					<!-- *** END OF MOVE TO PYTHON *** -->    
                     </div>
                     
                     <div class="picture" n:pattern="image">

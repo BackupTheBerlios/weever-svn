@@ -319,10 +319,49 @@ a img {
     vertical-align: middle;
 }
 
+/* gfx link-button */
 h3 a:link, h3 a:visited, h3 a:hover, h3 a:active {
     border-style: none;
     background: transparent;
 }
+
+/* quote & reply, edit and so on... */
+
+.actions {
+	margin: 0; 	
+    padding: 0;
+    
+    text-align: right;
+        
+}
+
+.actions a:link, .actions a:visited {
+	
+    border: 1px solid #999;
+    
+    padding: 2px 4px;
+    
+    margin: 0; 	
+    margin-left: 2px; 	
+    
+    font-size: 85%;
+
+    background: #ccc url("h-topgrad2.png") top left repeat-x;
+}
+
+
+.actions a:hover {
+	
+    border: 1px solid #993333;
+    
+    padding: 2px 4px;
+    
+    font-size: 85%;
+
+    color: #fff;
+    background: #933;
+}
+
 
 /* 
 ==========================================
@@ -538,7 +577,10 @@ entry / reply
 
 }
 
-/* view options block */
+/* view options block 
+
+@@ rename to #replies
+*/
 #view {
 
     position: relative;
@@ -566,7 +608,7 @@ entry / reply
     position: absolute;
     
     top: -12px;
-    right: 10px;
+    left: 10px;
     
 	color: #330000;
     margin: 0;
@@ -774,7 +816,7 @@ attached picture
     position: absolute;
     
     top: -15px;
-    right: 10px;
+    left: 10px;
     
 	color: #300;
     margin: 0;

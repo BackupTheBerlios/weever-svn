@@ -7,7 +7,7 @@
             <div class="topic">
                 <h2>Topic: 
                 <n:slot name="title">Topic title goes here.</n:slot></h2>
-                <n:slot name="body">Topic body goes here.</n:slot>
+                
                 <p class="datetime">Posted by 
                 <a onclick="alert('Soon...'); return false;" href="">
                     <n:attr name="href">
@@ -30,14 +30,36 @@
                     </n:invisible>
                 </n:invisible>
                 &bull; 
-                <a href="edit.xhtml">
+                <a href="#">
                 <n:attr name="href">
                     <n:slot name="edit" />
                 </n:attr>Edit</a> &bull; 
-                <a href="permalink.xhtml">
+                <a href="#">
                 <n:attr name="href">
                     <n:slot name="permalink" />
                 </n:attr>Permalink</a></p>
+
+                <n:slot name="body">Topic body goes here.</n:slot>
+                
+                <div class="actions">                    
+                    <n:invisible n:render="isLogged">
+                        <n:invisible n:pattern="True">
+                            <a href="#">
+                                <n:attr name="href">
+                                    <n:slot name="quote" />
+                                </n:attr>Quote &amp; Reply</a> 
+                        </n:invisible>
+                        <n:invisible n:pattern="False">
+                            Please <a href="/login">login</a> or 
+                            <a href="/register">register</a> to reply
+                        </n:invisible>
+                    </n:invisible>                
+                    <a href="#">
+                    <n:attr name="href">
+                        <n:slot name="edit" />
+                    </n:attr>Edit</a> 
+                </div>
+                
                 <!-- sample form -->
                 <!--
                 <div class="quick" id="reply123">
@@ -84,36 +106,41 @@
                     <h3>
                         <n:slot name="ptitle">Reply title goes here.</n:slot>
                     </h3>
-                    <n:slot name="body">Reply body goes here.</n:slot>
+                    
                     <p class="datetime">Reply #<n:slot name="progression">ZZ</n:slot> by 
-                    <a onclick="alert('Link a pagina profilo utente'); return false;" href="">
+                    <a onclick="alert('User profile page'); return false;" href="">
                         <n:attr name="href">
                             <n:slot name="userpref" />
                         </n:attr>
                         <n:slot name="owner">Owner</n:slot>
                     </a>on 
                     <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot> &bull; 
-                    <n:invisible n:render="isLogged">
-                        <n:invisible n:pattern="True">
-                            <a href="reply.xhtml">
-                                <n:attr name="href">
-                                    <n:slot name="quote" />
-                                </n:attr>Quote &amp; Reply</a> 
-                        </n:invisible>
-                        <n:invisible n:pattern="False">
-                            Please <a href="/login">login</a> or 
-                            <a href="/register">register</a> to reply
-                        </n:invisible>
-                    </n:invisible>  
-                    &bull; 
-                    <a href="edit.xhtml">
-                    <n:attr name="href">
-                        <n:slot name="edit" />
-                    </n:attr>Edit</a> &bull; 
-                    <a href="permalink.xhtml">
+                    <a title="Permanent link for this reply" href="#">
                     <n:attr name="href">
                         <n:slot name="permalink" />
                     </n:attr>Permalink</a></p>
+                                        
+                    <n:slot name="body">Reply body goes here.</n:slot>
+                    
+                    <div class="actions">
+                        <n:invisible n:render="isLogged">
+                            <n:invisible n:pattern="True">
+                                <a href="#">
+                                    <n:attr name="href">
+                                        <n:slot name="quote" />
+                                    </n:attr>Quote &amp; Reply</a> 
+                            </n:invisible>
+                            <n:invisible n:pattern="False">
+                                Please <a href="/login">login</a> or 
+                                <a href="/register">register</a> to reply
+                            </n:invisible>
+                        </n:invisible>  
+                        <a href="#">
+                        <n:attr name="href">
+                            <n:slot name="edit" />
+                        </n:attr>Edit</a>                    
+                    <div>
+                    
                     <div class="picture" n:pattern="image">
                         <h4>Attached Picture</h4>
                         <p>Sample attached picture.</p>

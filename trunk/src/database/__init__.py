@@ -18,9 +18,6 @@ def load(S):
         line = line.strip()
         if line and not line.startswith('#'):
             (a, o , i) = line.split()
-            a = reflect.namedAny(a)
-            o = reflect.namedAny(o)
-            i = reflect.namedAny(i)
             compy.registerAdapter(a,o,i)
 
 load(database_adapters)

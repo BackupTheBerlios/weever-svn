@@ -9,6 +9,7 @@ from main import MasterPage, BaseContent
 from users.interfaces import IA
 from database import interfaces as idb
 from web import getTemplate
+from web import forms
 
 choices = ['cazzi e ammazzi', 'prova1']
 
@@ -26,18 +27,18 @@ def keyToValue(x):
 
 class INewTopic(annotate.TypedInterface):
     def post_topic(self,
-       ctx=annotate.Context(),
-       title=annotate.String(required=True,
-                             strip=True,
-                             requiredFailMessage="Evey topic must have a title",
-                             maxlength="70",
-                             size="50"),
-       content=annotate.Text(required=True,
-                             requiredFailMessage="Missing body in this post"),
-       section=annotate.Choice(gatherSections, 
-                               stringify=stringify, 
-                               valueToKey=valueToKey,
-                               keyToValue=keyToValue)
+        ctx=annotate.Context(),
+        title=forms.StyleString(required=True,
+                                strip=True,
+                                requiredFailMessage="Evey topic must have a title",
+                                maxlength="70",
+                                size="50"),
+        content=annotate.Text(required=True,
+                              requiredFailMessage="Missing body in this post"),
+        section=annotate.Choice(gatherSections, 
+                                stringify=stringify, 
+                                valueToKey=valueToKey,
+                                keyToValue=keyToValue)
     ):
         """ """
     post_topic = annotate.autocallable(post_topic, action="Post Topic")

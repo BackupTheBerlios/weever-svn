@@ -13,8 +13,8 @@
                     <n:attr name="href">
                         <n:slot name="userpref" />
                     </n:attr>
-                    <n:slot name="owner">Owner</n:slot>
-                </a>on 
+                    <n:slot name="owner">Owner</n:slot></a>
+                on 
                 <n:slot name="when">Thu, MMM DD YYYY @ HH:MM</n:slot>&bull; 
                 <a href="reply.xhtml">
                 <n:attr name="href">
@@ -40,14 +40,13 @@
                             <input type="text" id="title_" name="title" maxlength="70" size="70" value="Re: Donec eu tellus nec risus" />
                             <label for="content_">Message 
                             <span>(reST formatting rules are supported)</span></label>
-                            <textarea id="content_" name="content" cols="80" rows="8">Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Your reply here.</textarea>
+                            <textarea id="content_" name="content" cols="70" rows="8" size="70" maxlength="70">Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Sample quoted text. Your reply here.</textarea>
                         </fieldset>
                         <fieldset>
                             <input type="submit" name="" value="Post Reply" />
                         </fieldset>
                     </form>
                 </div>
-              
                 <!-- /topic -->
             </div>
         </n:invisible>
@@ -99,14 +98,11 @@
                 </div>
                 <!-- /item -->
                 <hr noshade="noshade" n:pattern="divider" />
-                
-                
                 <div class="topic reply" n:pattern="empty" n:render="empty">
                     <p>No replies for this topic.</p>
-                </div>
-                                
+                </div>             
                 <div class="browser" n:pattern="footer">
-                    <a href="#">Blah</a>
+                    <!--<a href="#">Blah</a>-->
                     <n:invisible n:render="nextPosts">&bull; 
                     <a href="#">
                     <n:attr name="href">

@@ -21,7 +21,7 @@ class IQuickReply(annotate.TypedInterface):
        title=annotate.String(required=True,
                              requiredFailMessage="Missing Title",
                              maxlength="70",
-                             size="50"),
+                             size="70"),
        content=annotate.Text(required=True,
                              requiredFailMessage="Missing body",
                              cols="80",
@@ -126,7 +126,7 @@ class TopicContent(BaseContent):
         return ctx.tag.clear()[self.posts_num]
 
     def render_empty(self, ctx, data):
-        return ctx.tag.clear()
+        return ctx.tag
 
     def render_reply(self, ctx, data):
         ctx.tag.fillSlots('progression', self.start)

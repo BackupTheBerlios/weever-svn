@@ -50,11 +50,12 @@ textarea {
 }
 
 
-input[type='text'], textarea, input[type='password'] {
+input[type='text'], input[type='password'], textarea {
     border: 2px solid #e5e5e5;    
+    background: #fff;        
 }
 
-input[type='text']:focus, textarea:focus {
+input[type='text']:focus, input[type='password']:focus, textarea:focus {
     border-color: #993333;
 }
 

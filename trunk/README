@@ -1,0 +1,13 @@
+THIS SOFTWARE IS UNDER MIT LICENSE.
+(C) 2004 Valentino Volonghi, Andreal Peltrin
+
+Read LICENSE file for more informations
+
+
+Since Weever is currently under heavy development, you will need to get the 
+very latest versions (from SVN) of both Twisted (required) and Nevow (required).
+An additional dependency required by Twisted is ZopeInterface which can be downloaded from:
+http://www.zope.org/Products/ZopeInterface/
+
+I've tested it with psycopg2, but since I'm not using any special features provided with 
+psycopg2 it should work with psycopg1 too.
